@@ -14,10 +14,11 @@ $this->pageTitle=Yii::app()->name;
                 'data'=>'js:jQuery(this).parents("form").serialize()+"&isAjaxRequest=1"',
                 'success'=>
                 'function(data){
-                      $("#searchResult").html(data);
+                      //$("#searchResult").html(data);
+                      helper = new Helper();
+                      helper.PrintImages(data);
                       return false;
                  }'
-
             ),
             array(
                 'id'=>'ajaxSubmit',
@@ -28,4 +29,9 @@ $this->pageTitle=Yii::app()->name;
 
 <div class="output">
     <textarea readonly id="searchResult"></textarea>
+</div>
+
+<div class="img_container">
+    <div class="eyewear"></div>
+    <div class="cases"></div>
 </div>
