@@ -172,7 +172,20 @@ class GetDir
      */
     public static function getAllBrands() {
         self::$_brands = array('ARNETTE', 'BALENCIAGA', 'BURBERRY', 'BVLGARI', 'CHRISTIAN AUDIGIER', 'ROBERTO CAVALLI',
-                                 'CHANEL', 'CHROME HEARTS', 'CHLOE', 'CAZAL', 'D&G', 'DOLCE&GABBANA');
+                                 'CHANEL', 'CHROME HEARTS', 'CHLOE', 'CAZAL', 'D&G', 'DOLCE&GABBANA', 'CHRISTIAN DIOR',
+                                'EMPORIO ARMANI', 'ED HARDY', 'EMILIO PUCCI', 'FERRAGAMO', 'FENDI', 'GIORGIO ARMANI',
+                                'GUCCI', 'JIMMY CHOO', 'JUICY COUTURE', 'MONT BLANC', 'MARC JACOBS', 'MICHAEL KORS',
+                                'MARC BY MARC JACOBS', 'MOSCHINO', 'OAKLEY', 'OLIVER PEOPLES', 'CYNTHIA ROWLEY',
+                                'PRADA', 'PRADA SPORT', 'COACH', 'RAY-BAN', 'TIFFANY', 'TOM FORD', 'TAG HEUER',
+                                'VALENTINO', 'VERSACE', 'VOGUE', 'YSL', 'DSQUARED', 'LANVIN', 'PERSOL', 'PUMA',
+                                'TRUE RELIGION', 'TODS', 'JUST CAVALLI', 'CARRERA', 'TORY BURCH', 'ARMANI EXCHANGE',
+                                'DIANE VON FURSTENBERG', 'COACH', 'MICHAEL KORS', 'MICHAEL MICHAEL KORS', 'ADIDAS',
+                                'NIKE', 'AFFLICTION', 'BLUMARINE', 'CHRISTIAN ROTH', 'NAUTICA', 'REVO', 'ARNETTE',
+                                'LACOSTE', 'JOHN GALLIANO', 'MARCHON', 'WILEY X', 'CALVIN KLEIN', 'SWAROVSKI',
+                                'BEBE', 'PORSCHE DESIGN', 'SPY', 'VON ZIPPER', 'NINE WEST', 'CAVIAR', 'VERA WANG',
+                                'KATE SPADE', 'FRED LUNETTES', 'COSTA DEL MAR', 'ANDY WOLF', 'DIESEL', 'SONIA RYKIEL',
+                                'MYKITA', 'RALPH LAUREN', 'ALAIN MIKLI', 'MIKLI BY MIKLI', 'SUBCREW BY MIKLI',
+                                'PENGUIN', 'DKNY', 'CHOPARD');
         return self::$_brands;
     }
 

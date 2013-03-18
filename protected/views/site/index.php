@@ -8,7 +8,7 @@ $this->pageTitle=Yii::app()->name;
 
     <form class="input" action="?r=site/getdir" method="post">
         <div class="select">
-            <select>
+            <select name="brand">
                 <?php
                 foreach($brands as $brand) {
                     echo '<option>', $brand, '</option>';
