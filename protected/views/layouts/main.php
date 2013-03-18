@@ -50,10 +50,18 @@
 	<div id="footer">
 		Copyright &copy; 2013 by Alex.<br/>
 		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 
 </div><!-- page -->
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.zclip.js" ></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/scripts.js" ></script>
+<script>
+    $(document).ready(function() {
+        helper = new Helper();
+        helper.InitEvents();
+        $('#ajaxSubmit').addClass('small awesome');
+    });
+</script>
+<div id="tooltip"></div>
 </body>
 </html>

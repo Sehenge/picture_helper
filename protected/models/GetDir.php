@@ -8,6 +8,8 @@ class GetDir
 
     private static $_exception;
 
+    private static $_brands;
+
     /**
      * @param $asin
      *
@@ -79,7 +81,7 @@ class GetDir
             case 'CN': return 'CHANEL';
             case 'CH': return 'CHROME_HEARTS';
             case 'CL': return 'CHLOE';
-            case 'DD': return 'DG';
+            case 'DD':
             case 'DG': return 'DG';
             case 'CD': return 'CHRISTIAN_DIOR';
             case 'EH': return 'ED_HARDY';
@@ -165,8 +167,23 @@ class GetDir
         }
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllBrands() {
+        self::$_brands = array('ARNETTE', 'BALENCIAGA', 'BURBERRY', 'BVLGARI', 'CHRISTIAN AUDIGIER', 'ROBERTO CAVALLI',
+                                 'CHANEL', 'CHROME HEARTS', 'CHLOE', 'CAZAL', 'D&G', 'DOLCE&GABBANA');
+        return self::$_brands;
+    }
+
+    /**
+     * @param $situation
+     *
+     * @return string
+     */
     public static function printException($situation) {
         switch ($situation) {
+            case 'cases not found':
             case 'images not found': self::$_exception = "We are apologise, but no one image were found! You can:\n".
             "1. Check your input information and try again\n".
             "2. Try to find images manually\n".
