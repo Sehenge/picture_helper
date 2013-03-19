@@ -200,7 +200,7 @@ class GetDir
             case 'images not found': self::$_exception = "We are apologise, but no one image were found! You can:\n".
             "1. Check your input information and try again\n".
             "2. Try to find images manually\n".
-            "3. If image exists but program cann't find it - Please contact support!\n";
+            "3. If image exists but program can't find it - Please contact support!\n";
         }
         return self::$_exception;
     }
