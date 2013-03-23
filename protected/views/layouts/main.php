@@ -53,7 +53,6 @@
 	</div><!-- footer -->
 
 </div><!-- page -->
-<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.zclip.js" ></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/scripts.js" ></script>
 <script>
     $(document).ready(function() {

@@ -32,6 +32,39 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         //self.searchRes.append($(this).val());
     })
 
+    $("#ajaxSubmit").click(function() {
+        $("#preloader").show();
+    })
+
+    $('.input input[name="sku"]').change(function() {
+        var parts = $(this).val().split(' ');
+        var mcode;
+        if (parts[0].match(/AZ?(.*)/)) {
+            mcode = parts[0].match(/AZ?(.*)/)[1];
+        } else {
+            mcode = parts[0];
+        }
+        var supplement = parts[1].split('-');
+        $.ajax({
+            type: "POST",
+            url: "?r=site/JsonBrand",
+            data: { mcode: mcode }
+        }).done(function( msg ) {
+                if (msg.indexOf('_') !== -1) {
+                    var brand = msg.split('_');
+                    brand = brand[0] + ' ' + brand[1];
+                } else {
+                    var brand = msg;
+                }
+
+                if ($(".input select option:contains('" + brand + "')")) {
+                    $(".input select option:contains('" + brand + "')").attr('selected', 'selected');
+                }
+                $('.input input[name="model"]').val(supplement[0]);
+                $('.input input[name="color_code"]').val(supplement[1]);
+            });
+    })
+
     $("[data-tooltip]").mousemove(function (eventObject) {
 
         $data_tooltip = $(this).attr("data-tooltip");
@@ -55,6 +88,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 }
 
 Helper.prototype.PrintImages = function Helper_printImages(data) {
+    console.log(data);
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
     this.searchRes.empty();
@@ -67,12 +101,24 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
                 + '" data-tooltip="' + image.substr(image.indexOf('i:')+2) + '"/><br/>');
             //$("#searchResult").append(image.substr(image.indexOf('i:')+2) + ",\n");
             this.eyewear.push(image.substr(image.indexOf('i:')+2) + ",\n");
+            if (key == 4) {
+                $("#fifth_img").append('<img src="' + image.substr(image.indexOf('i:')+2)
+                    + '" width="240px" data-tooltip="' + image.substr(image.indexOf('i:')+2) + '"/><br/>');
+            }
         } else if (image.indexOf('c:') !== -1) {
             this.imgContrCases.append('<input type="radio" name="case" value="' + image.substr(image.indexOf('c:')+2) +
                 '">' + '<img src="' + image.substr(image.indexOf('c:')+2)
                 + '" data-tooltip="' + image.substr(image.indexOf('c:')+2) + '"/><br/>');
         }
     }
-    this.searchRes.append(this.eyewear);
+    if ((data.indexOf('<exception>') !== -1) && (data.indexOf('<exception>') !== 0)) {
+        this.searchRes.append(this.eyewear);
+        this.searchRes.append("\n" + data.substr(data.indexOf('<exception>') + 11, data.indexOf('</exception>')));
+    } else if ((data.indexOf('<exception>') !== -1) && (data.indexOf('<exception>') === 0)) {
+        this.searchRes.append("\n" + data.substr(data.indexOf('<exception>') + 11, data.indexOf('</exception>')));
+        this.searchRes.append(this.eyewear);
+    } else {
+        this.searchRes.append(this.eyewear);
+    }
     this.InitEvents();
 }

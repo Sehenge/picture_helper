@@ -110,11 +110,21 @@ class SiteController extends Controller
 
     public function actionGetDir()
     {
-        $images = GetDir::parseImages($_POST['sku']);
-        $cases = GetDir::parseCases($_POST['sku']);
+        if (!$_POST['sku']) {
+            $manCode = GetDir::getManCode($_POST['brand']);
+            $sku = $manCode . ' ' . $_POST['model'] . '-' . preg_replace('/\//', '', $_POST['color_code']);
+            $images = GetDir::parseImages($sku);
+            $cases = GetDir::parseCases($sku);
+        } else {
+            $sku = $_POST['sku'];
+            $images = GetDir::parseImages($sku);
+            $cases = GetDir::parseCases($sku);
+        }
         if ($images) {
             foreach ($images as $image) {
-                echo 'i:' . $image;
+                echo GetDir::resizeImage(substr($image, 0, -3), '/home/union-progress.com/public_html/feedhelper/picture_helper/temp', 300, 150);
+                //echo 'i:' . $image;
+                break;
             }
         } else {
             echo GetDir::printException('images not found');
@@ -127,5 +137,10 @@ class SiteController extends Controller
         } else {
             echo GetDir::printException('cases not found');
         }
+    }
+
+    public function actionJsonBrand()
+    {
+        echo GetDir::getPath($_POST['mcode']);
     }
 }

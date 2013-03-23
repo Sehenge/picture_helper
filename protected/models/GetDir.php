@@ -11,27 +11,46 @@ class GetDir
     private static $_brands;
 
     /**
-     * @param $asin
+     * @param $sku
      *
      * @return array All possible paths to images
      */
-    public static function parseImages($asin)
+    public static function parseImages($sku)
 	{
         $output = array();
-        $asin = explode('_', $asin);
-        $brand = self::getPath($asin[0]);
-        $string = file_get_contents('http://affordableluxurygroup.com/Pictures/' . $brand);
-        $doc = new DOMDocument();
-        $doc->strictErrorChecking = FALSE;
-        $doc->loadHTML($string);
-        $xml = simplexml_import_dom($doc);
-        $result = $xml->xpath("//a[contains(.,'jpg')]");
+        $sku = explode(' ', $sku); $sku = explode('-', implode("-", $sku));
+        $sku[0] = preg_replace("/(AZ)?/", "", $sku[0]);
+        if (is_array(self::getPath($sku[0]))) {
+            $brands = self::getPath($sku[0]);
+        } else {
+            $brands[] = self::getPath($sku[0]);
+        }
+        foreach ($brands as $brand) {
+            $lc_brand = ucfirst(strtolower($brand));
+            $path = 'http://affordableluxurygroup.com/Large_Pictures/';
+            $string = file_get_contents($path . $brand);
+            if (!$string) {
+                $string = file_get_contents($path . $lc_brand);
+            }
+            if (!$string) {
+                $path = 'http://affordableluxurygroup.com/Pictures/';
+                $string = file_get_contents($path . $brand);
+            }
+            if (!$string) {
+                $string = file_get_contents($path . $lc_brand);
+            }
+            $doc = new DOMDocument();
+            $doc->strictErrorChecking = FALSE;
+            $doc->loadHTML($string);
+            $xml = simplexml_import_dom($doc);
+            $result = $xml->xpath("//a[contains(.,'jpg')]");
 
-        foreach ($result as $element) {
-            $separated = explode('_', $element);
-            if((isset($separated[1])) && (($asin[1] == $separated[1]) || ($asin[1] == $separated[0]))) {
-                if ((isset($separated[2])) && (($asin[2] == $separated[2]) || ($asin[2] == $separated[1]))) {
-                    $output[] = 'http://affordableluxurygroup.com/Pictures/' . $brand . '/' . implode('_', $separated) . ", \n";
+            foreach ($result as $element) {
+                $separated = explode('_', $element);
+                if((isset($separated[1])) && (($sku[1] == $separated[1]) || ($sku[1] == $separated[0]))) {
+                    if ((isset($separated[2])) && (($sku[2] == $separated[2]) || ($sku[2] == $separated[1]))) {
+                        $output[] = $path . $brand . '/' . implode('_', $separated) . ", \n";
+                    }
                 }
             }
         }
@@ -40,24 +59,38 @@ class GetDir
 	}
 
     /**
-     * @param $asin
+     * @param $sku
      *
      * @return array All possible cases
      */
-    public static function parseCases($asin)
+    public static function parseCases($sku)
     {
         $output = array();
-        $asin = explode('_', $asin);
-        $brand = self::getPath($asin[0]);
-        $string = file_get_contents('http://affordableluxurygroup.com/Pictures/CASES/');
-        $doc = new DOMDocument();
-        $doc->strictErrorChecking = FALSE;
-        $doc->loadHTML($string);
-        $xml = simplexml_import_dom($doc);
-        $result = $xml->xpath("//a[contains(@href,'jpg')]/@href");
-        foreach ($result as $element) {
-            if (strpos(strtoupper($element), $brand) !== false) {
-                $output[] = 'http://affordableluxurygroup.com/Pictures/CASES/' . $element . ", \n";
+        $sku = explode(' ', $sku);
+        $sku[0] = preg_replace("/(AZ)?/", "", $sku[0]);
+        $brand = self::getPath($sku[0]);
+        if (is_array(self::getPath($sku[0]))) {
+            $brands = self::getPath($sku[0]);
+        } else {
+            $brands[] = self::getPath($sku[0]);
+        }
+
+        foreach ($brands as $brand) {
+            $strings = array('http://affordableluxurygroup.com/Large_Pictures/Cases/',
+                             'http://affordableluxurygroup.com/Pictures/CASES/');
+
+            foreach ($strings as $old_string) {
+                $string = file_get_contents($old_string);
+                $doc = new DOMDocument();
+                $doc->strictErrorChecking = FALSE;
+                $doc->loadHTML($string);
+                $xml = simplexml_import_dom($doc);
+                $result = $xml->xpath("//a[contains(@href,'jpg')]/@href");
+                foreach ($result as $element) {
+                    if (strpos(strtoupper($element), $brand) !== false) {
+                        $output[] = $old_string . $element . ", \n";
+                    }
+                }
             }
         }
 
@@ -67,9 +100,10 @@ class GetDir
     /**
      * @param $mcode
      *
-     * @return string Path to manufacturer folder on server
+     * @return array|string
      */
-    public static function getPath($mcode) {
+    public static function getPath($mcode)
+    {
         switch ($mcode) {
             case 'AN': return 'ARNETTE';
             case 'CZ': return 'CAZAL';
@@ -77,29 +111,28 @@ class GetDir
             case 'BE': return 'BURBERRY';
             case 'BV': return 'BVLGARI';
             case 'CA': return 'CHRISTIAN_AUDIGIER';
-            case 'RC': return 'ROBERTO CAVALLI';
+            case 'RC': return 'CAVALLI';
             case 'CN': return 'CHANEL';
             case 'CH': return 'CHROME_HEARTS';
             case 'CL': return 'CHLOE';
             case 'DD':
-            case 'DG': return 'DG';
+            case 'DG': return array('DG', 'DOLCE&GABANA');
             case 'CD': return 'CHRISTIAN_DIOR';
-            case 'EH': return 'ED_HARDY';
+            case 'EH': return 'EDHARDY';
             case 'EP': return 'EMILIO_PUCCI';
             case 'FE': return 'FERRAGAMO';
             case 'FS': return 'FENDI';
-            case 'GA': return 'GIORGIO_ARMANI';
             case 'GG': return 'GUCCI';
             case 'JC': return 'JIMMY_CHOO';
             case 'JU': return 'JUICY_COUTURE';
             case 'MB': return 'MONT_BLANC';
             case 'MJ':
-            case 'MM': return 'MARC_JACOBS';
+            case 'MM': return array('MARC_JACOBS', 'MarcJacobs');
             case 'MK':
             case 'MMK': return 'MICHAEL_KORS';
             case 'MO': return 'MOSCHINO';
             case 'OK': return 'OAKLEY';
-            case 'OP': return 'OLIVER_PEOPLES';
+            case 'OP': return 'OLIVER_PEOPLE';
             case 'PR':
             case 'SPR':
             case 'PS':
@@ -107,7 +140,7 @@ class GetDir
             case 'VPS':
             case 'VPR': return 'PRADA';
             case 'CO': return 'COACH';
-            case 'RB': return 'RAY_BAN';
+            case 'RB': return 'RayBan';
             case 'TC': return 'TIFFANY';
             case 'TF': return 'TOM_FORD';
             case 'TH': return 'TAG_HEUER';
@@ -115,7 +148,7 @@ class GetDir
             case 'VE': return 'VERSACE';
             case 'VO': return 'VOGUE';
             case 'YS': return 'YSL';
-            case 'DQ': return 'DSQUARED';
+            case 'DQ': return 'D SQUARED';
             case 'LV': return 'LANVIN';
             case 'PO': return 'PERSOL';
             case 'PU': return 'PUMA';
@@ -125,8 +158,9 @@ class GetDir
             case 'CR': return 'CARRERA';
             case 'TB': return 'TORY_BURCH';
             case 'AX':
-            case 'EA': return 'ARMANI';
-            case 'DF': return 'DIANE_VON_FURSTENBERG';
+            case 'EA':
+            case 'GA': return 'ARMANI';
+            case 'DF': return 'DVF';
             case 'A': return 'ADIDAS';
             case 'NK': return 'NIKE';
             case 'AF': return 'AFFLICTION';
@@ -139,7 +173,7 @@ class GetDir
             case 'JG': return 'JOHN_GALLIANO';
             case 'MA': return 'MARCHON';
             case 'WX': return 'WILEY_X';
-            case 'CK': return 'CALVIN_KLEIN';
+            case 'CK': return array('CK', 'CALVIN_KLEIN');
             case 'SK': return 'SWAROVSKI';
             case 'BB': return 'BEBE';
             case 'PD': return 'PORSCHE_DESIGN';
@@ -151,14 +185,14 @@ class GetDir
             case 'KS': return 'KATE_SPADE';
             case 'FR': return 'FRED_LUNETTES';
             case 'CS': return 'COSTA_DEL_MAR';
-            case 'AW': return 'ANDY_WOLF';
+            case 'AW': return 'ANDYWOLF';
             case 'DL': return 'DIESEL';
             case 'SR': return 'SONIA_RYKIEL';
             case 'MY': return 'MYKITA';
             case 'RL': return 'RALPH_LAUREN';
             case 'AL':
             case 'MBM':
-            case 'SBM': return 'ALAIN_MIKLI';
+            case 'SBM': return 'ALAN_MIKLI';
             case 'PG': return 'PENGUIN';
             case 'DY': return 'DKNY';
             case 'SCH':
@@ -170,9 +204,10 @@ class GetDir
     /**
      * @return array
      */
-    public static function getAllBrands() {
+    public static function getAllBrands()
+    {
         self::$_brands = array('ARNETTE', 'BALENCIAGA', 'BURBERRY', 'BVLGARI', 'CHRISTIAN AUDIGIER', 'ROBERTO CAVALLI',
-                                 'CHANEL', 'CHROME HEARTS', 'CHLOE', 'CAZAL', 'D&G', 'DOLCE&GABBANA', 'CHRISTIAN DIOR',
+                                'CHANEL', 'CHROME HEARTS', 'CHLOE', 'CAZAL', 'D&G', 'DOLCE&GABBANA', 'CHRISTIAN DIOR',
                                 'EMPORIO ARMANI', 'ED HARDY', 'EMILIO PUCCI', 'FERRAGAMO', 'FENDI', 'GIORGIO ARMANI',
                                 'GUCCI', 'JIMMY CHOO', 'JUICY COUTURE', 'MONT BLANC', 'MARC JACOBS', 'MICHAEL KORS',
                                 'MARC BY MARC JACOBS', 'MOSCHINO', 'OAKLEY', 'OLIVER PEOPLES', 'CYNTHIA ROWLEY',
@@ -190,17 +225,171 @@ class GetDir
     }
 
     /**
+     * @param $nameu
+     * @return string
+     */
+    public static function getManCode($nameu)
+    {
+        if( strcmp($nameu, 'ARNETTE') == 0) return 'AN';
+        if( strcmp($nameu, 'BALENCIAGA') == 0) return 'BA';
+        if( strcmp($nameu, 'BURBERRY') == 0) return 'BE';
+        if( strcmp($nameu, 'BVLGARI') == 0) return 'BV';
+        if( strcmp($nameu, 'CHRISTIAN AUDIGIER') == 0) return 'CA';
+        if( strcmp($nameu, 'ROBERTO CAVALLI') == 0 ) return 'RC';
+        if( strcmp($nameu, 'ROBERTO CAVALLI') == 0 ) return 'RC';
+        if( strcmp($nameu, 'CHANEL') == 0 ) return 'CN';
+        if( strcmp($nameu, 'CHROME HEARTS') == 0) return 'CH';
+        if( strcmp($nameu, 'CHLOE') == 0 ) return 'CL';
+        if( strcmp($nameu, 'CAZAL') == 0 ) return 'CZ';
+        if( strcmp($nameu, 'D&G') == 0) return 'DD';
+        if( strcmp($nameu, 'DOLCE&GABBANA') == 0) return 'DG';
+        if( strcmp($nameu, 'CHRISTIAN DIOR') == 0) return 'CD';
+        if( strcmp($nameu, 'EMPORIO ARMANI') == 0) return 'EA';
+        if( strcmp($nameu, 'ED HARDY') == 0) return 'EH';
+        if( strcmp($nameu, 'EMILIO PUCCI') == 0) return 'EP';
+        if( strcmp($nameu, 'FERRAGAMO') == 0 ) return 'FE';
+        if( strcmp($nameu, 'FENDI') == 0) return 'FS';
+        if( strcmp($nameu, 'GIORGIO ARMANI') == 0 ) return 'GA';
+        if( strcmp($nameu, 'GUCCI') == 0 ) return 'GG';
+        if( strcmp($nameu, 'JIMMY CHOO') == 0 ) return 'JC';
+        if( strcmp($nameu, 'JUICY COUTURE') == 0) return 'JU';
+        if( strcmp($nameu, 'MONT BLANC') == 0) return 'MB';
+        if( strcmp($nameu, 'MARC JACOBS') == 0 ) return 'MJ';
+        if( strcmp($nameu, 'MICHAEL KORS') == 0 ) return 'MK';
+        if( strcmp($nameu, 'MARC BY MARC JACOBS') == 0 ) return 'MM';
+        if( strcmp($nameu, 'MOSCHINO') == 0) return 'MO';
+        if( strcmp($nameu, 'OAKLEY') == 0 ) return 'OK';
+        if( strcmp($nameu, 'OLIVER PEOPLES') == 0) return 'OP';
+        if( strcmp($nameu, 'CYNTHIA ROWLEY') == 0) return 'CY';
+        if( strcmp($nameu, 'PRADA') == 0) return  'PR';
+        if( strcmp($nameu, 'PRADA SPORT') == 0) return 'PS';
+        if( strcmp($nameu, 'COACH') == 0) return 'CO';
+        if( strcmp($nameu, 'RAY-BAN') == 0 ) return 'RB';
+        if( strcmp($nameu, 'TIFFANY') == 0 ) return 'TC';
+        if( strcmp($nameu, 'TOM FORD') == 0) return 'TF';
+        if( strcmp($nameu, 'TAG HEUER') == 0 ) return 'TH';
+        if( strcmp($nameu, 'VALENTINO') == 0 ) return 'VA';
+        if( strcmp($nameu, 'VERSACE') == 0 ) return 'VE';
+        if( strcmp($nameu, 'VOGUE') == 0 ) return 'VO';
+        if( strcmp($nameu, 'YSL') == 0) return 'YS';
+        if( strcmp($nameu, 'DSQUARED') == 0) return 'DQ';
+        if( strcmp($nameu, 'LANVIN') == 0) return 'LV';
+        if( strcmp($nameu, 'PERSOL') == 0) return 'PO';
+        if( strcmp($nameu, 'PUMA') == 0) return 'PU';
+        if( strcmp($nameu, 'TRUE RELIGION') == 0) return 'TR';
+        if( strcmp($nameu, 'TODS') == 0) return 'TO';
+        if( strcmp($nameu, 'JUST CAVALLI') == 0) return 'JS';
+        if( strcmp($nameu, 'CARRERA') == 0) return 'CR';
+        if( strcmp($nameu, 'TORY BURCH') == 0) return 'TB';
+        if( strcmp($nameu, 'ARMANI EXCHANGE') == 0) return 'AX';
+        if( strcmp($nameu, 'DIANE VON FURSTENBERG') == 0) return 'DF';
+        if( strcmp($nameu, 'MICHAEL KORS') == 0) return 'MK';
+        if( strcmp($nameu, 'MICHAEL MICHAEL KORS') == 0) return 'MMK';
+        if( strcmp($nameu, 'ADIDAS') == 0) return 'A';
+        if( strcmp($nameu, 'NIKE') == 0) return 'NK';
+        if( strcmp($nameu, 'AFFLICTION') == 0) return 'AF';
+        if( strcmp($nameu, 'BLUMARINE') == 0) return 'BM';
+        if( strcmp($nameu, 'CHRISTIAN ROTH') == 0) return 'HR';
+        if( strcmp($nameu, 'NAUTICA') == 0) return 'NA';
+        if( strcmp($nameu, 'REVO') == 0) return 'RE';
+        if( strcmp($nameu, 'ARNETTE')== 0) return 'AN';
+        if( strcmp($nameu, 'LACOSTE') == 0) return 'LA';
+        if( strcmp($nameu, 'JOHN GALLIANO') == 0) return 'JG';
+        if( strcmp($nameu, 'MARCHON') == 0) return 'MA';
+        if( strcmp($nameu, 'WILEY X') == 0) return 'WX';
+        if( strcmp($nameu, 'CALVIN KLEIN') == 0) return 'CK';
+        if( strcmp($nameu, 'SWAROVSKI') == 0) return 'SK';
+        if( strcmp($nameu, 'BEBE') == 0) return 'BB';
+        if( strcmp($nameu, 'PORSCHE DESIGN') == 0) return 'PD';
+        if( strcmp($nameu, 'SPY') == 0) return 'SP';
+        if( strcmp($nameu, 'VON ZIPPER') == 0) return 'VZ';
+        if( strcmp($nameu, 'NINE WEST') == 0) return 'NW';
+        if( strcmp($nameu, 'CAVIAR') == 0) return 'CV';
+        if( strcmp($nameu, 'VERA WANG') == 0) return 'VW';
+        if( strcmp($nameu, 'KATE SPADE') == 0) return 'KS';
+        if( strcmp($nameu, 'FRED LUNETTES') == 0) return 'FR';
+        if( strcmp($nameu, 'COSTA DEL MAR') == 0) return 'CS';
+        if( strcmp($nameu, 'ANDY WOLF') == 0) return 'AW';
+        if( strcmp($nameu, 'DIESEL') == 0) return 'DL';
+        if( strcmp($nameu, 'SONIA RYKIEL') == 0) return 'SR';
+        if( strcmp($nameu, 'MYKITA') == 0) return 'MY';
+        if( strcmp($nameu, 'RALPH LAUREN') == 0) return 'RL';
+        if( strcmp($nameu, 'ALAIN MIKLI') == 0) return 'AL';
+        if( strcmp($nameu, 'MIKLI BY MIKLI') == 0) return 'MBM';
+        if( strcmp($nameu, 'SUBCREW BY MIKLI') == 0) return 'SBM';
+        if( strcmp($nameu, 'PENGUIN') == 0) return 'PG';
+        if( strcmp($nameu, 'DKNY') == 0) return 'DY';
+        if( strcmp($nameu, 'CHOPARD') == 0) return  'VCH';
+    }
+
+    /********************************************************************************
+    Функция img_resize(): генерация thumbnails
+    Параметры:
+    $src             - имя исходного файла
+    $dest            - имя генерируемого файла
+    $width, $height  - ширина и высота генерируемого изображения, в пикселях
+    Необязательные параметры:
+    $rgb             - цвет фона, по умолчанию - белый
+    $quality         - качество генерируемого JPEG, по умолчанию - максимальное (100)
+    ********************************************************************************/
+    function resizeImage($src, $dest, $width, $height, $rgb=0xFFFFFF, $quality=100)
+    {
+
+        $size = getimagesize($src);
+
+        if ($size === false) return false;
+
+        $format = strtolower(substr($size['mime'], strpos($size['mime'], '/')+1));
+
+        //if (!function_exists($icfunc)) return false;
+
+        $x_ratio = $width / $size[0];
+        $y_ratio = $height / $size[1];
+
+        $ratio       = min($x_ratio, $y_ratio);
+        $use_x_ratio = ($x_ratio == $ratio);
+
+        $new_width   = $use_x_ratio  ? $width  : floor($size[0] * $ratio);
+        $new_height  = !$use_x_ratio ? $height : floor($size[1] * $ratio);
+        $new_left    = $use_x_ratio  ? 0 : floor(($width - $new_width) / 2);
+        $new_top     = !$use_x_ratio ? 0 : floor(($height - $new_height) / 2);
+
+        $content = file_get_contents($src);
+        $fp = fopen($dest."/img.jpeg", "w");
+        fwrite($fp, $content);
+        fclose($fp);
+
+        $isrc = imagecreatefromjpeg("/home/union-progress.com/public_html/feedhelper/picture_helper/temp/img.jpeg");
+        return $dest."/img.jpg";
+        $idest = imagecreatetruecolor($width, $height);
+
+
+        imagefill($idest, 0, 0, $rgb);
+        imagecopyresampled($idest, $isrc, $new_left, $new_top, 0, 0,
+            $new_width, $new_height, $size[0], $size[1]);
+
+        imagejpeg($idest, $dest, $quality);
+
+
+        imagedestroy($isrc);
+        imagedestroy($idest);
+        return true;
+
+    }
+
+    /**
      * @param $situation
      *
      * @return string
      */
-    public static function printException($situation) {
+    public static function printException($situation)
+    {
         switch ($situation) {
             case 'cases not found':
-            case 'images not found': self::$_exception = "We are apologise, but no one image were found! You can:\n".
+            case 'images not found': self::$_exception = "<exception>We are apologise, but no one image were found! You can:\n".
             "1. Check your input information and try again\n".
             "2. Try to find images manually\n".
-            "3. If image exists but program cann't find it - Please contact support!\n";
+            "3. If image exists but program can't find it - Please contact support!\n</exception>";
         }
         return self::$_exception;
     }
