@@ -48,12 +48,11 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; 2013 by Alex.<br/>
+		Copyright &copy; 2013 by Union-Progress.<br/>
 		All Rights Reserved.<br/>
 	</div><!-- footer -->
 
 </div><!-- page -->
-<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.zclip.js" ></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/scripts.js" ></script>
 <script>
     $(document).ready(function() {
@@ -63,5 +62,6 @@
     });
 </script>
 <div id="tooltip"></div>
+<div id="popup"></div>
 </body>
 </html>
