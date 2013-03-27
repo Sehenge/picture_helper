@@ -33,8 +33,8 @@ class GetDir
             $lc_brand = ucfirst(strtolower($brand));
             $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $brand;
             $paths[] = 'http://affordableluxurygroup.com/Pictures/' . $brand;
-            //$paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $lc_brand;
-            //$paths[] = 'http://affordableluxurygroup.com/Pictures/' . $lc_brand;
+            $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $lc_brand;
+            $paths[] = 'http://affordableluxurygroup.com/Pictures/' . $lc_brand;
             foreach ($paths as $path) {
 
                 if ($string = @file_get_contents($path)) {
@@ -45,6 +45,9 @@ class GetDir
                     $result = $xml->xpath("//a[contains(.,'jpg')]");
 
                     if (isset($result)) {
+                        if ($output) {
+                            break;
+                        }
                         foreach ($result as $element) {
                             $separated = explode('_', $element);
                             if((isset($separated[1])) && (($matches[4] == $separated[1]) || ($matches[4] == $separated[0]))) {
@@ -52,9 +55,6 @@ class GetDir
                                     $output[] = $path . '/' . implode('_', $separated) . ",";
                                 }
                             }
-                        }
-                        if ($output) {
-                            break;
                         }
                     }
                 }
@@ -71,10 +71,10 @@ class GetDir
      */
     public static function parseCases($sku)
     {
-        $output = array();
+        $output = array(); $paths = array();
         $sku = explode(' ', $sku);
         $sku[0] = preg_replace("/(AZ)?/", "", $sku[0]);
-        $brand = self::getPath($sku[0]);
+
         if (is_array(self::getPath($sku[0]))) {
             $brands = self::getPath($sku[0]);
         } else {
@@ -82,23 +82,22 @@ class GetDir
         }
 
         foreach ($brands as $brand) {
-            $strings = array('http://affordableluxurygroup.com/Large_Pictures/Cases/',
-                             'http://affordableluxurygroup.com/Pictures/CASES/');
-
-            foreach ($strings as $old_string) {
-                $string = file_get_contents($old_string);
-                $doc = new DOMDocument();
-                $doc->strictErrorChecking = FALSE;
-                $doc->loadHTML($string);
-                $xml = simplexml_import_dom($doc);
-                $result = $xml->xpath("//a[contains(@href,'jpg')]/@href");
-                foreach ($result as $element) {
-                    if (strpos(strtoupper($element), $brand) !== false) {
-                        $output[] = $old_string . $element . ",";
+            $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/Cases/';
+            $paths[] = 'http://affordableluxurygroup.com/Pictures/CASES/';
+            foreach ($paths as $path) {
+                if($string = @file_get_contents($path)){ 
+                    $doc = new DOMDocument();
+                    $doc->strictErrorChecking = FALSE;
+                    $doc->loadHTML($string);
+                    $xml = simplexml_import_dom($doc);
+                    $result = $xml->xpath("//a[contains(@href,'jpg')]/@href");
+                    if (isset($result)) {
+                        foreach ($result as $element) {
+                            if (strpos(strtoupper($element), $brand) !== false) {
+                                $output[] = $path . $element . ",";
+                            }
+                        }
                     }
-                }
-                if ($output) {
-                    break;
                 }
             }
         }
@@ -125,7 +124,7 @@ class GetDir
             case 'CHROME HEARTS': return 'CHROME_HEARTS';
             case 'CL': return 'CHLOE';
             case 'DD':
-            case 'DG': return array('DG', 'DOLCE&GABANA');
+            case 'DG': return array('DG', 'DOLCE&GABANA', 'DOLCE');
             case 'CD': return 'CHRISTIAN_DIOR';
             case 'CHRISTIAN DIOR': return 'CHRISTIAN_DIOR';
             case 'EHO':

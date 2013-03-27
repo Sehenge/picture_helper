@@ -104,7 +104,6 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
  * @constructor
  */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
-    console.log(data);
     var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
