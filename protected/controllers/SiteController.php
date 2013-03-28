@@ -222,4 +222,9 @@ class SiteController extends Controller
     {
         echo GetDir::getPath($_POST['mcode']);
     }
+
+    public function actionClearFeed()
+    {
+        echo Generators::clearFeed();
+    }
 }

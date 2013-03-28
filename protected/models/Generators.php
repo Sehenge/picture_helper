@@ -86,4 +86,14 @@ class Generators
     {
         return count(file('temp.csv'));
     }
+
+    public static function clearFeed()
+    {
+        if ($fp = fopen('temp.csv', 'w')) {
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
