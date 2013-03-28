@@ -187,6 +187,26 @@ class SiteController extends Controller
         }
     }
 
+    public function actionAzGen()
+    {
+
+    }
+
+    public function actionUkGen()
+    {
+
+    }
+
+    public function actionFpGen()
+    {
+
+    }
+
+    public function actionStdGen()
+    {
+
+    }
+
     public function actionJsonBrand()
     {
         echo GetDir::getPath($_POST['mcode']);
