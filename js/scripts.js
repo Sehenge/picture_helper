@@ -20,6 +20,13 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     this.casesRB = this.imgContrCases.find("input:radio");
     this.casesImg = this.imgContrCases.find("img");
 
+    $.ajax({
+        type: "POST",
+        url: "?r=site/CheckCount"
+    }).done(function( msg ) {
+        $("#fcount").text(msg);
+        });
+
     this.casesRB.click(function(){
         self.searchRes.empty();
         self.searchRes.append(self.eyewear);
