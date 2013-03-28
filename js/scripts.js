@@ -43,7 +43,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         $(this).fadeOut("slow");
     })
 
-    $("#ajaxSubmit").click(function() {
+    $(".ajaxSubmit").click(function() {
         $("#preloader").show();
     })
 
@@ -104,6 +104,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
  * @constructor
  */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
+    console.log(data);
     var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
@@ -117,8 +118,15 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
         var imageTemp = image.split('/');
         var unionImage = "http://union-progress.com/feedhelper/picture_helper/temp/" + imageTemp[7] +
             '/' + imageTemp[8] + '/' + imageTemp[9];
-        var affImage = "http://affordableluxurygroup.com/"+ imageTemp[7] +
-            '/' + imageTemp[8] + '/' + imageTemp[9];
+        console.log(imageTemp[7]);
+        if ((imageTemp[7] == 'Large_Pictures') || (imageTemp[7] == 'Pictures')) {
+            var affImage = "http://affordableluxurygroup.com/"+ imageTemp[7] +
+                '/' + imageTemp[8] + '/' + imageTemp[9];
+        } else {
+            var affImage = "http://shadesexpo.net/Ebay/"+ imageTemp[7] +
+                '/' + imageTemp[8] + '/' + imageTemp[9];
+        }
+
 
 
         if (image.indexOf('i:') !== -1) {

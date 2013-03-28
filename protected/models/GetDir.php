@@ -15,7 +15,7 @@ class GetDir
      *
      * @return array All possible paths to images
      */
-    public static function parseImages($sku)
+    public static function parseImages($sku, $sh)
 	{
         $output = array(); $paths = array();
 
@@ -31,10 +31,17 @@ class GetDir
         }
         foreach ($brands as $brand) {
             $lc_brand = ucfirst(strtolower($brand));
-            $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $brand;
-            $paths[] = 'http://affordableluxurygroup.com/Pictures/' . $brand;
-            $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $lc_brand;
-            $paths[] = 'http://affordableluxurygroup.com/Pictures/' . $lc_brand;
+            if ($sh == 'aff') {
+                $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $brand;
+                $paths[] = 'http://affordableluxurygroup.com/Pictures/' . $brand;
+                $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/' . $lc_brand;
+                $paths[] = 'http://affordableluxurygroup.com/Pictures/' . $lc_brand;
+            } else {
+                $paths[] = 'http://shadesexpo.net/Ebay/Glasses_Large/' . $brand;
+                $paths[] = 'http://shadesexpo.net/Ebay/Glasses/' . $brand;
+                $paths[] = 'http://shadesexpo.net/Ebay/Glasses_Large/' . $lc_brand;
+                $paths[] = 'http://shadesexpo.net/Ebay/Glasses/' . $lc_brand;
+            }
             foreach ($paths as $path) {
 
                 if ($string = @file_get_contents($path)) {
@@ -69,21 +76,30 @@ class GetDir
      *
      * @return array All possible cases
      */
-    public static function parseCases($sku)
+    public static function parseCases($sku, $sh)
     {
         $output = array(); $paths = array();
-        $sku = explode(' ', $sku);
-        $sku[0] = preg_replace("/(AZ)?/", "", $sku[0]);
+        //$sku = explode(' ', $sku);
+        //$sku[0] = preg_replace("/(AZ)?/", "", $sku[0]);
 
-        if (is_array(self::getPath($sku[0]))) {
-            $brands = self::getPath($sku[0]);
+        $pattern = "/(AZ)?([A-Z]+)([^A-Z0-9])([A-Z0-9]+)([^A-Z0-9])([A-Z0-9]+)/";
+        preg_match($pattern, $sku, $matches);
+
+        if (is_array(self::getPath($matches[2]))) {
+            $brands = self::getPath($matches[2]);
         } else {
-            $brands[] = self::getPath($sku[0]);
+            $brands[] = self::getPath($matches[2]);
         }
 
         foreach ($brands as $brand) {
-            $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/Cases/';
-            $paths[] = 'http://affordableluxurygroup.com/Pictures/CASES/';
+            if ($sh == 'aff') {
+                $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/Cases/';
+                $paths[] = 'http://affordableluxurygroup.com/Pictures/CASES/';
+            } else {
+                $paths[] = 'http://shadesexpo.net/Ebay/Glasses_Large/Cases/';
+                $paths[] = 'http://shadesexpo.net/Ebay/Glasses/Cases/';
+            }
+
             foreach ($paths as $path) {
                 if($string = @file_get_contents($path)){ 
                     $doc = new DOMDocument();

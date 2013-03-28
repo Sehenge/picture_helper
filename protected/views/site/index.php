@@ -20,7 +20,7 @@ $this->pageTitle=Yii::app()->name;
         <input type="text" placeholder="Model" name="model"/>
         <input type="text" placeholder="Color Code" name="color_code"/>
         <?php
-        echo CHtml::ajaxSubmitButton('Search', CHtml::normalizeUrl(array('site/getdir')),
+        echo CHtml::ajaxSubmitButton('Search Affordable', CHtml::normalizeUrl(array('site/getdir')),
             array(
                 'data'=>'js:jQuery(this).parents("form").serialize()',
                 'success'=>
@@ -32,8 +32,24 @@ $this->pageTitle=Yii::app()->name;
                  }'
             ),
             array(
-                'id'=>'ajaxSubmit',
+                'class'=>'ajaxSubmit',
                 'name'=>'ajaxSubmit'
+            ));
+
+        echo CHtml::ajaxSubmitButton('Search Shadesexpo', CHtml::normalizeUrl(array('site/getshades')),
+            array(
+                'data'=>'js:jQuery(this).parents("form").serialize()',
+                'success'=>
+                'function(data){
+                      helper = new Helper();
+                      helper.PrintImages(data);
+                      $("#preloader").hide();
+                      return false;
+                 }'
+            ),
+            array(
+                'class'=>'ajaxSubmit',
+                'name'=>'ajaxSubmitSh'
             ));
         ?>
         <div id="fifth_img"></div>
