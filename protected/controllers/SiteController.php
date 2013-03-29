@@ -192,25 +192,30 @@ class SiteController extends Controller
         //var_dump($_POST);die(1);
         echo Generators::checkCount();
     }
+
     public function actionAddToFeed()
     {
-        //var_dump($_POST);die(1);
         echo Generators::addToFeed($_POST);
     }
+
     public function actionAzGen()
     {
-        //var_dump($_POST);die(1);
-        Generators::azGenerator($_POST, $_POST['mode']);
+        Generators::azGenerator();
     }
 
     public function actionUkGen()
     {
-
+        Generators::ukGenerator();
     }
 
     public function actionFpGen()
     {
+        Generators::fpGenerator();
+    }
 
+    public function actionEbayGen()
+    {
+        Generators::ebayGenerator();
     }
 
     public function actionStdGen()
