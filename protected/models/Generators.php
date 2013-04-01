@@ -60,7 +60,8 @@ class Generators
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $model = $data[1];
-                $manufacturer = explode(" ", $data[1])[0];
+                $manufacturer = explode(" ", $data[1]);
+                $manufacturer = $manufacturer[0];
                 $alterModel = $data[2];
                 $colorCode = $data[3];
                 $frame = $data[4];
@@ -115,7 +116,8 @@ class Generators
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $model = $data[1];
-                $manufacturer = explode(" ", $data[1])[0];
+                $manufacturer = explode(" ", $data[1]);
+                $manufacturer = $manufacturer[0];
                 $alterModel = $data[2];
                 $colorCode = $data[3];
                 $frame = $data[4];
@@ -150,8 +152,9 @@ class Generators
         if (($handle = fopen("temp.csv", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
-                $manufacturer = explode(" ", $data[1])[0];
-                $model = preg_replace(" ", "_", $data[1]);
+                $manufacturer = explode(" ", $data[1]);
+                $manufacturer = $manufacturer[0];
+                $model = preg_replace("/ /", "_", $data[1]);
                 $alterModel = $data[2];
                 $colorCode = $data[3];
                 $frame = $data[4];
@@ -185,7 +188,8 @@ class Generators
         if (($handle = fopen("temp.csv", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
-                $manufacturer = explode(" ", $data[1])[0];
+                $manufacturer = explode(" ", $data[1]);
+                $manufacturer = $manufacturer[0];
                 $model = $data[1];
                 $alterModel = $data[2];
                 $colorCode = $data[3];
@@ -222,8 +226,11 @@ class Generators
 
     public static function checkCount()
     {
-        return 3;
-
+        if (file_exists('temp.csv')) {
+            return count(file('temp.csv'));
+        } else {
+            return 0;
+        }
     }
 
     public static function clearFeed()
