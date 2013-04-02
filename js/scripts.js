@@ -12,12 +12,20 @@ function Helper() {
     this.imgContrCases = this.imgCont.find(".cases form");
     this.searchRes = $("#searchResult");
     this.eyewear = new Array();
+    this.fifth = $("#fifth_img");
 }
 
 Helper.prototype.InitEvents = function Helper_initEvents() {
     var self = this;
     this.casesRB = this.imgContrCases.find("input:radio");
     this.casesImg = this.imgContrCases.find("img");
+
+    $.ajax({
+        type: "POST",
+        url: "?r=site/CheckCount"
+    }).done(function( msg ) {
+        $("#fcount").text(msg);
+        });
 
     this.casesRB.click(function(){
         self.searchRes.empty();
@@ -32,11 +40,21 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         //self.searchRes.append($(this).val());
     })
 
-    $("#ajaxSubmit").click(function() {
+    this.fifth.click(function(){
+        $("#popup").empty();
+        $("#popup").append('<img src="' + $(this).find("img").attr("data-tooltip") + '" style="width: 700px"/>');
+        $("#popup").fadeIn("slow");
+    })
+
+    $("#popup").click(function(){
+        $(this).fadeOut("slow");
+    })
+
+    $(".ajaxSubmit").click(function() {
         $("#preloader").show();
     })
 
-    $('.input input[name="sku"]').change(function() {
+    $(".input input").change(function() {
         var parts = $(this).val().split(' ');
         var mcode;
         if (parts[0].match(/AZ?(.*)/)) {
@@ -87,28 +105,52 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         });
 }
 
+/**
+ *
+ * @param data
+ * @constructor
+ */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
     console.log(data);
+    var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
     this.searchRes.empty();
     var images = data.split(',');
+
     var eyewear = new Array();
     for (var key in images) {
         var image = images[key];
+
+        var imageTemp = image.split('/');
+        var unionImage = "http://union-progress.com/feedhelper/picture_helper/temp/" + imageTemp[7] +
+            '/' + imageTemp[8] + '/' + imageTemp[9];
+        console.log(imageTemp[7]);
+        if ((imageTemp[7] == 'Large_Pictures') || (imageTemp[7] == 'Pictures')) {
+            var affImage = "http://affordableluxurygroup.com/"+ imageTemp[7] +
+                '/' + imageTemp[8] + '/' + imageTemp[9];
+        } else {
+            var affImage = "http://shadesexpo.net/Ebay/"+ imageTemp[7] +
+                '/' + imageTemp[8] + '/' + imageTemp[9];
+        }
+
+
+
         if (image.indexOf('i:') !== -1) {
-            this.imgContEyewear.append('<img src="' + image.substr(image.indexOf('i:')+2)
-                + '" data-tooltip="' + image.substr(image.indexOf('i:')+2) + '"/><br/>');
+
+            this.imgContEyewear.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
+                + '" data-tooltip="' + affImage.substr(affImage.indexOf('i:')+1) + '"/><br/>');
             //$("#searchResult").append(image.substr(image.indexOf('i:')+2) + ",\n");
-            this.eyewear.push(image.substr(image.indexOf('i:')+2) + ",\n");
+            this.eyewear.push(affImage.substr(affImage.indexOf('i:')+1) + ",");
             if (key == 4) {
-                $("#fifth_img").append('<img src="' + image.substr(image.indexOf('i:')+2)
-                    + '" width="240px" data-tooltip="' + image.substr(image.indexOf('i:')+2) + '"/><br/>');
+                self.fifth.empty();
+                self.fifth.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
+                    + '" width="240px" data-tooltip="' + affImage.substr(affImage.indexOf('i:')+1) + '"/><br/>');
             }
         } else if (image.indexOf('c:') !== -1) {
-            this.imgContrCases.append('<input type="radio" name="case" value="' + image.substr(image.indexOf('c:')+2) +
-                '">' + '<img src="' + image.substr(image.indexOf('c:')+2)
-                + '" data-tooltip="' + image.substr(image.indexOf('c:')+2) + '"/><br/>');
+            this.imgContrCases.append('<input type="radio" name="case" value="' + affImage.substr(affImage.indexOf('c:')+1) +
+                '">' + '<img src="' + unionImage.substr(unionImage.indexOf('c:')+1)
+                + '" data-tooltip="' + affImage.substr(affImage.indexOf('c:')+1) + '"/><br/>');
         }
     }
     if ((data.indexOf('<exception>') !== -1) && (data.indexOf('<exception>') !== 0)) {
