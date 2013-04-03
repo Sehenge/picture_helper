@@ -15,6 +15,11 @@ function Helper() {
     this.fifth = $("#fifth_img");
     this.finput = $(".finput");
     this.fmodel = this.finput.find('input[name="model"]');
+    this.fcolorcodes = this.finput.find('select[name="colorCodeS"]');
+    this.fcolors = this.finput.find('select[name="colorS"]');
+    this.fsizes = this.finput.find('select[name="sizeS"]');
+    this.fprices = this.finput.find('select[name="priceS"]');
+    this.fselects = this.finput.find(".fselect select");
 }
 
 Helper.prototype.InitEvents = function Helper_initEvents() {
@@ -64,8 +69,24 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             data: { model: model }
         }).done(function( msg ) {
                 console.log(JSON.parse(msg));
+                var obj = JSON.parse(msg);
+                if (obj.length > 1) {
+                    $('input[name="brand"]').val(obj[0]['brand']);
+
+                    obj.forEach(function(objd) {
+                        self.fcolorcodes.append('<option>' + objd['colorCode'] + '</option>');
+                        self.fcolors.append('<option>' + objd['color'] + '</option>');
+                        self.fsizes.append('<option>' + objd['size'] + '</option>');
+                        self.fprices.append('<option>' + objd['price'] + '</option>');
+                    });
+                }
             });
     })
+
+    this.fselects.change(function() {
+        $(this).parent().prev().val($(this).val());
+    })
+
 
     $(".input input").change(function() {
         var parts = $(this).val().split(' ');

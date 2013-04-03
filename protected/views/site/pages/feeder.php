@@ -7,17 +7,36 @@ $this->breadcrumbs=array(
 );
 ?>
 
+<div class="count">
+    Count of products in feed: <span id="fcount">0</span>
+</div>
+
 <form class="feederInput" action="?r=site/getdir" method="post">
     <div class="finput">
         <input type="text" placeholder="UPC" name="upc"/>
         <input type="text" placeholder="MODEL" name="model"/>
+        <input type="text" placeholder="BRAND" name="brand"/>
         <input type="text" placeholder="COLOR CODE" name="colorCode"/>
+        <div class="fselect">
+            <select name="colorCodeS"></select>
+        </div>
+        <input type="text" placeholder="COLOR" name="color"/>
+        <div class="fselect">
+            <select name="colorS"></select>
+        </div>
         <input type="text" placeholder="FRAME" name="frame"/>
         <input type="text" placeholder="LENS" name="lens"/>
         <input type="text" placeholder="MATERIAL" name="material"/>
         <!--input type="text" placeholder="SHAPE" name="shape"/-->
         <input type="text" placeholder="USAGE" name="usage"/>
         <input type="text" placeholder="SIZE" name="size"/>
+        <div class="fselect">
+            <select name="sizeS"></select>
+        </div>
+        <input type="text" placeholder="PRICE" name="price"/>
+        <div class="fselect">
+            <select name="priceS"></select>
+        </div>
 
         RX <input type="checkbox" name="rx" value="rx">
         POLARIZED <input type="checkbox" name="polar" value="polar">
@@ -170,7 +189,3 @@ $this->breadcrumbs=array(
         ?>
     </div>
 </form>
-
-<div class="count">
-    Count of products in feed: <span id="fcount">0</span>
-</div>
