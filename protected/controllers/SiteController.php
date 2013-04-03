@@ -228,6 +228,11 @@ class SiteController extends Controller
         echo GetDir::getPath($_POST['mcode']);
     }
 
+    public function actionQbParse()
+    {
+        echo CJSON::encode(Generators::getInfo($_POST['model']));
+    }
+
     public function actionClearFeed()
     {
         echo Generators::clearFeed();

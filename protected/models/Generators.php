@@ -242,4 +242,47 @@ class Generators
             return false;
         }
     }
+
+    /**
+     * @param $model
+     *
+     * @return array
+     */
+    public static function getInfo($model)
+    {
+        $result = array();
+        $output = array();
+        $connection = Yii::app()->db;
+
+        $command = $connection->createCommand("SELECT DISTINCT product_id FROM product_entity WHERE value = '" . $model . "'");
+        $dataReader = $command->query();
+        $rows = $dataReader->readAll();
+
+        if (count($rows) > 1) {
+            foreach ($rows as $row) {
+                $command = $connection->createCommand("SELECT * FROM product_entity WHERE product_id = '" . $row['product_id'] . "'");
+                $dataReader = $command->query();
+                $result[] = $dataReader->readAll();
+            }
+        }
+
+        foreach ($result as $product) {
+            foreach ($product as $unique) {
+                if ($unique['attribute_id'] == 1) {
+                    $brand = $unique['value'];
+                } else if ($unique['attribute_id'] == 6) {
+                    $color = $unique['value'];
+                } else if ($unique['attribute_id'] == 5) {
+                    $colorCode = $unique['value'];
+                } else if ($unique['attribute_id'] == 7) {
+                    $size = $unique['value'];
+                } else if ($unique['attribute_id'] == 3) {
+                    $price = $unique['value'];
+                }
+            }
+            $output[] = array('brand' => $brand, 'color' => $color, 'colorCode' => $colorCode, 'size' => $size, 'price' => $price);
+        }
+
+        return $output;
+    }
 }

@@ -13,6 +13,8 @@ function Helper() {
     this.searchRes = $("#searchResult");
     this.eyewear = new Array();
     this.fifth = $("#fifth_img");
+    this.finput = $(".finput");
+    this.fmodel = this.finput.find('input[name="model"]');
 }
 
 Helper.prototype.InitEvents = function Helper_initEvents() {
@@ -52,6 +54,17 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 
     $(".ajaxSubmit").click(function() {
         $("#preloader").show();
+    })
+
+    this.fmodel.change(function() {
+        var model = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "?r=site/QbParse",
+            data: { model: model }
+        }).done(function( msg ) {
+                console.log(JSON.parse(msg));
+            });
     })
 
     $(".input input").change(function() {
