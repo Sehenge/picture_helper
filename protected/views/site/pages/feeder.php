@@ -37,6 +37,8 @@ $this->breadcrumbs=array(
         <div class="fselect">
             <select name="priceS"></select>
         </div>
+        <input type="text" placeholder="QUANTITY" name="quantity"/>
+
 
         RX <input type="checkbox" name="rx" value="rx">
         POLARIZED <input type="checkbox" name="polar" value="polar">

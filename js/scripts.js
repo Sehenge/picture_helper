@@ -20,6 +20,7 @@ function Helper() {
     this.fsizes = this.finput.find('select[name="sizeS"]');
     this.fprices = this.finput.find('select[name="priceS"]');
     this.fselects = this.finput.find(".fselect select");
+    this.obj = new Object();
 }
 
 Helper.prototype.InitEvents = function Helper_initEvents() {
@@ -69,15 +70,16 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             data: { model: model }
         }).done(function( msg ) {
                 console.log(JSON.parse(msg));
-                var obj = JSON.parse(msg);
-                if (obj.length > 1) {
-                    $('input[name="brand"]').val(obj[0]['brand']);
+                self.obj = JSON.parse(msg);
+                window.obj = JSON.parse(msg);
+                if (self.obj.length > 1) {
+                    $('input[name="brand"]').val(self.obj[0]['brand']);
 
-                    obj.forEach(function(objd) {
-                        self.fcolorcodes.append('<option>' + objd['colorCode'] + '</option>');
-                        self.fcolors.append('<option>' + objd['color'] + '</option>');
-                        self.fsizes.append('<option>' + objd['size'] + '</option>');
-                        self.fprices.append('<option>' + objd['price'] + '</option>');
+                    self.obj.forEach(function(objd) {
+                        self.fcolorcodes.append('<option>' + objd['Attribute'] + '</option>');
+                        self.fcolors.append('<option>' + objd['Desc2'] + '</option>');
+                        self.fsizes.append('<option>' + objd['Size'] + '</option>');
+                        self.fprices.append('<option>' + objd['Price1'] + '</option>');
                     });
                 }
             });
@@ -85,6 +87,17 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 
     this.fselects.change(function() {
         $(this).parent().prev().val($(this).val());
+    })
+
+    this.fcolorcodes.change(function() {
+        window.obj.forEach(function(objd) {
+            if (objd['Attribute'] == self.fcolorcodes.val()) {
+                $('input[name="color"]').val(objd['Desc2']);
+                $('input[name="price"]').val(objd['Price1']);
+                $('input[name="quantity"]').val(objd['QuantityOnHand']);
+                $('input[name="size"]').val(objd['Size']);
+            }
+        });
     })
 
 
@@ -120,6 +133,27 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     $("[data-tooltip]").mousemove(function (eventObject) {
 
         $data_tooltip = $(this).attr("data-tooltip");
+
+        $("#tooltip").text($data_tooltip)
+            .css({
+                "top" : eventObject.pageY + 5,
+                "left" : eventObject.pageX + 5
+            })
+            .show();
+
+    }).mouseout(function () {
+
+            $("#tooltip").hide()
+                .text("")
+                .css({
+                    "top" : 0,
+                    "left" : 0
+                });
+        });
+
+    $(".finput input, .finput select").mousemove(function (eventObject) {
+
+        $data_tooltip = $(this).attr("name");
 
         $("#tooltip").text($data_tooltip)
             .css({

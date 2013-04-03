@@ -6,8 +6,8 @@
  * Time: 12:37 AM
  * To change this template use File | Settings | File Templates.
  */
-phpinfo();
- /*
+//phpinfo();
+
 $isrc = imagecreatefromjpeg("/home/union-progress.com/public_html/feedhelper/picture_helper/temp/img.jpeg");
 
 $idest = imagecreatetruecolor('300', '200');
@@ -16,10 +16,10 @@ $rgb=0xFFFFFF;
 
 imagefill($idest, 0, 0, $rgb);
 
-
-imagejpeg($idest, '/home/union-progress.com/public_html/feedhelper/picture_helper/temp/', $quality);
+$quality = 100;
+imagejpeg($idest, '/home/union-progress.com/public_html/feedhelper/picture_helper/temp/img2.jpeg', $quality);
 
 
 imagedestroy($isrc);
 imagedestroy($idest);
-return true;*/
+return true;

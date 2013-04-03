@@ -413,9 +413,6 @@ input[type="text"] {
 }
 .fbuttons {
     float: right;
-    position: relative;
-    top: 350px;
-    right: 100px;
 }
 .awesome, .awesome:visited {
     background: #222 url(http://www.zurb.com/blog_uploads/0000/0617/alert-overlay.png) repeat-x;

@@ -254,23 +254,23 @@ class Generators
         $output = array();
         $connection = Yii::app()->db;
 
-        $command = $connection->createCommand("SELECT DISTINCT product_id FROM product_entity WHERE value = '" . $model . "'");
+        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE Desc1 REGEXP '" . $model . "'");
         $dataReader = $command->query();
-        $rows = $dataReader->readAll();
+        $result = $dataReader->readAll();
 
-        if (count($rows) > 1) {
-            foreach ($rows as $row) {
-                $command = $connection->createCommand("SELECT * FROM product_entity WHERE product_id = '" . $row['product_id'] . "'");
-                $dataReader = $command->query();
-                $result[] = $dataReader->readAll();
-            }
+        $pattern = "/([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/";
+        preg_match($pattern, $model, $matches);
+
+        $brand = strtoupper(GetDir::getPath($matches[1]));
+        foreach ($result as $key => $res) {
+            $result[$key]['brand'] = $brand;
         }
-
+/*
         foreach ($result as $product) {
             foreach ($product as $unique) {
                 if ($unique['attribute_id'] == 1) {
                     $brand = $unique['value'];
-                } else if ($unique['attribute_id'] == 6) {
+                } else if ($unique['Desc2'] == 6) {
                     $color = $unique['value'];
                 } else if ($unique['attribute_id'] == 5) {
                     $colorCode = $unique['value'];
@@ -281,8 +281,8 @@ class Generators
                 }
             }
             $output[] = array('brand' => $brand, 'color' => $color, 'colorCode' => $colorCode, 'size' => $size, 'price' => $price);
-        }
+        }*/
 
-        return $output;
+        return $result;
     }
 }
