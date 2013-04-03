@@ -20,7 +20,7 @@ function Helper() {
     this.fsizes = this.finput.find('select[name="sizeS"]');
     this.fprices = this.finput.find('select[name="priceS"]');
     this.fselects = this.finput.find(".fselect select");
-    this.obj = new Object();
+    this.descriptions = this.finput.find('select[name="description"]');
 }
 
 Helper.prototype.InitEvents = function Helper_initEvents() {
@@ -63,7 +63,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     })
 
     this.fmodel.change(function() {
-        var model = $(this).val();
+        var model = $(this).val().toUpperCase();
         $.ajax({
             type: "POST",
             url: "?r=site/QbParse",
@@ -72,6 +72,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 console.log(JSON.parse(msg));
                 self.obj = JSON.parse(msg);
                 window.obj = JSON.parse(msg);
+                self.fselects.empty();
                 if (self.obj.length > 1) {
                     $('input[name="brand"]').val(self.obj[0]['brand']);
 
@@ -81,6 +82,19 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                         self.fsizes.append('<option>' + objd['Size'] + '</option>');
                         self.fprices.append('<option>' + objd['Price1'] + '</option>');
                     });
+
+                    $('input[name="colorCode"]').val(self.obj[0]['Attribute']);
+                    $('input[name="color"]').val(self.obj[0]['Desc2']);
+                    $('input[name="price"]').val(self.obj[0]['Price1']);
+                    $('input[name="quantity"]').val(self.obj[0]['QuantityOnHand']);
+                    $('input[name="size"]').val(self.obj[0]['Size']);
+                    if ((self.obj[0]['DepartmentCode'] == 'EYE') || (self.obj[0]['DepartmentCode'] == 'RX')) {
+                        self.descriptions.val('Eyeglasses');
+                        $('input[name="rx"]').prop('checked', true);
+                    } else {
+                        self.descriptions.val('Sunglasses');
+                        $('input[name="rx"]').prop('checked', false);
+                    }
                 }
             });
     })
@@ -96,6 +110,13 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 $('input[name="price"]').val(objd['Price1']);
                 $('input[name="quantity"]').val(objd['QuantityOnHand']);
                 $('input[name="size"]').val(objd['Size']);
+                if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
+                    self.descriptions.val('Eyeglasses');
+                    $('input[name="rx"]').prop('checked', true);
+                } else {
+                    $('input[name="rx"]').prop('checked', false);
+                    self.descriptions.val('Sunglasses');
+                }
             }
         });
     })
