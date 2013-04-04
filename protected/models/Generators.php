@@ -24,9 +24,12 @@ class Generators
         $length = $size_arr[2];
 
 
+
         $line = array($data['upc'],$data['model'],implode('', explode(" ", $data['model'])),$data['colorCode'],
             $data['frame'],$data['lens'],$data['material'],$data['style'],$data['usage'],$data['size'],
-            $data['description'],$data['polar'],$data['rx'],$data['gender'],$data['country'],$width,$length);
+            $data['description'],$data['polar'],$data['rx'],$data['gender'],$data['country'],$width,$length,
+            $data['brand'], $data['color'], $data['quantity'], $data['sellerCost'], $data['startingBid'],
+            $data['buyItNow'], $data['retail']);
         /*
         $upc = $data['upc'];
         $model = $data['model'];
@@ -43,7 +46,6 @@ class Generators
         $rxable = $data['rx'];
         $gender = $data['gender'];
         $country = $data['country'];*/
-
         $tempFile = fopen('temp.csv', 'a');
         fputcsv($tempFile, $line);
         fclose($tempFile);
@@ -77,7 +79,15 @@ class Generators
                 $country = $data[14];
                 $width = $data[15];
                 $length = $data[16];
+                $brand = $data[17];
+                $color = $data[18];
+                $quantity = $data[19];
+                $sellerCost = $data[20];
+                $startingBid = $data[21];
+                $retail = $data[22];
+                $buyitnow = $data[23];
                 $invNumber = 'AZ' . $model . '-' . $colorCode . '-' . $width;
+                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
 
                 /*
                 $upc = $data['upc'];
@@ -98,7 +108,8 @@ class Generators
                 */
 
 
-                $content = array('Auction Title',$invNumber,'INSTOCK','Quantity','Starting Bid','','','',$upc,'','','','',$description,$manufacturer,'Brand','NEW','','Seller Cost','','Buy It Now Price','Retail Price','','Picture URLs','','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION','Attribute3Value','SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND','NEED BRAND','CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'','Picture URLs','','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+
                 fputcsv($fp, $content);
             }
         }
@@ -254,7 +265,7 @@ class Generators
         $output = array();
         $connection = Yii::app()->db;
 
-        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE Desc1 REGEXP '" . $model . "'");
+        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE Desc1 LIKE '" . $model . "'");
         $dataReader = $command->query();
         $result = $dataReader->readAll();
 

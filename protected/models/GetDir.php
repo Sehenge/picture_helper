@@ -21,6 +21,9 @@ class GetDir
 
         $pattern = "/(AZ)?([A-Z]+)([^A-Z0-9])([A-Z0-9]+)([^A-Z0-9])([A-Z0-9]+)/";
         preg_match($pattern, $sku, $matches);
+        if (substr($matches[4], -1) == 'S') {
+            $submodel = substr($matches[4], 0, -1);
+        }
         //$sku = explode(' ', $sku); $sku = explode('-', implode("-", $sku));
 
         //$sku[0] = preg_replace("/(AZ)?/", "", $sku[0]);
@@ -57,8 +60,11 @@ class GetDir
                         }
                         foreach ($result as $element) {
                             $separated = explode('_', $element);
-                            if((isset($separated[1])) && (($matches[4] == $separated[1]) || ($matches[4] == $separated[0]))) {
-                                if ((isset($separated[2])) && (($matches[6] == $separated[2]) || ($matches[6] == $separated[1]))) {
+                            if((isset($separated[1]) && $matches[4] == $separated[1])
+                                || ($matches[4] == $separated[0])
+                                || ((isset($submodel) && $submodel == $separated[0]))
+                                || ((isset($submodel) && isset($separated[1]) && $submodel == $separated[1]))) {
+                                if ((isset($separated[2]) && ($matches[6] == $separated[2]) || ($matches[6] == $separated[1]))) {
                                     $output[] = $path . '/' . implode('_', $separated) . ",";
                                 }
                             }

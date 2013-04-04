@@ -19,6 +19,7 @@ function Helper() {
     this.fcolors = this.finput.find('select[name="colorS"]');
     this.fsizes = this.finput.find('select[name="sizeS"]');
     this.fprices = this.finput.find('select[name="priceS"]');
+    this.fsellercosts = this.finput.find('select[name="sellerCostS"]');
     this.fselects = this.finput.find(".fselect select");
     this.descriptions = this.finput.find('select[name="description"]');
 }
@@ -80,12 +81,12 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                         self.fcolorcodes.append('<option>' + objd['Attribute'] + '</option>');
                         self.fcolors.append('<option>' + objd['Desc2'] + '</option>');
                         self.fsizes.append('<option>' + objd['Size'] + '</option>');
-                        self.fprices.append('<option>' + objd['Price1'] + '</option>');
+                        self.fsellercosts.append('<option>' + objd['Cost'] + '</option>');
                     });
 
                     $('input[name="colorCode"]').val(self.obj[0]['Attribute']);
                     $('input[name="color"]').val(self.obj[0]['Desc2']);
-                    $('input[name="price"]').val(self.obj[0]['Price1']);
+                    $('input[name="sellerCost"]').val(self.obj[0]['Cost']);
                     $('input[name="quantity"]').val(self.obj[0]['QuantityOnHand']);
                     $('input[name="size"]').val(self.obj[0]['Size']);
                     if ((self.obj[0]['DepartmentCode'] == 'EYE') || (self.obj[0]['DepartmentCode'] == 'RX')) {
@@ -107,7 +108,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         window.obj.forEach(function(objd) {
             if (objd['Attribute'] == self.fcolorcodes.val()) {
                 $('input[name="color"]').val(objd['Desc2']);
-                $('input[name="price"]').val(objd['Price1']);
+                $('input[name="sellerCost"]').val(objd['Cost']);
                 $('input[name="quantity"]').val(objd['QuantityOnHand']);
                 $('input[name="size"]').val(objd['Size']);
                 if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
@@ -123,18 +124,13 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 
 
     $(".input input").change(function() {
-        var parts = $(this).val().split(' ');
-        var mcode;
-        if (parts[0].match(/AZ?(.*)/)) {
-            mcode = parts[0].match(/AZ?(.*)/)[1];
-        } else {
-            mcode = parts[0];
-        }
-        var supplement = parts[1].split('-');
+        var pattern = /([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/;
+        var parts = pattern.exec($(this).val());
+
         $.ajax({
             type: "POST",
             url: "?r=site/JsonBrand",
-            data: { mcode: mcode }
+            data: { mcode: parts[1] }
         }).done(function( msg ) {
                 if (msg.indexOf('_') !== -1) {
                     var brand = msg.split('_');
@@ -146,8 +142,8 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 if ($(".input select option:contains('" + brand + "')")) {
                     $(".input select option:contains('" + brand + "')").attr('selected', 'selected');
                 }
-                $('.input input[name="model"]').val(supplement[0]);
-                $('.input input[name="color_code"]').val(supplement[1]);
+                $('.input input[name="model"]').val(parts[3]);
+                $('.input input[name="color_code"]').val(parts[6]);
             });
     })
 
@@ -200,7 +196,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
  * @constructor
  */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
-    console.log(data);
+    //console.log(data);
     var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
@@ -214,7 +210,7 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
         var imageTemp = image.split('/');
         var unionImage = "http://union-progress.com/feedhelper/picture_helper/temp/" + imageTemp[7] +
             '/' + imageTemp[8] + '/' + imageTemp[9];
-        console.log(imageTemp[7]);
+
         if ((imageTemp[7] == 'Large_Pictures') || (imageTemp[7] == 'Pictures')) {
             var affImage = "http://affordableluxurygroup.com/"+ imageTemp[7] +
                 '/' + imageTemp[8] + '/' + imageTemp[9];

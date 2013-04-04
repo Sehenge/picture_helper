@@ -33,10 +33,13 @@ $this->breadcrumbs=array(
         <div class="fselect">
             <select name="sizeS"></select>
         </div>
-        <input type="text" placeholder="PRICE" name="price"/>
+        <input type="text" placeholder="STARTING BID" name="startingBid"/>
+        <input type="text" placeholder="SELLER COST" name="sellerCost"/>
         <div class="fselect">
-            <select name="priceS"></select>
+            <select name="sellerCostS"></select>
         </div>
+        <input type="text" placeholder="BUY IT NOW" name="buyItNow"/>
+        <input type="text" placeholder="RETAIL PRICE" name="retail"/>
         <input type="text" placeholder="QUANTITY" name="quantity"/>
 
 
