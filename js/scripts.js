@@ -145,7 +145,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         $.ajax({
             type: "POST",
             url: "?r=site/GetDir",
-            data: { sku: sku }
+            data: { sku: sku, cases: false }
         }).done(function( msg ) {
                 self.PrintImages(msg);
             });

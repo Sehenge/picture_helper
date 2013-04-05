@@ -110,15 +110,21 @@ class SiteController extends Controller
 
     public function actionGetDir()
     {
+
         if (!$_POST['sku']) {
             $manCode = GetDir::getManCode($_POST['brand']);
             $sku = $manCode . ' ' . preg_replace('/\//', '', $_POST['model']) . '-' . preg_replace('/\//', '', $_POST['color_code']);
             $images = GetDir::parseImages($sku, 'aff');
-            $cases = GetDir::parseCases($sku, 'aff');
+            if ($_POST['cases'] != 'false') {
+                $cases = GetDir::parseCases($sku, 'aff');
+            }
         } else {
             $sku = preg_replace('/\//', '', $_POST['sku']);
             $images = GetDir::parseImages($sku, 'aff');
-            $cases = GetDir::parseCases($sku, 'aff');
+            if ($_POST['cases'] != 'false') {
+                echo $_POST['cases']; die(1);
+                $cases = GetDir::parseCases($sku, 'aff');
+            }
         }
         if ($images) {
             foreach ($images as $image) {
@@ -132,18 +138,19 @@ class SiteController extends Controller
         } else {
             echo GetDir::printException('images not found');
         }
-
-        if ($cases) {
-            foreach ($cases as $case) {
-                $dest_name = preg_split("/\//", $case);
-                echo 'c:' . GetDir::resizeImage(substr($case, 0, -1),
-                    '/home/union-progress.com/public_html/feedhelper/picture_helper/temp/' .
-                        $dest_name[3] . '/' . $dest_name[4] . '/' . substr($dest_name[5], 0, -1),
-                    300, 150);
-                //echo 'c:' . $case;
+        if ($_POST['cases'] != 'false') {
+            if ($cases) {
+                foreach ($cases as $case) {
+                    $dest_name = preg_split("/\//", $case);
+                    echo 'c:' . GetDir::resizeImage(substr($case, 0, -1),
+                        '/home/union-progress.com/public_html/feedhelper/picture_helper/temp/' .
+                            $dest_name[3] . '/' . $dest_name[4] . '/' . substr($dest_name[5], 0, -1),
+                        300, 150);
+                    //echo 'c:' . $case;
+                }
+            } else {
+                echo GetDir::printException('cases not found');
             }
-        } else {
-            echo GetDir::printException('cases not found');
         }
     }
 
