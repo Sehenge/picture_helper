@@ -59,6 +59,7 @@
         helper = new Helper();
         helper.InitEvents();
         $('.ajaxSubmit').addClass('small awesome');
+        $('.customSubmit').addClass('small awesome');
     });
 </script>
 <div id="tooltip"></div>

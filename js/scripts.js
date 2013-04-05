@@ -119,20 +119,35 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                         self.fsellercosts.append('<option>' + objd['Cost'] + '</option>');
                     });
                 }
-                $('input[name="upc"]').val(self.obj[0]['UPC']);
-                $('input[name="brand"]').val(self.obj[0]['brand']);
-                $('input[name="colorCode"]').val(self.obj[0]['Attribute']);
-                $('input[name="color"]').val(self.obj[0]['Desc2']);
-                $('input[name="sellerCost"]').val(self.obj[0]['Cost']);
-                $('input[name="quantity"]').val(self.obj[0]['QuantityOnHand']);
-                $('input[name="size"]').val(self.obj[0]['Size']);
-                if ((self.obj[0]['DepartmentCode'] == 'EYE') || (self.obj[0]['DepartmentCode'] == 'RX')) {
-                    self.descriptions.val('Eyeglasses');
-                    $('input[name="rx"]').prop('checked', true);
-                } else {
-                    self.descriptions.val('Sunglasses');
-                    $('input[name="rx"]').prop('checked', false);
+                if (typeof self.obj[0] != 'undefined') {
+                    $('input[name="upc"]').val(self.obj[0]['UPC']);
+                    $('input[name="brand"]').val(self.obj[0]['brand']);
+                    $('input[name="colorCode"]').val(self.obj[0]['Attribute']);
+                    $('input[name="color"]').val(self.obj[0]['Desc2']);
+                    $('input[name="sellerCost"]').val(self.obj[0]['Cost']);
+                    $('input[name="quantity"]').val(self.obj[0]['QuantityOnHand']);
+                    $('input[name="size"]').val(self.obj[0]['Size']);
+                    if ((self.obj[0]['DepartmentCode'] == 'EYE') || (self.obj[0]['DepartmentCode'] == 'RX')) {
+                        self.descriptions.val('Eyeglasses');
+                        $('input[name="rx"]').prop('checked', true);
+                    } else {
+                        self.descriptions.val('Sunglasses');
+                        $('input[name="rx"]').prop('checked', false);
+                    }
                 }
+            });
+    })
+
+    $('#searchAff').click(function(e) {
+        var model = $('input[name="model"]').val();
+        var colorCode = $('input[name="colorCode"]').val();
+        var sku = model + '-' + colorCode;
+        $.ajax({
+            type: "POST",
+            url: "?r=site/GetDir",
+            data: { sku: sku }
+        }).done(function( msg ) {
+                self.PrintImages(msg);
             });
     })
 
@@ -141,23 +156,16 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     })
 
     this.fcolorcodes.change(function() {
-        window.obj.forEach(function(objd) {
-            if (objd['Attribute'] == self.fcolorcodes.val()) {
-                $('input[name="color"]').val(objd['Desc2']);
-                $('input[name="sellerCost"]').val(objd['Cost']);
-                $('input[name="quantity"]').val(objd['QuantityOnHand']);
-                $('input[name="size"]').val(objd['Size']);
-                if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
-                    self.descriptions.val('Eyeglasses');
-                    $('input[name="rx"]').prop('checked', true);
-                } else {
-                    $('input[name="rx"]').prop('checked', false);
-                    self.descriptions.val('Sunglasses');
-                }
-            }
-        });
+        self.ChangeUnique('colorcode');
     })
 
+    this.fcolors.change(function() {
+        self.ChangeUnique('color');
+    })
+
+    this.fsizes.change(function() {
+        self.ChangeUnique('size');
+    })
 
     $(".input input").change(function() {
         var pattern = /([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/;
@@ -232,7 +240,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
  * @constructor
  */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
-    //console.log(data);
+    console.log(data);
     var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
@@ -255,10 +263,7 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
                 '/' + imageTemp[8] + '/' + imageTemp[9];
         }
 
-
-
         if (image.indexOf('i:') !== -1) {
-
             this.imgContEyewear.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
                 + '" data-tooltip="' + affImage.substr(affImage.indexOf('i:')+1) + '"/><br/>');
             //$("#searchResult").append(image.substr(image.indexOf('i:')+2) + ",\n");
@@ -284,4 +289,54 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
         this.searchRes.append(this.eyewear);
     }
     this.InitEvents();
+}
+
+Helper.prototype.ChangeUnique = function Helper_changeUnique(param) {
+    self = this;
+    window.obj.forEach(function(objd) {
+        if (param == 'colorcode') {
+            if (objd['Attribute'] == self.fcolorcodes.val()) {
+                $('input[name="color"]').val(objd['Desc2']);
+                $('input[name="sellerCost"]').val(objd['Cost']);
+                $('input[name="quantity"]').val(objd['QuantityOnHand']);
+                $('input[name="size"]').val(objd['Size']);
+                if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
+                    self.descriptions.val('Eyeglasses');
+                    $('input[name="rx"]').prop('checked', true);
+                } else {
+                    $('input[name="rx"]').prop('checked', false);
+                    self.descriptions.val('Sunglasses');
+                }
+            }
+        } else if (param == 'color') {
+            if (objd['Desc2'] == self.fcolors.val()) {
+                $('input[name="colorcode"]').val(objd['Attribute']);
+                $('input[name="sellerCost"]').val(objd['Cost']);
+                $('input[name="quantity"]').val(objd['QuantityOnHand']);
+                $('input[name="size"]').val(objd['Size']);
+                if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
+                    self.descriptions.val('Eyeglasses');
+                    $('input[name="rx"]').prop('checked', true);
+                } else {
+                    $('input[name="rx"]').prop('checked', false);
+                    self.descriptions.val('Sunglasses');
+                }
+            }
+        } else if (param == 'size') {
+            if (objd['Size'] == self.fsizes.val()) {
+                $('input[name="colorCode"]').val(objd['Attribute']);
+                $('input[name="color"]').val(objd['Desc2']);
+                $('input[name="sellerCost"]').val(objd['Cost']);
+                $('input[name="quantity"]').val(objd['QuantityOnHand']);
+                if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
+                    self.descriptions.val('Eyeglasses');
+                    $('input[name="rx"]').prop('checked', true);
+                } else {
+                    $('input[name="rx"]').prop('checked', false);
+                    self.descriptions.val('Sunglasses');
+                }
+            }
+        }
+
+    });
 }

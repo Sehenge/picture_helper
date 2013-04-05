@@ -89,27 +89,7 @@ class Generators
                 $invNumber = 'AZ' . $model . '-' . $colorCode . '-' . $width;
                 $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
 
-                /*
-                $upc = $data['upc'];
-                $model = $data['model'];
-                $alterModel = implode('', explode(" ", $model));
-                $colorCode = $data['colorCode'];
-                $frame = $data['frame'];
-                $lens = $data['lens'];
-                $material = $data['material'];
-                $style = $data['style'];
-                $usage = $data['usage'];
-                $size = $data['size'];
-                $description = $data['description'];
-                $polarized = $data['polar'];
-                $rxable = $data['rx'];
-                $gender = $data['gender'];
-                $country = $data['country'];
-                */
-
-
                 $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'','Picture URLs','','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
-
                 fputcsv($fp, $content);
             }
         }
@@ -144,9 +124,17 @@ class Generators
                 $country = $data[14];
                 $width = $data[15];
                 $length = $data[16];
+                $brand = $data[17];
+                $color = $data[18];
+                $quantity = $data[19];
+                $sellerCost = $data[20];
+                $startingBid = $data[21];
+                $retail = $data[22];
+                $buyitnow = $data[23];
                 $invNumber = 'UK' . $model . '-' . $colorCode . '-' . $width;
+                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
 
-                $content = array('Auction Title',$invNumber,'INSTOCK','Quantity','Starting Bid','','','',$upc,'','','','',$description,$manufacturer,'Brand','NEW','','Seller Cost','','Buy It Now Price','Retail Price','','Picture URLs','','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION','Attribute3Value','SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND','NEED BRAND','CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'','Picture URLs','','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
             }
         }
@@ -181,9 +169,17 @@ class Generators
                 $country = $data[14];
                 $width = $data[15];
                 $length = $data[16];
+                $brand = $data[17];
+                $color = $data[18];
+                $quantity = $data[19];
+                $sellerCost = $data[20];
+                $startingBid = $data[21];
+                $retail = $data[22];
+                $buyitnow = $data[23];
                 $invNumber = 'FP' . $model . '-' . $colorCode . '-' . $width;
+                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
 
-                $content = array('Auction Title',$invNumber,'INSTOCK','Quantity','Starting Bid','','','',$upc,'','','','',$description,$manufacturer,'Brand','NEW','','Seller Cost','','Buy It Now Price','Retail Price','','Picture URLs','','','','','','','','','','','','','','Sears','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION','Attribute3Value','SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND','NEED BRAND','CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'','Picture URLs','','','','','','','','','','','','','','Sears','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
             }
         }
@@ -217,12 +213,20 @@ class Generators
                 $country = $data[14];
                 $width = $data[15];
                 $length = $data[16];
+                $brand = $data[17];
+                $color = $data[18];
+                $quantity = $data[19];
+                $sellerCost = $data[20];
+                $startingBid = $data[21];
+                $retail = $data[22];
+                $buyitnow = $data[23];
                 $invNumber = $model . '-' . $colorCode . '-' . $width;
+                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
                 $description == 'SUNGLASSES' // todo: need to check gender? (MENS)
                     ? $templateName = 'FP /FREE SHIP/***SUN***MENS/no upc'
                     : $templateName = 'FP /FREE SHIP/***RX/no upc';
 
-                $content = array('Auction Title',$invNumber,'INSTOCK','Quantity','Starting Bid','','','',$upc,'','','','',$description,$manufacturer,'Brand','NEW','','Seller Cost','','Buy It Now Price','Retail Price','','Picture URLs','','','','','','','','','SHADESEXPO EBAY NEW DESIGN','','','','','Sears','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION','Attribute3Value','SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND','NEED BRAND','CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'','Picture URLs','','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'','',$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
             }
         }

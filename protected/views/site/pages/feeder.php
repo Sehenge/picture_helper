@@ -11,7 +11,7 @@ $this->breadcrumbs=array(
     Count of products in feed: <span id="fcount">0</span>
 </div>
 
-<form class="feederInput" action="?r=site/getdir" method="post">
+<form class="feederInput" method="post">
     <div class="finput">
         <input type="text" placeholder="UPC" name="upc"/>
         <input type="text" placeholder="MODEL" name="model"/>
@@ -192,5 +192,25 @@ $this->breadcrumbs=array(
                 'name'=>'clearfeed'
             ));
         ?>
+        <input class="customSubmit" name="searchAff" type="button" value="Search Affordable" id="searchAff" />
     </div>
+    <div id="fifth_img"></div>
 </form>
+
+
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+
+<div class="output">
+    <textarea readonly id="searchResult"></textarea>
+</div>
+
+<div class="img_container" style="top: -320px;">
+    <div class="eyewear"></div>
+    <div class="cases">
+        <form>
+
+        </form>
+    </div>
+</div>
