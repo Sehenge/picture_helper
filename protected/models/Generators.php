@@ -259,7 +259,7 @@ class Generators
      *
      * @return array
      */
-    public static function getInfo($model)
+    public static function getInfoByModel($model)
     {
         $result = array();
         $output = array();
@@ -276,23 +276,31 @@ class Generators
         foreach ($result as $key => $res) {
             $result[$key]['brand'] = $brand;
         }
-/*
-        foreach ($result as $product) {
-            foreach ($product as $unique) {
-                if ($unique['attribute_id'] == 1) {
-                    $brand = $unique['value'];
-                } else if ($unique['Desc2'] == 6) {
-                    $color = $unique['value'];
-                } else if ($unique['attribute_id'] == 5) {
-                    $colorCode = $unique['value'];
-                } else if ($unique['attribute_id'] == 7) {
-                    $size = $unique['value'];
-                } else if ($unique['attribute_id'] == 3) {
-                    $price = $unique['value'];
-                }
-            }
-            $output[] = array('brand' => $brand, 'color' => $color, 'colorCode' => $colorCode, 'size' => $size, 'price' => $price);
-        }*/
+
+        return $result;
+    }
+
+    /**
+     * @param $model
+     * @return mixed
+     */
+    public static function getInfoByUpc($upc)
+    {
+        $result = array();
+        $output = array();
+        $connection = Yii::app()->db;
+
+        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE UPC = '" . $upc . "'");
+        $dataReader = $command->query();
+        $result = $dataReader->readAll();
+
+        $pattern = "/([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/";
+        preg_match($pattern, $result[0]['Desc1'], $matches);
+
+        $brand = strtoupper(GetDir::getPath($matches[1]));
+        foreach ($result as $key => $res) {
+            $result[$key]['brand'] = $brand;
+        }
 
         return $result;
     }
