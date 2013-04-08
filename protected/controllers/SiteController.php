@@ -226,7 +226,7 @@ class SiteController extends Controller
         Generators::ebayGenerator();
     }
 
-    public function actionStdGen()
+    public function actionRegGen()
     {
 
     }

@@ -19,7 +19,6 @@ function Helper() {
     this.fcolorcodes = this.finput.find('select[name="colorCodeS"]');
     this.fcolors = this.finput.find('select[name="colorS"]');
     this.fsizes = this.finput.find('select[name="sizeS"]');
-    this.fprices = this.finput.find('select[name="priceS"]');
     this.fsellercosts = this.finput.find('select[name="sellerCostS"]');
     this.fselects = this.finput.find(".fselect select");
     this.descriptions = this.finput.find('select[name="description"]');
@@ -30,6 +29,9 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     this.casesRB = this.imgContrCases.find("input:radio");
     this.casesImg = this.imgContrCases.find("img");
 
+    /**
+     * Current count of products in temporary feed
+     */
     $.ajax({
         type: "POST",
         url: "?r=site/CheckCount"
@@ -45,9 +47,6 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 
     this.casesImg.click(function(){
         $(this).prev().click();
-        //self.searchRes.empty();
-        //self.searchRes.append(self.eyewear);
-        //self.searchRes.append($(this).val());
     })
 
     this.fifth.click(function(){
@@ -64,6 +63,9 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         $("#preloader").show();
     })
 
+    /**
+     * QB Parser by UPC
+     */
     this.fupc.change(function() {
         var upc = $(this).val().toUpperCase();
         $.ajax({
@@ -100,6 +102,9 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
+    /**
+     * QB Parser by Model
+     */
     this.fmodel.change(function() {
         var model = $(this).val().toUpperCase();
         $.ajax({
@@ -138,6 +143,9 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
+    /**
+     * Temporary container viewer
+     */
     $('.count').click(function() {
         $.ajax({
             type: "POST",
@@ -161,40 +169,41 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
-
-
     $('#searchAff').click(function() {
-        var model = $('input[name="model"]').val();
-        var colorCode = $('input[name="colorCode"]').val();
-        var sku = model + '-' + colorCode;
-        $.ajax({
-            type: "POST",
-            url: "?r=site/GetDir",
-            data: { sku: sku, cases: false }
-        }).done(function( msg ) {
-                self.PrintImages(msg);
-                $("#bpop span").text("Searching is ended!").css("color","green");
-                $("#bpop").bPopup();
-                return false;
-            });
+        self.SearchAff();
     });
 
-    $('.fbuttons #addToFeed').click(function() {
-        console.log('click!');
-        $.ajax({
-            type: "POST",
-            url: "?r=site/AddToFeed",
-            data: $(this).parents("form").serialize()
-        }).done(function( data ) {
-                console.log(data);
-                $("#fcount").text(data);
-                $("#preloader").hide();
-                $("#bpop span").text("Successfully added to feed!").css("color","green");
-                $("#bpop").bPopup();
-                return false;
-            });
+    $('#addToFeed').click(function() {
+        self.AddToFeed($(this));
     });
 
+    $('#azGenBtn').click(function() {
+        self.AzGenFeed($(this));
+    });
+
+    $('#ukGenBtn').click(function() {
+        self.UkGenFeed($(this));
+    });
+
+    $('#fpGenBtn').click(function() {
+        self.FpGenFeed($(this));
+    });
+
+    $('#ebayGenBtn').click(function() {
+        self.EbayGenFeed($(this));
+    });
+
+    $('#regGenBtn').click(function() {
+        self.RegGenFeed($(this));
+    });
+
+    $('#clearfeed').click(function() {
+        self.ClearFeed();
+    });
+
+    /**
+     * Model-Color Code-Color Chooser
+     */
     this.fselects.change(function() {
         $(this).parent().prev().val($(this).val());
     })
@@ -207,6 +216,9 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         self.ChangeUnique('color');
     })
 
+    /**
+     * Json Real-Time brand parser
+     */
     $(".input input").change(function() {
         var pattern = /([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/;
         var parts = pattern.exec($(this).val());
@@ -231,19 +243,18 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
+    /**
+     * Tooltips
+     */
     $("[data-tooltip]").mousemove(function (eventObject) {
-
         $data_tooltip = $(this).attr("data-tooltip");
-
         $("#tooltip").text($data_tooltip)
             .css({
                 "top" : eventObject.pageY + 5,
                 "left" : eventObject.pageX + 5
             })
             .show();
-
     }).mouseout(function () {
-
             $("#tooltip").hide()
                 .text("")
                 .css({
@@ -253,18 +264,14 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         });
 
     $(".finput input, .finput select").mousemove(function (eventObject) {
-
         $data_tooltip = $(this).attr("name");
-
         $("#tooltip").text($data_tooltip)
             .css({
                 "top" : eventObject.pageY + 5,
                 "left" : eventObject.pageX + 5
             })
             .show();
-
     }).mouseout(function () {
-
             $("#tooltip").hide()
                 .text("")
                 .css({
@@ -275,7 +282,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 }
 
 /**
- *
+ * Print founded images in output div
  * @param data
  * @constructor
  */
@@ -328,9 +335,13 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
     } else {
         this.searchRes.append(this.eyewear);
     }
-    //this.InitEvents();
 }
 
+/**
+ * Product chooser by changing select options
+ * @param param
+ * @constructor
+ */
 Helper.prototype.ChangeUnique = function Helper_changeUnique(param) {
     self = this;
     window.obj.forEach(function(objd) {
@@ -363,6 +374,158 @@ Helper.prototype.ChangeUnique = function Helper_changeUnique(param) {
                 }
             }
         }
-
     });
+}
+
+/**
+ * Add product to temporary feed
+ * @param obj
+ * @constructor
+ */
+Helper.prototype.AddToFeed = function Helper_addToFeed(obj) {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/AddToFeed",
+        data: obj.parents("form").serialize()
+    }).done(function( data ) {
+            console.log(data);
+            $("#fcount").text(data);
+            $("#preloader").hide();
+            $("#bpop span").text("Successfully added to feed!").css("color","green");
+            $("#bpop").bPopup();
+            return false;
+        });
+}
+
+/**
+ * Generate AZ feed from temporary feed
+ * @param obj
+ * @constructor
+ */
+Helper.prototype.AzGenFeed = function Helper_azGenFeed(obj) {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/azgen",
+        data: obj.parents("form").serialize()
+    }).done(function( data ) {
+            console.log(data);
+            $("#bpop span").text("AZ feed successfully generated!").css("color","green");
+            $("#bpop").bPopup();
+            $("#preloader").hide();
+            return false;
+        });
+}
+
+/**
+ * Generate UK feed from temporary feed
+ * @param obj
+ * @constructor
+ */
+Helper.prototype.UkGenFeed = function Helper_ukGenFeed(obj) {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/ukgen",
+        data: obj.parents("form").serialize()
+    }).done(function( data ) {
+            console.log(data);
+            $("#bpop span").text("UK feed successfully generated!").css("color","green");
+            $("#bpop").bPopup();
+            $("#preloader").hide();
+            return false;
+        });
+}
+
+/**
+ * Generate FP feed from temporary feed
+ * @param obj
+ * @constructor
+ */
+Helper.prototype.FpGenFeed = function Helper_fpGenFeed(obj) {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/fpgen",
+        data: obj.parents("form").serialize()
+    }).done(function( data ) {
+            console.log(data);
+            $("#bpop span").text("FP feed successfully generated!").css("color","green");
+            $("#bpop").bPopup();
+            $("#preloader").hide();
+            return false;
+        });
+}
+
+/**
+ * Generate Ebay feed from temporary feed
+ * @param obj
+ * @constructor
+ */
+Helper.prototype.EbayGenFeed = function Helper_ebayGenFeed(obj) {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/ebaygen",
+        data: obj.parents("form").serialize()
+    }).done(function( data ) {
+            console.log(data);
+            $("#bpop span").text("Ebay feed successfully generated!").css("color","green");
+            $("#bpop").bPopup();
+            $("#preloader").hide();
+            return false;
+        });
+}
+
+/**
+ * Generate Regular feed from temporary feed
+ * @param obj
+ * @constructor
+ */
+Helper.prototype.RegGenFeed = function Helper_regGenFeed(obj) {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/reggen",
+        data: obj.parents("form").serialize()
+    }).done(function( data ) {
+            console.log(data);
+            $("#bpop span").text("Regular feed successfully generated!").css("color","green");
+            $("#bpop").bPopup();
+            $("#preloader").hide();
+            return false;
+        });
+}
+
+/**
+ * Image searching in AffordableLuxury
+ * @constructor
+ */
+Helper.prototype.SearchAff = function Helper_searchAff() {
+    self = this;
+    var model = $('input[name="model"]').val();
+    var colorCode = $('input[name="colorCode"]').val();
+    var sku = model + '-' + colorCode;
+    $.ajax({
+        type: "POST",
+        url: "?r=site/getdir",
+        data: { sku: sku, cases: false }
+    }).done(function( msg ) {
+            self.PrintImages(msg);
+            $("#bpop span").text("Searching is ended!").css("color","green");
+            $("#bpop").bPopup();
+            return false;
+        });
+}
+
+/**
+ * Clear temporary feed
+ * @constructor
+ */
+Helper.prototype.ClearFeed = function Helper_clearFeed() {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/clearfeed"
+    }).done(function( data ) {
+            $("#bpop span").text("Feed successfully cleared!").css("color","green");
+            $("#bpop").bPopup();
+            $("#preloader").hide();
+            $("#fcount").text(data);
+            return false;
+        });
 }

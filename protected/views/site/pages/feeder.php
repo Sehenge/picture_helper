@@ -78,112 +78,14 @@ $this->breadcrumbs=array(
         </div>
 </div>
     <div class="fbuttons">
-     <?php
-
-        echo CHtml::ajaxSubmitButton('Generate AZ Feed', CHtml::normalizeUrl(array('site/azgen')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                    $("#bpop span").text("AZ feed successfully generated!").css("color","green");
-                    $("#bpop").bPopup();
-                      helper = new Helper();
-                      console.log(data);
-                      $("#preloader").hide();
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'azGenBtn'
-            ));
-        echo CHtml::ajaxSubmitButton('Generate UK Feed', CHtml::normalizeUrl(array('site/ukgen')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                    $("#bpop span").text("UK feed successfully generated!").css("color","green");
-                    $("#bpop").bPopup();
-                      helper = new Helper();
-                      $("#preloader").hide();
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'ukGenBtn'
-            ));
-
-        echo CHtml::ajaxSubmitButton('Generate FP Feed', CHtml::normalizeUrl(array('site/fpgen')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                    $("#bpop span").text("FP feed successfully generated!").css("color","green");
-                    $("#bpop").bPopup();
-                      helper = new Helper();
-                      $("#preloader").hide();
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'fpGenBtn'
-            ));
-
-        echo CHtml::ajaxSubmitButton('Generate Ebay Feed', CHtml::normalizeUrl(array('site/ebaygen')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                    $("#bpop span").text("Ebay feed successfully generated!").css("color","green");
-                    $("#bpop").bPopup();
-                      helper = new Helper();
-                      $("#preloader").hide();
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'fpGenBtn'
-            ));
-        echo CHtml::ajaxSubmitButton('Generate Reg Feed', CHtml::normalizeUrl(array('site/stdgen')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                    $("#bpop span").text("Regular feed successfully generated!").css("color","green");
-                    $("#bpop").bPopup();
-                      helper = new Helper();
-                      $("#preloader").hide();
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'stdGenBtn'
-            ));
-
-        echo CHtml::ajaxSubmitButton('Clear Feed', CHtml::normalizeUrl(array('site/clearfeed')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                    $("#bpop span").text("Feed successfully cleared!").css("color","green");
-                    $("#bpop").bPopup();
-                      helper = new Helper();
-                      $("#preloader").hide();
-                      $("#fcount").text(data);
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'clearfeed'
-            ));
-        ?>
         <input class="customSubmit" name="searchAff" type="button" value="Search Affordable" id="searchAff" />
         <input class="customSubmit" name="addToFeed" type="button" value="Add to feed" id="addToFeed" />
+        <input class="customSubmit" name="azGenBtn" type="button" value="Generate AZ Feed" id="azGenBtn" />
+        <input class="customSubmit" name="ukGenBtn" type="button" value="Generate UK Feed" id="ukGenBtn" />
+        <input class="customSubmit" name="fpGenBtn" type="button" value="Generate FP Feed" id="fpGenBtn" />
+        <input class="customSubmit" name="ebayGenBtn" type="button" value="Generate Ebay Feed" id="ebayGenBtn" />
+        <input class="customSubmit" name="regGenBtn" type="button" value="Generate Regular Feed" id="regGenBtn" />
+        <input class="customSubmit" name="clearfeed" type="button" value="Clear Feed" id="clearfeed" />
     </div>
     <div id="fifth_img"></div>
 
