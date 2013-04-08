@@ -202,6 +202,7 @@ class SiteController extends Controller
 
     public function actionAddToFeed()
     {
+        //var_dump($_POST);die(1);
         echo Generators::addToFeed($_POST);
     }
 
@@ -248,5 +249,10 @@ class SiteController extends Controller
     public function actionClearFeed()
     {
         echo Generators::clearFeed();
+    }
+
+    public function actionTmpCont()
+    {
+        $this->render('pages/tmpcont');
     }
 }

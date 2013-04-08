@@ -260,6 +260,33 @@ div.search-form
     overflow: hidden;
 }
 
+#bpop {
+    background: white;
+    color: black;
+    font-size: 24px;
+    height: 100px;
+    width: 400px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 0 25px 5px #999;
+    text-align: center;
+    display: none;
+}
+
+#bpop span {
+    position: relative;
+    top: 35px;
+}
+
+.tmpCont {
+    width: 1000px;
+    min-height: 100px;
+    background: white;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 0 25px 5px #999;
+    text-align: center;
+    overflow: hidden;
+}
+
 .img_container input[type="radio"] {
     position: relative;
     top: -80px;
@@ -411,10 +438,27 @@ input[type="text"] {
     font-size: 18px;
     color: red;
     float: right;
+    cursor: pointer;
+}
+.count:hover {
+    text-decoration: underline;
 }
 .count #fcount {
     font-weight: bold;
     color: black;
+}
+.tmpModel {
+    text-align: left;
+    font-size: 16px;
+    padding: 10px 0 0 20px;
+    min-height: 30px;
+    background: rgb(235,235,235);
+    border-bottom: 1px solid grey;
+    cursor: pointer;
+}
+.fullModel {
+    display: none;
+    padding: 10px;
 }
 .finput {
     float: left;

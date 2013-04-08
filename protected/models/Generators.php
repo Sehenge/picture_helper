@@ -20,7 +20,10 @@ class Generators
             }
         }
         isset($data['rx']) ? $data['rx'] = 'YES' : $data['rx'] = 'NO';
-        isset($data['pictures']) ? $pictures = $data['pictures'] : $pictures = 'false';
+        isset($data['pictures']) ? $pictures = $data['pictures'] : $pictures = '';
+        if (strpos($pictures, 'no one image were found!') !== false) {
+            $pictures = '';
+        }
         isset($data['polar']) ? $data['polar'] = 'POLARIZED' : $data['polar'] = '';
 
         $size_arr = explode('/', $data['size']);
@@ -30,7 +33,7 @@ class Generators
         } else if (isset($size_arr[1])) {
             $length = $size_arr[1];
         } else {
-            // todo: what to do????
+            $length = ''; // todo: what to do????
         }
         if (substr($pictures,-1,1) == ',') {
             $pictures = substr($pictures,0,-1);
@@ -267,9 +270,9 @@ class Generators
     {
         if ($fp = fopen('temp.csv', 'w')) {
             fclose($fp);
-            return true;
+            return count(file('temp.csv'));
         } else {
-            return false;
+            return 'Error';
         }
     }
 
@@ -322,5 +325,44 @@ class Generators
         }
 
         return $result;
+    }
+
+    public static function updateCont()
+    {
+        $obj = array();
+        $i = 0;
+        if (($handle = fopen("temp.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $obj[$i]['upc'] = $data[0];
+                $obj[$i]['model'] = $data[1];
+                    $manufacturer = explode(" ", $data[1]);
+                $obj[$i]['manufacturer'] = $manufacturer[0];
+                $obj[$i]['alterModel'] = $data[2];
+                $obj[$i]['colorCode'] = $data[3];
+                $obj[$i]['frame'] = $data[4];
+                $obj[$i]['lens'] = $data[5];
+                $obj[$i]['material'] = $data[6];
+                $obj[$i]['style'] = $data[7];
+                $obj[$i]['usage'] = $data[8];
+                $obj[$i]['size'] = $data[9];
+                $obj[$i]['description'] = $data[10];
+                $obj[$i]['polarized'] = $data[11];
+                $obj[$i]['rxable'] = $data[12];
+                $obj[$i]['gender'] = $data[13];
+                $obj[$i]['country'] = $data[14];
+                $obj[$i]['width'] = $data[15];
+                $obj[$i]['length'] = $data[16];
+                $obj[$i]['brand'] = $data[17];
+                $obj[$i]['color'] = $data[18];
+                $obj[$i]['quantity'] = $data[19];
+                $obj[$i]['sellerCost'] = $data[20];
+                $obj[$i]['startingBid'] = $data[21];
+                $obj[$i]['retail'] = $data[22];
+                $obj[$i]['buyitnow'] = $data[23];
+                $obj[$i]['pictures'] = $data[24];
+                $i++;
+            }
+        }
+        return $obj;
     }
 }

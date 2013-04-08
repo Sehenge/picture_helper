@@ -79,32 +79,17 @@ $this->breadcrumbs=array(
 </div>
     <div class="fbuttons">
      <?php
-        echo CHtml::ajaxSubmitButton('Add to Feed', CHtml::normalizeUrl(array('site/addtofeed')),
-            array(
-                'data'=>'js:jQuery(this).parents("form").serialize()',
-                'success'=>
-                'function(data){
-                      helper = new Helper();
-                      console.log(data);
-                      $("#fcount").text(data);
-                      //helper.PrintImages(data);
-                      //$("#preloader").hide();
-                      return false;
-                 }'
-            ),
-            array(
-                'class'=>'ajaxSubmit',
-                'name'=>'addtofeed'
-            ));
+
         echo CHtml::ajaxSubmitButton('Generate AZ Feed', CHtml::normalizeUrl(array('site/azgen')),
             array(
                 'data'=>'js:jQuery(this).parents("form").serialize()',
                 'success'=>
                 'function(data){
+                    $("#bpop span").text("AZ feed successfully generated!").css("color","green");
+                    $("#bpop").bPopup();
                       helper = new Helper();
                       console.log(data);
-                      //helper.PrintImages(data);
-                      //$("#preloader").hide();
+                      $("#preloader").hide();
                       return false;
                  }'
             ),
@@ -113,28 +98,31 @@ $this->breadcrumbs=array(
                 'name'=>'azGenBtn'
             ));
         echo CHtml::ajaxSubmitButton('Generate UK Feed', CHtml::normalizeUrl(array('site/ukgen')),
-        array(
-            'data'=>'js:jQuery(this).parents("form").serialize()',
-            'success'=>
-            'function(data){
-                  helper = new Helper();
-                  //helper.PrintImages(data);
-                  //$("#preloader").hide();
-                  return false;
-             }'
-        ),
-        array(
-            'class'=>'ajaxSubmit',
-            'name'=>'ukGenBtn'
-        ));
+            array(
+                'data'=>'js:jQuery(this).parents("form").serialize()',
+                'success'=>
+                'function(data){
+                    $("#bpop span").text("UK feed successfully generated!").css("color","green");
+                    $("#bpop").bPopup();
+                      helper = new Helper();
+                      $("#preloader").hide();
+                      return false;
+                 }'
+            ),
+            array(
+                'class'=>'ajaxSubmit',
+                'name'=>'ukGenBtn'
+            ));
 
         echo CHtml::ajaxSubmitButton('Generate FP Feed', CHtml::normalizeUrl(array('site/fpgen')),
             array(
                 'data'=>'js:jQuery(this).parents("form").serialize()',
                 'success'=>
                 'function(data){
+                    $("#bpop span").text("FP feed successfully generated!").css("color","green");
+                    $("#bpop").bPopup();
                       helper = new Helper();
-                      console.log(data);
+                      $("#preloader").hide();
                       return false;
                  }'
             ),
@@ -148,9 +136,10 @@ $this->breadcrumbs=array(
                 'data'=>'js:jQuery(this).parents("form").serialize()',
                 'success'=>
                 'function(data){
+                    $("#bpop span").text("Ebay feed successfully generated!").css("color","green");
+                    $("#bpop").bPopup();
                       helper = new Helper();
-                      //helper.PrintImages(data);
-                      //$("#preloader").hide();
+                      $("#preloader").hide();
                       return false;
                  }'
             ),
@@ -158,14 +147,15 @@ $this->breadcrumbs=array(
                 'class'=>'ajaxSubmit',
                 'name'=>'fpGenBtn'
             ));
-        echo CHtml::ajaxSubmitButton('Generate Std Feed', CHtml::normalizeUrl(array('site/stdgen')),
+        echo CHtml::ajaxSubmitButton('Generate Reg Feed', CHtml::normalizeUrl(array('site/stdgen')),
             array(
                 'data'=>'js:jQuery(this).parents("form").serialize()',
                 'success'=>
                 'function(data){
+                    $("#bpop span").text("Regular feed successfully generated!").css("color","green");
+                    $("#bpop").bPopup();
                       helper = new Helper();
-                      //helper.PrintImages(data);
-                      //$("#preloader").hide();
+                      $("#preloader").hide();
                       return false;
                  }'
             ),
@@ -179,11 +169,11 @@ $this->breadcrumbs=array(
                 'data'=>'js:jQuery(this).parents("form").serialize()',
                 'success'=>
                 'function(data){
+                    $("#bpop span").text("Feed successfully cleared!").css("color","green");
+                    $("#bpop").bPopup();
                       helper = new Helper();
-                      console.log(data);
+                      $("#preloader").hide();
                       $("#fcount").text(data);
-                      //helper.PrintImages(data);
-                      //$("#preloader").hide();
                       return false;
                  }'
             ),
@@ -193,6 +183,7 @@ $this->breadcrumbs=array(
             ));
         ?>
         <input class="customSubmit" name="searchAff" type="button" value="Search Affordable" id="searchAff" />
+        <input class="customSubmit" name="addToFeed" type="button" value="Add to feed" id="addToFeed" />
     </div>
     <div id="fifth_img"></div>
 
@@ -214,3 +205,7 @@ $this->breadcrumbs=array(
         </form>
     </div>
 </div>
+
+<div id='bpop'><span>Test message</span></div>
+
+<div class="tmpCont" style="display: none;"></div>

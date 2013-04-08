@@ -138,6 +138,31 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
+    $('.count').click(function() {
+        $.ajax({
+            type: "POST",
+            url: "?r=popups/TmpCont"
+        }).done(function( msg ) {
+                $('.tmpCont').html(msg);
+                $('.tmpCont').bPopup({
+                    follow: [false, false],
+                    position: [150, 150]
+                });
+
+                $('.tmpModel').click(function() {
+                    if ($(this).find('.fullModel').css("display") == 'none') {
+                        $(this).find('.fullModel').slideDown("slow");
+                    } else {
+                        $(this).find('.fullModel').slideUp("slow");
+                    }
+
+                })
+                console.log(msg);
+            });
+    })
+
+
+
     $('#searchAff').click(function() {
         var model = $('input[name="model"]').val();
         var colorCode = $('input[name="colorCode"]').val();
@@ -148,8 +173,27 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             data: { sku: sku, cases: false }
         }).done(function( msg ) {
                 self.PrintImages(msg);
+                $("#bpop span").text("Searching is ended!").css("color","green");
+                $("#bpop").bPopup();
+                return false;
             });
-    })
+    });
+
+    $('.fbuttons #addToFeed').click(function() {
+        console.log('click!');
+        $.ajax({
+            type: "POST",
+            url: "?r=site/AddToFeed",
+            data: $(this).parents("form").serialize()
+        }).done(function( data ) {
+                console.log(data);
+                $("#fcount").text(data);
+                $("#preloader").hide();
+                $("#bpop span").text("Successfully added to feed!").css("color","green");
+                $("#bpop").bPopup();
+                return false;
+            });
+    });
 
     this.fselects.change(function() {
         $(this).parent().prev().val($(this).val());
@@ -284,7 +328,7 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
     } else {
         this.searchRes.append(this.eyewear);
     }
-    this.InitEvents();
+    //this.InitEvents();
 }
 
 Helper.prototype.ChangeUnique = function Helper_changeUnique(param) {
