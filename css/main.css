@@ -233,11 +233,6 @@ div.search-form
     float: left;
 }
 
-.output {
-    position: relative;
-    top: -378px;
-    left: -23px;
-}
 .output textarea{
     float: right;
     width: 625px;

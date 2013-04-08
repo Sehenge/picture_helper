@@ -138,7 +138,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
-    $('#searchAff').click(function(e) {
+    $('#searchAff').click(function() {
         var model = $('input[name="model"]').val();
         var colorCode = $('input[name="colorCode"]').val();
         var sku = model + '-' + colorCode;
@@ -161,10 +161,6 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 
     this.fcolors.change(function() {
         self.ChangeUnique('color');
-    })
-
-    this.fsizes.change(function() {
-        self.ChangeUnique('size');
     })
 
     $(".input input").change(function() {
@@ -314,20 +310,6 @@ Helper.prototype.ChangeUnique = function Helper_changeUnique(param) {
                 $('input[name="sellerCost"]').val(objd['Cost']);
                 $('input[name="quantity"]').val(objd['QuantityOnHand']);
                 $('input[name="size"]').val(objd['Size']);
-                if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
-                    self.descriptions.val('Eyeglasses');
-                    $('input[name="rx"]').prop('checked', true);
-                } else {
-                    $('input[name="rx"]').prop('checked', false);
-                    self.descriptions.val('Sunglasses');
-                }
-            }
-        } else if (param == 'size') {
-            if (objd['Size'] == self.fsizes.val()) {
-                $('input[name="colorCode"]').val(objd['Attribute']);
-                $('input[name="color"]').val(objd['Desc2']);
-                $('input[name="sellerCost"]').val(objd['Cost']);
-                $('input[name="quantity"]').val(objd['QuantityOnHand']);
                 if ((objd['DepartmentCode'] == 'EYE') || (objd['DepartmentCode'] == 'RX')) {
                     self.descriptions.val('Eyeglasses');
                     $('input[name="rx"]').prop('checked', true);

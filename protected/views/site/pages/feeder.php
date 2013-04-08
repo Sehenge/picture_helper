@@ -195,15 +195,15 @@ $this->breadcrumbs=array(
         <input class="customSubmit" name="searchAff" type="button" value="Search Affordable" id="searchAff" />
     </div>
     <div id="fifth_img"></div>
+
+    <div class="output" style="position: relative; top: -378px; left: -23px;">
+        <textarea readonly id="searchResult" name="pictures"></textarea>
+    </div>
 </form>
 
 
 <div id="preloader">
     <div id="status">&nbsp;</div>
-</div>
-
-<div class="output">
-    <textarea readonly id="searchResult"></textarea>
 </div>
 
 <div class="img_container" style="top: -320px;">
