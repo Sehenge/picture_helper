@@ -252,7 +252,7 @@ class Generators
         fclose($handle);
     }
 
-    public static function stdGenerator()
+    public static function regGenerator()
     {
 
     }

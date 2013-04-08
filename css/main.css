@@ -436,7 +436,7 @@ input[type="text"] {
 }
 .count {
     font-size: 18px;
-    color: red;
+    color: #06c;
     float: right;
     cursor: pointer;
 }
@@ -465,9 +465,15 @@ input[type="text"] {
 }
 .fbuttons {
     float: right;
-    top: 70px;
-    right: -170px;
+    top: 170px;
+    right: -200px;
     position: relative;
+}
+.files {
+    width: 200px;
+    float: right;
+    clear: right;
+    margin: 10px 35px 0 0;
 }
 .awesome, .awesome:visited {
     background: #222 url(http://www.zurb.com/blog_uploads/0000/0617/alert-overlay.png) repeat-x;
