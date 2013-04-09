@@ -244,6 +244,7 @@ class GetDir
             case 'DY': return 'DKNY';
             case 'SCH':
             case 'VCH': return 'CHOPARD';
+            case 'AMQ': return 'MCQUEEN';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -267,7 +268,7 @@ class GetDir
                                 'BEBE', 'PORSCHE DESIGN', 'SPY', 'VON ZIPPER', 'NINE WEST', 'CAVIAR', 'VERA WANG',
                                 'KATE SPADE', 'FRED LUNETTES', 'COSTA DEL MAR', 'ANDY WOLF', 'DIESEL', 'SONIA RYKIEL',
                                 'MYKITA', 'RALPH LAUREN', 'ALAIN MIKLI', 'MIKLI BY MIKLI', 'SUBCREW BY MIKLI',
-                                'PENGUIN', 'DKNY', 'CHOPARD');
+                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN');
         return self::$_brands;
     }
 
@@ -367,6 +368,7 @@ class GetDir
         if( strcmp($nameu, 'PENGUIN') == 0) return 'PG';
         if( strcmp($nameu, 'DKNY') == 0) return 'DY';
         if( strcmp($nameu, 'CHOPARD') == 0) return  'VCH';
+        if( strcmp($nameu, 'MCQUEEN') == 0) return  'AMQ';
     }
 
     /********************************************************************************

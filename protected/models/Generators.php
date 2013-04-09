@@ -254,7 +254,45 @@ class Generators
 
     public static function regGenerator()
     {
+        $fp = fopen('regFeed.csv', 'w');
+        if (($handle = fopen("temp.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $upc = $data[0];
+                $model = $data[1];
+                $manufacturer = explode(" ", $data[1]);
+                $manufacturer = $manufacturer[0];
+                $alterModel = $data[2];
+                $colorCode = $data[3];
+                $frame = $data[4];
+                $lens = $data[5];
+                $material = $data[6];
+                $style = $data[7];
+                $usage = $data[8];
+                $size = $data[9];
+                $description = $data[10];
+                $polarized = $data[11];
+                $rxable = $data[12];
+                $gender = $data[13];
+                $country = $data[14];
+                $width = $data[15];
+                $length = $data[16];
+                $brand = $data[17];
+                $color = $data[18];
+                $quantity = $data[19];
+                $sellerCost = $data[20];
+                $startingBid = $data[21];
+                $retail = $data[22];
+                $buyitnow = $data[23];
+                $pictures = $data[24];
+                $invNumber = 'UK' . $model . '-' . $colorCode . '-' . $width;
+                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
 
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                fputcsv($fp, $content);
+            }
+        }
+        fclose($fp);
+        fclose($handle);
     }
 
     public static function checkCount()

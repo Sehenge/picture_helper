@@ -154,7 +154,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 $('.tmpCont').html(msg);
                 $('.tmpCont').bPopup({
                     follow: [false, false],
-                    position: [150, 150]
+                    position: [150, 50]
                 });
 
                 $('.tmpModel').click(function() {
@@ -220,13 +220,13 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
      * Json Real-Time brand parser
      */
     $(".input input").change(function() {
-        var pattern = /([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/;
+        var pattern = /(AZ)?([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/;
         var parts = pattern.exec($(this).val());
 
         $.ajax({
             type: "POST",
             url: "?r=site/JsonBrand",
-            data: { mcode: parts[1] }
+            data: { mcode: parts[2] }
         }).done(function( msg ) {
                 if (msg.indexOf('_') !== -1) {
                     var brand = msg.split('_');
@@ -238,8 +238,8 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 if ($(".input select option:contains('" + brand + "')")) {
                     $(".input select option:contains('" + brand + "')").attr('selected', 'selected');
                 }
-                $('.input input[name="model"]').val(parts[3]);
-                $('.input input[name="color_code"]').val(parts[6]);
+                $('.input input[name="model"]').val(parts[4]);
+                $('.input input[name="color_code"]').val(parts[7]);
             });
     })
 

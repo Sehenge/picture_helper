@@ -121,8 +121,7 @@ class SiteController extends Controller
         } else {
             $sku = preg_replace('/\//', '', $_POST['sku']);
             $images = GetDir::parseImages($sku, 'aff');
-            if ($_POST['cases'] != 'false') {
-                echo $_POST['cases']; die(1);
+            if (!isset($_POST['cases']) || $_POST['cases'] !== 'false') {
                 $cases = GetDir::parseCases($sku, 'aff');
             }
         }
@@ -138,7 +137,7 @@ class SiteController extends Controller
         } else {
             echo GetDir::printException('images not found');
         }
-        if ($_POST['cases'] != 'false') {
+        if (!isset($_POST['cases']) || $_POST['cases'] !== 'false') {
             if ($cases) {
                 foreach ($cases as $case) {
                     $dest_name = preg_split("/\//", $case);
