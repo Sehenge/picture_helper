@@ -261,33 +261,67 @@ class Generators
                 $model = $data[1];
                 $manufacturer = explode(" ", $data[1]);
                 $manufacturer = $manufacturer[0];
-                $alterModel = $data[2];
                 $colorCode = $data[3];
                 $frame = $data[4];
                 $lens = $data[5];
-                $material = $data[6];
-                $style = $data[7];
-                $usage = $data[8];
+                switch($data[6]) {
+                    case 'METAL': $material = 1; break;
+                    case 'PLASTIC': $material = 2; break;
+                    case 'MIX': $material = 3; break;
+                    default: $material = 1;
+                }
+                switch($data[7]) {
+                    case 'AVIATOR': $style = 1; break;
+                    case 'BUTTERFLY': $style = 2; break;
+                    case 'CAT EYE': $style = 3; break;
+                    case 'GOGGLE': $style = 4; break;
+                    case 'OVAL': $style = 5; break;
+                    case 'RECTANGLE': $style = 6; break;
+                    case 'RIMLESS': $style = 7; break;
+                    case 'ROUND': $style = 8; break;
+                    case 'SEMI-RIMLESS': $style = 9; break;
+                    case 'SHIELD': $style = 10; break;
+                    case 'SQUARE': $style = 11; break;
+                    case 'WAYFARER': $style = 12; break;
+                    case 'WRAP': $style = 13; break;
+                    case 'HEART': $style = 14; break;
+                    default: $style = 1;
+                }
+                switch($data[8]) {
+                    case 'FASHION': $usage = 1; break;
+                    case 'SPORTS': $usage = 2; break;
+                    case 'WATERSPORTS': $usage = 3; break;
+                    case 'SNOWSPORTS': $usage = 4; break;
+                    case 'GOLF': $usage = 5; break;
+                    default: $usage = 1;
+                }
                 $size = $data[9];
                 $description = $data[10];
                 $polarized = $data[11];
+                $polarized == 'POLARIZED' ? $polarized = 1 : $polarized = 0;
                 $rxable = $data[12];
-                $gender = $data[13];
+                $rxable == 'NO' ? $rxable = 0 : $rxable = 1;
+                switch($data[13]) {
+                    case 'UNISEX': $gender = 1; break;
+                    case 'MALE': $gender = 2; break;
+                    case 'FEMALE': $gender = 3; break;
+                    default: $gender = 1;
+                }
                 $country = $data[14];
                 $width = $data[15];
                 $length = $data[16];
                 $brand = $data[17];
                 $color = $data[18];
-                $quantity = $data[19];
                 $sellerCost = $data[20];
                 $startingBid = $data[21];
                 $retail = $data[22];
                 $buyitnow = $data[23];
-                $pictures = $data[24];
-                $invNumber = 'UK' . $model . '-' . $colorCode . '-' . $width;
-                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
-
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                $pictures = explode(",", $data[24]);
+                $pics = '';
+                for ($i = 1; $i < 4; $i++) {
+                    $pics .= 'ITEMIMAGEURL' . $i . '=' . $pictures[$i] . ',';
+                }
+                $content = array(1,'','','','','',1,'','','','','','','','','price',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',$description,'','','','','','','','','','','','','','','','','','','','','','','','','',$brand,$upc,'','','','','','',$colorCode,'',$frame,'','','',$country,'',$color,$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
                 fputcsv($fp, $content);
             }
         }
@@ -349,15 +383,14 @@ class Generators
         $result = array();
         $output = array();
         $connection = Yii::app()->db;
-
-        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE UPC = '" . $upc . "'");
+        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE UPC LIKE '%" . $upc . "%'");
         $dataReader = $command->query();
         $result = $dataReader->readAll();
 
         $pattern = "/([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/";
         preg_match($pattern, $result[0]['Desc1'], $matches);
 
-        $brand = strtoupper(GetDir::getPath($matches[1]));
+        $brand = strtoupper(GetDir::getBrand($matches[1]));
         foreach ($result as $key => $res) {
             $result[$key]['brand'] = $brand;
         }

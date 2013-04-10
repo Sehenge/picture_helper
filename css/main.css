@@ -390,12 +390,10 @@ input[type="text"] {
 
 #preloader {
     display: none;
-    position:absolute;
+    position: fixed;
     width: 200px;
     height: 200px;
-    left: 50%;
-    top: 50%;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.0);
     z-index:99; /* makes sure it stays on top */
     margin:-100px 0 0 -100px; /* is width and height divided by two */
     border-radius: 20px;
@@ -404,8 +402,8 @@ input[type="text"] {
 #status {
     width:200px;
     height:200px;
-    position:absolute;
-    background-image:url(../images/159.gif); /* path to your loading animation */
+    position: relative;
+    background-image:url(../images/103.gif); /* path to your loading animation */
     background-repeat:no-repeat;
     background-position:center;
 }

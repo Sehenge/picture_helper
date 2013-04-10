@@ -227,7 +227,7 @@ class SiteController extends Controller
 
     public function actionRegGen()
     {
-
+        Generators::regGenerator();
     }
 
     public function actionJsonBrand()

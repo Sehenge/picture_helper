@@ -59,8 +59,8 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
         $(this).fadeOut("slow");
     })
 
-    $(".ajaxSubmit").click(function() {
-        $("#preloader").show();
+    $(".customSubmit, .ajaxSubmit").click(function() {
+        $("#preloader").bPopup();
     })
 
     /**
@@ -73,7 +73,8 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             url: "?r=site/QbParse",
             data: { upc: upc }
         }).done(function( msg ) {
-                console.log(JSON.parse(msg));
+                console.log(msg);
+                //console.log(JSON.parse(msg));
                 self.obj = JSON.parse(msg);
                 window.obj = JSON.parse(msg);
                 self.fselects.empty();
@@ -390,7 +391,7 @@ Helper.prototype.AddToFeed = function Helper_addToFeed(obj) {
     }).done(function( data ) {
             console.log(data);
             $("#fcount").text(data);
-            $("#preloader").hide();
+            $('#preloader').bPopup().close();
             $("#bpop span").text("Successfully added to feed!").css("color","green");
             $("#bpop").bPopup();
             return false;
@@ -408,10 +409,10 @@ Helper.prototype.AzGenFeed = function Helper_azGenFeed(obj) {
         url: "?r=site/azgen",
         data: obj.parents("form").serialize()
     }).done(function( data ) {
+            $('#preloader').bPopup().close();
             console.log(data);
             $("#bpop span").text("AZ feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
-            $("#preloader").hide();
             return false;
         });
 }
@@ -427,10 +428,10 @@ Helper.prototype.UkGenFeed = function Helper_ukGenFeed(obj) {
         url: "?r=site/ukgen",
         data: obj.parents("form").serialize()
     }).done(function( data ) {
+            $('#preloader').bPopup().close();
             console.log(data);
             $("#bpop span").text("UK feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
-            $("#preloader").hide();
             return false;
         });
 }
@@ -446,10 +447,10 @@ Helper.prototype.FpGenFeed = function Helper_fpGenFeed(obj) {
         url: "?r=site/fpgen",
         data: obj.parents("form").serialize()
     }).done(function( data ) {
+            $('#preloader').bPopup().close();
             console.log(data);
             $("#bpop span").text("FP feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
-            $("#preloader").hide();
             return false;
         });
 }
@@ -465,10 +466,10 @@ Helper.prototype.EbayGenFeed = function Helper_ebayGenFeed(obj) {
         url: "?r=site/ebaygen",
         data: obj.parents("form").serialize()
     }).done(function( data ) {
+            $('#preloader').bPopup().close();
             console.log(data);
             $("#bpop span").text("Ebay feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
-            $("#preloader").hide();
             return false;
         });
 }
@@ -484,10 +485,10 @@ Helper.prototype.RegGenFeed = function Helper_regGenFeed(obj) {
         url: "?r=site/reggen",
         data: obj.parents("form").serialize()
     }).done(function( data ) {
+            $('#preloader').bPopup().close();
             console.log(data);
             $("#bpop span").text("Regular feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
-            $("#preloader").hide();
             return false;
         });
 }
@@ -506,6 +507,7 @@ Helper.prototype.SearchAff = function Helper_searchAff() {
         url: "?r=site/getdir",
         data: { sku: sku, cases: false }
     }).done(function( msg ) {
+            $('#preloader').bPopup().close();
             self.PrintImages(msg);
             $("#bpop span").text("Searching is ended!").css("color","green");
             $("#bpop").bPopup();
@@ -522,9 +524,9 @@ Helper.prototype.ClearFeed = function Helper_clearFeed() {
         type: "POST",
         url: "?r=site/clearfeed"
     }).done(function( data ) {
+            $('#preloader').bPopup().close();
             $("#bpop span").text("Feed successfully cleared!").css("color","green");
             $("#bpop").bPopup();
-            $("#preloader").hide();
             $("#fcount").text(data);
             return false;
         });

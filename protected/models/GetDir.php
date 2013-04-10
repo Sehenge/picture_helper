@@ -186,7 +186,7 @@ class GetDir
             case 'RB': return 'RayBan';
             case 'TC': return 'TIFFANY';
             case 'TF': return 'TOM_FORD';
-            case 'THE': return 'TAG_HEUER'; // todo: ????s
+            case 'TH': return array('TAG_HEUER','TAGHEUER');
             case 'VAL': return 'VALENTINO';
             case 'VE': return 'VERSACE';
             case 'VO': return 'VOGUE';
@@ -212,7 +212,6 @@ class GetDir
             case 'HR': return 'CHRISTIAN_ROTH';
             case 'NA': return 'NAUTICA';
             case 'RE': return 'REVO';
-            case 'AN': return 'ARNETTE';
             case 'LA': return 'LACOSTE';
             case 'JG': return 'JOHN_GALLIANO';
             case 'MA': return 'MARCHON';
@@ -240,6 +239,118 @@ class GetDir
             case 'ML':
             case 'MBM':
             case 'SBM': return 'ALAN_MIKLI';
+            case 'PG': return 'PENGUIN';
+            case 'DY': return 'DKNY';
+            case 'SCH':
+            case 'VCH': return 'CHOPARD';
+            case 'AMQ': return 'MCQUEEN';
+            default: return 'Manufacturer code was not found';
+        }
+    }
+
+    public static function getBrand($mcode)
+    {
+        switch ($mcode) {
+            case 'AN': return 'ARNETTE';
+            case 'CZ': return 'CAZAL';
+            case 'BAL': return 'BALENCIAGA';
+            case 'BE': return 'BURBERRY';
+            case 'BV': return 'BVLGARI';
+            case 'CA': return 'CHRISTIAN AUDIGIER'; // todo: wtf2?
+            case 'RC': return 'CAVALLI';
+            case 'CN': return 'CHANEL';
+            case 'CHROME HEARTS': return 'CHROME_HEARTS';
+            case 'CL': return 'CHLOE';
+            case 'DD':
+            case 'DG': return 'DOLCE&GABANA';
+            case 'CD': return 'CHRISTIAN DIOR';
+            case 'EHO':
+            case 'EHR':
+            case 'EHL':
+            case 'EHS': return 'ED HARDY';
+            case 'EP': return 'EMILIO PUCCI';
+            case 'SF':
+            case 'FE': return 'FERRAGAMO';
+            case 'FS': return 'FENDI';
+            case 'F': return 'FENDI';
+            case 'GG': return 'GUCCI';
+            case 'JC': return 'JIMMY CHOO';
+            case 'JU': return 'JUICY COUTURE';
+            case 'MB': return 'MONT BLANC';
+            case 'MJ':
+            case 'MM': return 'MARC JACOBS';
+            case 'MKS':
+            case 'MK':
+            case 'MMK': return 'MICHAEL KORS';
+            case 'MO': return 'MOSCHINO';
+            case 'OX':
+            case 'OK': return 'OAKLEY';
+            case 'OP': return 'OLIVER PEOPLE';
+            case 'PR':
+            case 'SPR':
+            case 'PS':
+            case 'SPS':
+            case 'VPS':
+            case 'VPR': return 'PRADA';
+            case 'CC':
+            case 'HC':
+            case 'COACH': return 'COACH';
+            case 'RX':
+            case 'RB': return 'RAY-BAN';
+            case 'TC': return 'TIFFANY';
+            case 'TF': return 'TOM FORD';
+            case 'THE': return 'TAG HEUER'; // todo: ????s
+            case 'VAL': return 'VALENTINO';
+            case 'VE': return 'VERSACE';
+            case 'VO': return 'VOGUE';
+            case 'YSL': return 'YSL';
+            case 'DQ': return 'D SQUARED';
+            case 'LV': return 'LANVIN';
+            case 'PO': return 'PERSOL';
+            case 'PU': return 'PUMA';
+            case 'TR': return 'TRUE RELIGION';
+            case 'TO': return 'TODS';
+            case 'JS': return 'JUST CAVALLI';
+            case 'Carrera': return 'CARRERA';
+            case 'CR': return 'CARRERA';
+            case 'TY': return 'TORY BURCH';
+            case 'AX':
+            case 'EA':
+            case 'GA': return 'ARMANI';
+            case 'DF': return 'DVF';
+            case 'AA': return 'ADIDAS';
+            case 'NK': return 'NIKE';
+            case 'AFFLICTION': return 'AFFLICTION';
+            case 'BM': return 'BLUMARINE';
+            case 'HR': return 'CHRISTIAN ROTH';
+            case 'NA': return 'NAUTICA';
+            case 'RE': return 'REVO';
+            case 'LA': return 'LACOSTE';
+            case 'JG': return 'JOHN GALLIANO';
+            case 'MA': return 'MARCHON';
+            case 'WX': return 'WILEY X';
+            case 'CK': return 'CALVIN KLEIN';
+            case 'SK': return 'SWAROVSKI';
+            case 'BB': return 'BEBE';
+            case 'P': return 'PORSCHE DESIGN';
+            case 'SP': return 'SPY';
+            case 'VZ': return 'VON ZIPPER';
+            case 'NW': return 'NINE WEST';
+            case 'CV': return 'CAVIAR';
+            case 'VW': return 'VERA WANG';
+            case 'KS': return 'KATE SPADE';
+            case 'FR': return 'FRED LUNETTES';
+            case 'CS': return 'COSTA DEL MAR';
+            case 'AW': return 'ANDY WOLF';
+            case 'DS':
+            case 'DL': return 'DIESEL';
+            case 'SR': return 'SONIA RYKIEL';
+            case 'MYKITA': return 'MYKITA';
+            case 'RL': return 'RALPH LAUREN';
+            case 'AL':
+            case 'ML':
+            case 'MBM':
+            case 'SBM': return 'ALAN MIKLI';
             case 'PG': return 'PENGUIN';
             case 'DY': return 'DKNY';
             case 'SCH':

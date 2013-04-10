@@ -27,7 +27,7 @@ $this->pageTitle=Yii::app()->name;
                 'function(data){
                       helper = new Helper();
                       helper.PrintImages(data);
-                      $("#preloader").hide();
+                      $("#preloader").bPopup().close();
                       return false;
                  }'
             ),
@@ -43,7 +43,7 @@ $this->pageTitle=Yii::app()->name;
                 'function(data){
                       helper = new Helper();
                       helper.PrintImages(data);
-                      $("#preloader").hide();
+                      $("#preloader").bPopup().close();
                       return false;
                  }'
             ),
