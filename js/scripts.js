@@ -29,15 +29,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     this.casesRB = this.imgContrCases.find("input:radio");
     this.casesImg = this.imgContrCases.find("img");
 
-    /**
-     * Current count of products in temporary feed
-     */
-    $.ajax({
-        type: "POST",
-        url: "?r=site/CheckCount"
-    }).done(function( msg ) {
-        $("#fcount").text(msg);
-        });
+    this.CheckCount();
 
     this.casesRB.click(function(){
         self.searchRes.empty();
@@ -158,15 +150,19 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                     position: [150, 50]
                 });
 
-                $('.tmpModel').click(function() {
-                    if ($(this).find('.fullModel').css("display") == 'none') {
-                        $(this).find('.fullModel').slideDown("slow");
-                    } else {
-                        $(this).find('.fullModel').slideUp("slow");
+                $('.tmpModel').click(function(e) {
+                    if (e.target.className === "tmpModel"){
+                        if ($(this).find('.fullModel').css("display") == 'none') {
+                            $(this).find('.fullModel').slideDown("slow");
+                        } else {
+                            $(this).find('.fullModel').slideUp("slow");
+                        }
                     }
+                });
 
-                })
-                console.log(msg);
+                $('.tmpModel a').click(function() {
+                    self.DeleteModel($(this).attr("rel"));
+                });
             });
     })
 
@@ -529,5 +525,38 @@ Helper.prototype.ClearFeed = function Helper_clearFeed() {
             $("#bpop").bPopup();
             $("#fcount").text(data);
             return false;
+        });
+}
+
+/**
+ *
+ * @param rel
+ * @constructor
+ */
+Helper.prototype.DeleteModel = function Helper_deleteModel(rel) {
+    var self = this;
+    $.ajax({
+        type: "POST",
+        url: "?r=site/deletemodel",
+        data: {rel: rel}
+    }).done(function( data ) {
+            //console.log(data);
+            $('.tmpModel a[rel="' + rel +'"]').parent().remove();
+            self.CheckCount();
+            //$('#preloader').bPopup().close();
+            //return false;
+        });
+}
+
+/**
+ * Current count of products in temporary feed
+ * @constructor
+ */
+Helper.prototype.CheckCount = function Helper_checkCount() {
+    $.ajax({
+        type: "POST",
+        url: "?r=site/CheckCount"
+    }).done(function( msg ) {
+            $("#fcount").text(msg);
         });
 }

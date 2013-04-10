@@ -454,6 +454,10 @@ input[type="text"] {
     border-bottom: 1px solid grey;
     cursor: pointer;
 }
+.tmpModel a {
+    float: right;
+    margin: 0 50px 0 0;
+}
 .fullModel {
     display: none;
     padding: 10px;

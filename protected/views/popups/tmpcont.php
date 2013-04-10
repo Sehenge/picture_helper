@@ -6,7 +6,7 @@ foreach ($data as $key => $model) {
     //print_r($model);die(1);
     $fPicture = explode(",", $model['pictures']);
     echo '<div class=tmpModel><strong>' . ($key+1) . '</strong>' . '. ' . $model['model'] .
-        ' - ' . $model['colorCode'] . ' - ' . $model['size'] . '<div class="fullModel">',
+        ' - ' . $model['colorCode'] . ' - ' . $model['size'] . '<a rel="' . $key . '">Delete</a>' . '<div class="fullModel">',
      '<img src="' . $fPicture[0] . '" width="450px" style="float: right;"/>',
      '<ul style="font-size: 14px;word-wrap: break-word;">',
      '<li>UPC: ' . $model['upc'] . '</li>',

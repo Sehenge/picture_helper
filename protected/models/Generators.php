@@ -436,4 +436,24 @@ class Generators
         }
         return $obj;
     }
+
+    public static function deleteModel($rel)
+    {
+        $i = 0;
+        $obj = array();
+        if (($handle = fopen("temp.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($i != $rel) {
+                    $obj[] = $data;
+                }
+                $i++;
+            }
+        }
+
+        $fp = fopen('temp.csv', 'w');
+        foreach ($obj as $row) {
+            fputcsv($fp, $row);
+        }
+        fclose($fp);
+    }
 }

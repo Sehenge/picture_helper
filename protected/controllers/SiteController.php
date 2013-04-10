@@ -52,6 +52,7 @@ class SiteController extends Controller
 	 */
 	public function actionContact()
 	{
+        /*
 		$model=new ContactForm;
 		if(isset($_POST['ContactForm']))
 		{
@@ -71,6 +72,7 @@ class SiteController extends Controller
 			}
 		}
 		$this->render('contact',array('model'=>$model));
+        */
 	}
 
 	/**
@@ -78,6 +80,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+        /*
 		$model=new LoginForm;
 
 		// if it is ajax validation request
@@ -97,6 +100,7 @@ class SiteController extends Controller
 		}
 		// display the login form
 		$this->render('login',array('model' => $model));
+        */
 	}
 
 	/**
@@ -104,8 +108,10 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
+        /*
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+        */
 	}
 
     public function actionGetDir()
@@ -253,5 +259,10 @@ class SiteController extends Controller
     public function actionTmpCont()
     {
         $this->render('pages/tmpcont');
+    }
+
+    public function actionDeleteModel()
+    {
+        echo Generators::deleteModel($_POST['rel']);
     }
 }
