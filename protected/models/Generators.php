@@ -41,8 +41,8 @@ class Generators
 
         $line = array($data['upc'],$data['model'],implode('', explode(" ", $data['model'])),$data['colorCode'],
             $data['frame'],$data['lens'],$data['material'],$data['style'],$data['usage'],$data['size'],
-            $data['description'],$data['polar'],$data['rx'],$data['gender'],$data['country'],$width,$length,
-            $data['brand'], $data['color'], $data['quantity'], $data['sellerCost'], $data['startingBid'],
+            ucwords(strtolower($data['description'])),$data['polar'],$data['rx'],$data['gender'],$data['country'],$width,$length,
+            ucwords(strtolower($data['brand'])), $data['color'], $data['quantity'], preg_replace("/\./",",",$data['sellerCost']), $data['startingBid'],
             $data['buyItNow'], $data['retail'], $pictures);
         /*
         $upc = $data['upc'];
@@ -194,7 +194,7 @@ class Generators
                 $buyitnow = $data[23];
                 $pictures = $data[24];
                 $invNumber = 'FP' . $model . '-' . $colorCode . '-' . $width;
-                $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
+                $aucTitle = $brand . ' ' . $description . ' ' . preg_replace("/_/", " ", $model) . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
 
                 $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'',$pictures,'','','','','','','','','','','','','','Sears','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
@@ -228,8 +228,8 @@ class Generators
                 $rxable = $data[12];
                 $gender = $data[13];
                 $country = $data[14];
-                $width = $data[15];
-                $length = $data[16];
+                $width = $data[15] . 'MM';
+                $length = $data[16] . 'MM';
                 $brand = $data[17];
                 $color = $data[18];
                 $quantity = $data[19];

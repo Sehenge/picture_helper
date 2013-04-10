@@ -32,11 +32,27 @@ $this->breadcrumbs=array(
         <div class="fselect">
             <select name="colorS"></select>
         </div>
-        <input type="text" placeholder="FRAME" name="frame"/>
-        <input type="text" placeholder="LENS" name="lens"/>
-        <input type="text" placeholder="MATERIAL" name="material"/>
+        <input type="text" placeholder="FRAME COLOR" name="frame"/>
+        <input type="text" placeholder="LENS COLOR" name="lens"/>
+        <!--input type="text" placeholder="MATERIAL" name="material"/-->
+        <div class="select">
+            <select name="material">
+                <option>Metal</option>
+                <option>Plastic</option>
+                <option>Mix</option>
+            </select>
+        </div>
         <!--input type="text" placeholder="SHAPE" name="shape"/-->
-        <input type="text" placeholder="USAGE" name="usage"/>
+        <!--input type="text" placeholder="USAGE" name="usage"/-->
+        <div class="select">
+            <select name="usage">
+                <option>Fashion</option>
+                <option>Sports</option>
+                <option>Watersports</option>
+                <option>Snowsports</option>
+                <option>Golf</option>
+            </select>
+        </div>
         <input type="text" placeholder="SIZE" name="size"/>
         <div class="fselect">
             <select name="sizeS"></select>
@@ -72,6 +88,16 @@ $this->breadcrumbs=array(
                 <option>Aviator</option>
                 <option>Round</option>
                 <option>Oval</option>
+                <option>Butterfly</option>
+                <option>Cat Eye</option>
+                <option>Goggle</option>
+                <option>Rimless</option>
+                <option>Semi-Rimless</option>
+                <option>Shield</option>
+                <option>Square</option>
+                <option>Wayfarer</option>
+                <option>Wrap</option>
+                <option>Heart</option>
             </select>
         </div>
         <div class="select">
