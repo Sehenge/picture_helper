@@ -240,11 +240,21 @@ class Generators
                 $pictures = $data[24];
                 $invNumber = $model . '-' . $colorCode . '-' . $width;
                 $aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
-                $description == 'SUNGLASSES' // todo: need to check gender? (MENS)
-                    ? $templateName = 'FP /FREE SHIP/***SUN***MENS/no upc'
-                    : $templateName = 'FP /FREE SHIP/***RX/no upc';
 
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'','',$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                if ( $description == 'Eyeglasses' ) {
+                    $ebaycat = '31415';
+                    $templateName = 'FP /FREE SHIP/***RX/no upc';
+                } else if ( $description == 'Sunglasses' ) {
+                    if ( $gender == 'MEN') {
+                        $ebaycat = '79720';
+                        $templateName = 'FP /FREE SHIP/***SUN***MENS/no upc';
+                    } else if ( $gender == 'WOMEN') {
+                        $ebaycat = '45246';
+                        $templateName = 'FP /FREE SHIP/***SUN***WMNS/no upc';
+                    }
+                }
+
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$buyitnow,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'',$ebaycat,$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
             }
         }
@@ -303,8 +313,8 @@ class Generators
                 $rxable == 'NO' ? $rxable = 0 : $rxable = 1;
                 switch($data[13]) {
                     case 'UNISEX': $gender = 1; break;
-                    case 'MALE': $gender = 2; break;
-                    case 'FEMALE': $gender = 3; break;
+                    case 'MEN': $gender = 2; break;
+                    case 'WOMEN': $gender = 3; break;
                     default: $gender = 1;
                 }
                 $country = $data[14];
@@ -387,12 +397,51 @@ class Generators
         $dataReader = $command->query();
         $result = $dataReader->readAll();
 
+        $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE
+            Attribute = '" . $result[0]['Attribute'] . "' AND
+            Desc1 REGEXP '" . $result[0]['Desc1'] . "' AND
+            Size = '" . $result[0]['Size'] . "'");
+        $dataReader = $command->query();
+        $result = $dataReader->readAll();
+        $flag = false;
+
+        foreach ($result as $row) {
+            if (!preg_match("/CO$|FBA$|VW$|SPO$/", $row['Desc1'])) {
+                $flag = true;
+                if ($row['QuantityOnHand'] == 0) {
+                    foreach ($result as $rowCo) {
+                        if (preg_match("/CO$/", $rowCo['Desc1'])) {
+                            if ($rowCo['QuantityOnHand'] != 0) {
+                                $quantity = $rowCo['QuantityOnHand'];
+                            } else {
+                                $quantity = 0;
+                                foreach ($result as $rowVw) {
+                                    if (preg_match("/VW$|SPO$/", $row['Desc1'])) {
+                                        $quantity += $rowVw['QuantityOnHand'];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $quantity = $row['QuantityOnHand'];
+                }
+            } else if ($flag == false) {
+                foreach ($result as $rowCo) {
+                    if (preg_match("/CO$/", $rowCo['Desc1'])) {
+                        $quantity = $rowCo['QuantityOnHand'];
+                    }
+                }
+            }
+        }
+         
         $pattern = "/([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/";
         preg_match($pattern, $result[0]['Desc1'], $matches);
 
         $brand = strtoupper(GetDir::getBrand($matches[1]));
         foreach ($result as $key => $res) {
             $result[$key]['brand'] = $brand;
+            $result[$key]['QuantityOnHand'] = $quantity;
         }
 
         return $result;

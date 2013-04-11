@@ -26,20 +26,7 @@ function Helper() {
 
 Helper.prototype.InitEvents = function Helper_initEvents() {
     var self = this;
-    this.casesRB = this.imgContrCases.find("input:radio");
-    this.casesImg = this.imgContrCases.find("img");
-
     this.CheckCount();
-
-    this.casesRB.click(function(){
-        self.searchRes.empty();
-        self.searchRes.append(self.eyewear);
-        self.searchRes.append($(this).val());
-    })
-
-    this.casesImg.click(function(){
-        $(this).prev().click();
-    })
 
     this.fifth.click(function(){
         $("#popup").empty();
@@ -81,6 +68,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 $('input[name="brand"]').val(self.obj[0]['brand']);
                 $('input[name="colorCode"]').val(self.obj[0]['Attribute']);
                 $('input[name="color"]').val(self.obj[0]['Desc2']);
+                self.obj[0]['Desc1'] = self.obj[0]['Desc1'].replace(/-\s*CO$/,'');
                 $('input[name="model"]').val(self.obj[0]['Desc1']);
                 $('input[name="sellerCost"]').val(self.obj[0]['Cost']);
                 $('input[name="quantity"]').val(self.obj[0]['QuantityOnHand']);
@@ -98,7 +86,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
     /**
      * QB Parser by Model
      */
-    this.fmodel.change(function() {
+    /*this.fmodel.change(function() {
         var model = $(this).val().toUpperCase();
         $.ajax({
             type: "POST",
@@ -134,7 +122,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                     }
                 }
             });
-    })
+    })*/
 
     /**
      * Temporary container viewer
@@ -168,6 +156,10 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
 
     $('#searchAff').click(function() {
         self.SearchAff();
+    });
+
+    $('#searchShdx').click(function() {
+        self.SearchShdx();
     });
 
     $('#addToFeed').click(function() {
@@ -240,42 +232,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             });
     })
 
-    /**
-     * Tooltips
-     */
-    $("[data-tooltip]").mousemove(function (eventObject) {
-        $data_tooltip = $(this).attr("data-tooltip");
-        $("#tooltip").text($data_tooltip)
-            .css({
-                "top" : eventObject.pageY + 5,
-                "left" : eventObject.pageX + 5
-            })
-            .show();
-    }).mouseout(function () {
-            $("#tooltip").hide()
-                .text("")
-                .css({
-                    "top" : 0,
-                    "left" : 0
-                });
-        });
-
-    $(".finput input, .finput select").mousemove(function (eventObject) {
-        $data_tooltip = $(this).attr("name");
-        $("#tooltip").text($data_tooltip)
-            .css({
-                "top" : eventObject.pageY + 5,
-                "left" : eventObject.pageX + 5
-            })
-            .show();
-    }).mouseout(function () {
-            $("#tooltip").hide()
-                .text("")
-                .css({
-                    "top" : 0,
-                    "left" : 0
-                });
-        });
+    this.Tooltips();
 }
 
 /**
@@ -332,6 +289,20 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
     } else {
         this.searchRes.append(this.eyewear);
     }
+
+    this.casesRB = this.imgContrCases.find("input:radio");
+    this.casesImg = this.imgContrCases.find("img");
+    this.casesRB.click(function(){
+        self.searchRes.empty();
+        self.searchRes.append(self.eyewear);
+        self.searchRes.append($(this).val());
+    });
+
+    this.casesImg.click(function(){
+        $(this).prev().click();
+    });
+
+    this.Tooltips();
 }
 
 /**
@@ -501,7 +472,29 @@ Helper.prototype.SearchAff = function Helper_searchAff() {
     $.ajax({
         type: "POST",
         url: "?r=site/getdir",
-        data: { sku: sku, cases: false }
+        data: { sku: sku, cases: true }
+    }).done(function( msg ) {
+            $('#preloader').bPopup().close();
+            self.PrintImages(msg);
+            $("#bpop span").text("Searching is ended!").css("color","green");
+            $("#bpop").bPopup();
+            return false;
+        });
+}
+
+/**
+ * Image searching in Shadesexpo
+ * @constructor
+ */
+Helper.prototype.SearchShdx = function Helper_searchShdx() {
+    self = this;
+    var model = $('input[name="model"]').val();
+    var colorCode = $('input[name="colorCode"]').val();
+    var sku = model + '-' + colorCode;
+    $.ajax({
+        type: "POST",
+        url: "?r=site/getshades",
+        data: { sku: sku, cases: true }
     }).done(function( msg ) {
             $('#preloader').bPopup().close();
             self.PrintImages(msg);
@@ -558,5 +551,45 @@ Helper.prototype.CheckCount = function Helper_checkCount() {
         url: "?r=site/CheckCount"
     }).done(function( msg ) {
             $("#fcount").text(msg);
+        });
+}
+
+/**
+ * Tooltips on elements hover
+ * @constructor
+ */
+Helper.prototype.Tooltips = function Helper_tooltips() {
+    $("[data-tooltip]").mousemove(function (eventObject) {
+        $data_tooltip = $(this).attr("data-tooltip");
+        $("#tooltip").text($data_tooltip)
+            .css({
+                "top" : eventObject.pageY + 5,
+                "left" : eventObject.pageX + 5
+            })
+            .show();
+    }).mouseout(function () {
+            $("#tooltip").hide()
+                .text("")
+                .css({
+                    "top" : 0,
+                    "left" : 0
+                });
+        });
+
+    $(".finput input, .finput select").mousemove(function (eventObject) {
+        $data_tooltip = $(this).attr("name");
+        $("#tooltip").text($data_tooltip)
+            .css({
+                "top" : eventObject.pageY + 5,
+                "left" : eventObject.pageX + 5
+            })
+            .show();
+    }).mouseout(function () {
+            $("#tooltip").hide()
+                .text("")
+                .css({
+                    "top" : 0,
+                    "left" : 0
+                });
         });
 }
