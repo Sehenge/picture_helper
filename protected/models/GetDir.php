@@ -199,7 +199,7 @@ class GetDir
             case 'TO': return 'TODS';
             case 'JS': return 'JUST_CAVALLI';
             case 'Carrera': return 'CARRERA';
-            case 'CR': return 'CARRERA';
+            case 'CAR': return 'CARRERA';
             case 'TY': return 'TORY_BURCH';
             case 'AX':
             case 'EA':
@@ -312,7 +312,7 @@ class GetDir
             case 'TO': return 'TODS';
             case 'JS': return 'JUST CAVALLI';
             case 'Carrera': return 'CARRERA';
-            case 'CR': return 'CARRERA';
+            case 'CAR': return 'CARRERA';
             case 'TY': return 'TORY BURCH';
             case 'AX':
             case 'EA':

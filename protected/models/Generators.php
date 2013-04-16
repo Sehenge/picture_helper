@@ -286,7 +286,7 @@ class Generators
                     case 'CAT EYE': $style = 3; break;
                     case 'GOGGLE': $style = 4; break;
                     case 'OVAL': $style = 5; break;
-                    case 'RECTANGLE': $style = 6; break;
+                    case 'RECTANGULAR': $style = 6; break;
                     case 'RIMLESS': $style = 7; break;
                     case 'ROUND': $style = 8; break;
                     case 'SEMI-RIMLESS': $style = 9; break;
@@ -434,7 +434,7 @@ class Generators
                 }
             }
         }
-         
+
         $pattern = "/([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/";
         preg_match($pattern, $result[0]['Desc1'], $matches);
 
