@@ -233,6 +233,7 @@ class SiteController extends Controller
 
     public function actionRegGen()
     {
+        echo '123';
         Generators::regGenerator();
     }
 

@@ -21,7 +21,9 @@ class GetDir
 
         $pattern = "/(AZ)?([A-Z]+)([^A-Z0-9])([A-Z0-9]+)([^A-Z0-9])([A-Z0-9]+)/";
         preg_match($pattern, $sku, $matches);
-        if (substr($matches[4], -1) == 'S') {
+        if (substr($matches[4], -2) == 'LS') {
+            $submodel = substr($matches[4], 0, -2);
+        } else if (substr($matches[4], -1) == 'S') {
             $submodel = substr($matches[4], 0, -1);
         }
         //$sku = explode(' ', $sku); $sku = explode('-', implode("-", $sku));
@@ -45,6 +47,7 @@ class GetDir
                 $paths[] = 'http://shadesexpo.net/Ebay/Glasses_Large/' . $lc_brand;
                 $paths[] = 'http://shadesexpo.net/Ebay/Glasses/' . $lc_brand;
             }
+
             foreach ($paths as $path) {
 
                 if ($string = @file_get_contents($path)) {
@@ -198,7 +201,7 @@ class GetDir
             case 'TR': return 'TRUE_RELIGION';
             case 'TO': return 'TODS';
             case 'JS': return 'JUST_CAVALLI';
-            case 'Carrera': return 'CARRERA';
+            case 'CARRERA': return 'CARRERA';
             case 'CAR': return 'CARRERA';
             case 'TY': return 'TORY_BURCH';
             case 'AX':
@@ -311,7 +314,7 @@ class GetDir
             case 'TR': return 'TRUE RELIGION';
             case 'TO': return 'TODS';
             case 'JS': return 'JUST CAVALLI';
-            case 'Carrera': return 'CARRERA';
+            case 'CARRERA': return 'CARRERA';
             case 'CAR': return 'CARRERA';
             case 'TY': return 'TORY BURCH';
             case 'AX':
@@ -438,7 +441,7 @@ class GetDir
         if( strcmp($nameu, 'TRUE RELIGION') == 0) return 'TR';
         if( strcmp($nameu, 'TODS') == 0) return 'TO';
         if( strcmp($nameu, 'JUST CAVALLI') == 0) return 'JS';
-        if( strcmp($nameu, 'CARRERA') == 0) return 'CR';
+        if( strcmp($nameu, 'CARRERA') == 0) return 'CAR';
         if( strcmp($nameu, 'TORY BURCH') == 0) return 'TB';
         if( strcmp($nameu, 'ARMANI EXCHANGE') == 0) return 'AX';
         if( strcmp($nameu, 'DIANE VON FURSTENBERG') == 0) return 'DF';

@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
     <tr><td>Amazon UK:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/ukFeed.csv">Download</a></td></tr>
     <tr><td>Sears:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/fpFeed.csv">Download</a></td></tr>
     <tr><td>Ebay:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/ebayFeed.csv">Download</a></td></tr>
-    <tr><td>Regular:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/regFeed.csv">Download</a></td></tr>
+    <tr><td>Ewc:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/regFeed.csv">Download</a></td></tr>
 </table>
 
 <form class="feederInput" method="post">
@@ -39,7 +39,7 @@ $this->breadcrumbs=array(
             <select name="material">
                 <option>Metal</option>
                 <option>Plastic</option>
-                <option>Mix</option>
+                <option>Composite</option>
             </select>
         </div>
         <!--input type="text" placeholder="SHAPE" name="shape"/-->
@@ -62,7 +62,6 @@ $this->breadcrumbs=array(
         <div class="fselect">
             <select name="sellerCostS"></select>
         </div>
-        <input type="text" placeholder="BUY IT NOW" name="buyItNow"/>
         <input type="text" placeholder="RETAIL PRICE" name="retail"/>
         <input type="text" placeholder="QUANTITY" name="quantity"/>
 
@@ -121,12 +120,12 @@ $this->breadcrumbs=array(
         <input class="customSubmit" name="ukGenBtn" type="button" value="Generate UK Feed" id="ukGenBtn" />
         <input class="customSubmit" name="fpGenBtn" type="button" value="Generate FP Feed" id="fpGenBtn" />
         <input class="customSubmit" name="ebayGenBtn" type="button" value="Generate Ebay Feed" id="ebayGenBtn" />
-        <input class="customSubmit" name="regGenBtn" type="button" value="Generate Regular Feed" id="regGenBtn" />
+        <input class="customSubmit" name="regGenBtn" type="button" value="Generate EWC Feed" id="regGenBtn" />
         <input class="customSubmit" name="clearfeed" type="button" value="Clear Feed" id="clearfeed" />
     </div>
     <div id="fifth_img"></div>
 
-    <div class="output" style="position: relative; top: -378px; left: -23px;">
+    <div class="output" style="position: relative; top: -324px; left: -23px;">
         <textarea id="searchResult" name="pictures"></textarea>
     </div>
 </form>

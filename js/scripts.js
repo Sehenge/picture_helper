@@ -241,11 +241,12 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
  * @constructor
  */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
-    console.log(data);
+    console.log(this.eyewear);
     var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
     this.searchRes.empty();
+    this.eyewear = [];
     var images = data.split(',');
 
     var eyewear = new Array();
@@ -280,22 +281,23 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
                 + '" data-tooltip="' + affImage.substr(affImage.indexOf('c:')+1) + '"/><br/>');
         }
     }
+
     if ((data.indexOf('<exception>') !== -1) && (data.indexOf('<exception>') !== 0)) {
-        this.searchRes.append(this.eyewear);
-        this.searchRes.append("\n" + data.substr(data.indexOf('<exception>') + 11, data.indexOf('</exception>')));
+        this.searchRes.val(this.eyewear);
+        //this.searchRes.append("\n" + data.substr(data.indexOf('<exception>') + 11, data.indexOf('</exception>')));
     } else if ((data.indexOf('<exception>') !== -1) && (data.indexOf('<exception>') === 0)) {
-        this.searchRes.append("\n" + data.substr(data.indexOf('<exception>') + 11, data.indexOf('</exception>')));
-        this.searchRes.append(this.eyewear);
+        //this.searchRes.append("\n" + data.substr(data.indexOf('<exception>') + 11, data.indexOf('</exception>')));
+        this.searchRes.val(this.eyewear);
     } else {
-        this.searchRes.append(this.eyewear);
+        this.searchRes.val(this.eyewear);
     }
 
     this.casesRB = this.imgContrCases.find("input:radio");
     this.casesImg = this.imgContrCases.find("img");
     this.casesRB.click(function(){
         self.searchRes.empty();
-        self.searchRes.append(self.eyewear);
-        self.searchRes.append($(this).val());
+        self.searchRes.val(self.eyewear + $(this).val());
+        //self.searchRes.append($(this).val());
     });
 
     this.casesImg.click(function(){
