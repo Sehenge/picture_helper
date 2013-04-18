@@ -1,7 +1,7 @@
 <?php
 echo '<span style="font-size: 18px; text-align: center; position: relative; top: 10px; margin-bottom: 15px; display: block;"> Current feed:</span>';
 
-//var_dump($data);
+//var_dump($data);die(1);
 foreach ($data as $key => $model) {
     //print_r($model);die(1);
     $fPicture = explode(",", $model['pictures']);
@@ -22,7 +22,6 @@ foreach ($data as $key => $model) {
      '<li>Size: ' . $model['size'] . '</li>',
      '<li>Starting Bid: ' . $model['startingBid'] . '</li>',
      '<li>Seller Cost: ' . $model['sellerCost'] . '</li>',
-     '<li>Buy It Now: ' . $model['buyitnow'] . '</li>',
      '<li>Retail price: ' . $model['retail'] . '</li>',
      '<li>Quantity: ' . $model['quantity'] . '</li>',
      '<li>RX: ' . $model['rxable'] . '</li>',

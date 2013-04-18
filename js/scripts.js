@@ -139,7 +139,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                 });
 
                 $('.tmpModel').click(function(e) {
-                    if (e.target.className === "tmpModel"){
+                    if (e.target.localName !== "a"){
                         if ($(this).find('.fullModel').css("display") == 'none') {
                             $(this).find('.fullModel').slideDown("slow");
                         } else {
@@ -269,7 +269,7 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
             this.imgContEyewear.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
                 + '" data-tooltip="' + affImage.substr(affImage.indexOf('i:')+1) + '"/><br/>');
             //$("#searchResult").append(image.substr(image.indexOf('i:')+2) + ",\n");
-            this.eyewear.push(affImage.substr(affImage.indexOf('i:')+1) + ",");
+            this.eyewear.push(affImage.substr(affImage.indexOf('i:')+1));
             if (key == 4) {
                 self.fifth.empty();
                 self.fifth.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
@@ -358,7 +358,7 @@ Helper.prototype.AddToFeed = function Helper_addToFeed(obj) {
         url: "?r=site/AddToFeed",
         data: obj.parents("form").serialize()
     }).done(function( data ) {
-            console.log(data);
+            //console.log(data);
             $("#fcount").text(data);
             $('#preloader').bPopup().close();
             $("#bpop span").text("Successfully added to feed!").css("color","green");
