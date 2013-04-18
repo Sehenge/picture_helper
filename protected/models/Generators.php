@@ -73,7 +73,7 @@ class Generators
         $fp = fopen('azFeed.csv', 'w');
         fputcsv($fp, $head);
         if (($handle = fopen("temp.csv", "r")) !== FALSE) {
-            $i = 1;
+            $i = 2;
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $model = $data[1];
@@ -122,7 +122,7 @@ class Generators
         $fp = fopen('ukFeed.csv', 'w');
         fputcsv($fp, $head);
         if (($handle = fopen("temp.csv", "r")) !== FALSE) {
-            $i = 1;
+            $i = 2;
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $model = $data[1];
@@ -171,7 +171,7 @@ class Generators
         $fp = fopen('fpFeed.csv', 'w');
         fputcsv($fp, $head);
         if (($handle = fopen("temp.csv", "r")) !== FALSE) {
-            $i = 1;
+            $i = 2;
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $manufacturer = explode(" ", $data[1]);
@@ -219,7 +219,7 @@ class Generators
         $fp = fopen('ebayFeed.csv', 'w');
         fputcsv($fp, $head);
         if (($handle = fopen("temp.csv", "r")) !== FALSE) {
-            $i = 1;
+            $i = 2;
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $manufacturer = explode(" ", $data[1]);
