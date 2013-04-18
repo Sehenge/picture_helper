@@ -344,7 +344,7 @@ class Generators
                         $pics .= 'ITEMIMAGEURL' . $i . '=' . $pictures[$i] . ',';
                     }
                 }
-                $content = array(1,'','','','','',1,'','','','','','',$sellerCost,'','price',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',$description,'','','','','','','','','','','','','','','','','','','','','','','','','',$brand,$upc,'','','','','','',$colorCode,'',$frame,'','','',$country,'',$color,'',$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
+                $content = array(1,'','','','','',1,'','','','','','',$sellerCost,'','',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',$description,'','','','','','','','','','','','','','','','','','','','','','','','','',$brand,$upc,'','','','','','',$colorCode,'',$frame,'','','',$country,'',$color,'',$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
                 var_dump($content);
                 fputcsv($fp, $content);
             }
