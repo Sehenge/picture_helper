@@ -265,7 +265,7 @@ class Generators
                     }
                 }
 
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'GTC Monday 4pm all',$ebaycat,$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,$ebaycat,'GTC Monday 4pm all',$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl4',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -344,8 +344,8 @@ class Generators
                         $pics .= 'ITEMIMAGEURL' . $i . '=' . $pictures[$i] . ',';
                     }
                 }
-                $content = array(1,'','','','','',1,'','','','','','',$sellerCost,'','',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',$description,'','','','','','','','','','','','','','','','','','','','','','','','','',$brand,$upc,'','','','','','',$colorCode,'',$frame,'','','',$country,'',$color,'',$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
-                var_dump($content);
+                $content = array(1,'','','','','',1,'','','','','','',$sellerCost,'','',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',strtoupper($description),'','','','','','','','','','','','','','','','','','','','','','','','','',strtoupper($brand),$upc,'','','','','','',$colorCode,'',$frame,'','','',$country,'',$color,'',$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
+                //var_dump($content);
                 fputcsv($fp, $content);
             }
         }
