@@ -83,12 +83,12 @@ $this->breadcrumbs=array(
         </div>
         <div class="select">
             <select name="style">
-                <option>Rectangular</option>
+                <option>Rectangle</option>
                 <option>Aviator</option>
                 <option>Round</option>
                 <option>Oval</option>
                 <option>Butterfly</option>
-                <option>Cateye</option>
+                <option>Cat-eye</option>
                 <option>Goggle</option>
                 <option>Rimless</option>
                 <option>Semi-Rimless</option>

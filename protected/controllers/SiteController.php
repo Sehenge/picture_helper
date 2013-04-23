@@ -233,7 +233,6 @@ class SiteController extends Controller
 
     public function actionRegGen()
     {
-        echo '123';
         Generators::regGenerator();
     }
 
@@ -244,12 +243,9 @@ class SiteController extends Controller
 
     public function actionQbParse()
     {
-        if (isset($_POST['model'])) {
-            echo CJSON::encode(Generators::getInfoByModel($_POST['model']));
-        } else if (isset($_POST['upc'])) {
+        if (isset($_POST['upc'])) {
             echo CJSON::encode(Generators::getInfoByUpc($_POST['upc']));
         }
-
     }
 
     public function actionClearFeed()

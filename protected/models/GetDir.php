@@ -18,7 +18,6 @@ class GetDir
     public static function parseImages($sku, $sh)
 	{
         $output = array(); $paths = array();
-
         $pattern = "/(AZ)?([A-Z]+)([^A-Z0-9])([A-Z0-9]+)([^A-Z0-9])([A-Z0-9]+)/";
         preg_match($pattern, $sku, $matches);
         if (substr($matches[4], -2) == 'LS') {
@@ -49,7 +48,6 @@ class GetDir
             }
 
             foreach ($paths as $path) {
-
                 if ($string = @file_get_contents($path)) {
                     $doc = new DOMDocument();
                     $doc->strictErrorChecking = FALSE;
@@ -142,7 +140,7 @@ class GetDir
             case 'CZ': return 'CAZAL';
             case 'BAL': return 'BALENCIAGA';
             case 'BE': return 'BURBERRY';
-            case 'BV': return 'BVLGARI';
+            case 'BVL': return 'BVLGARI';
             case 'ChAdv': return 'CHRISTIAN_AUDIGIER'; // todo: wtf2?
             case 'RC': return 'CAVALLI';
             case 'CN': return 'CHANEL';
@@ -247,6 +245,7 @@ class GetDir
             case 'SCH':
             case 'VCH': return 'CHOPARD';
             case 'AMQ': return 'MCQUEEN';
+            case 'BV': return 'BOTTEGA_VENETA';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -258,7 +257,7 @@ class GetDir
             case 'CZ': return 'CAZAL';
             case 'BAL': return 'BALENCIAGA';
             case 'BE': return 'BURBERRY';
-            case 'BV': return 'BVLGARI';
+            case 'BVL': return 'BVLGARI';
             case 'CA': return 'CHRISTIAN AUDIGIER'; // todo: wtf2?
             case 'RC': return 'CAVALLI';
             case 'CN': return 'CHANEL';
@@ -359,6 +358,7 @@ class GetDir
             case 'SCH':
             case 'VCH': return 'CHOPARD';
             case 'AMQ': return 'MCQUEEN';
+            case 'BV': return 'BOTTEGA VENETA';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -382,7 +382,7 @@ class GetDir
                                 'BEBE', 'PORSCHE DESIGN', 'SPY', 'VON ZIPPER', 'NINE WEST', 'CAVIAR', 'VERA WANG',
                                 'KATE SPADE', 'FRED LUNETTES', 'COSTA DEL MAR', 'ANDY WOLF', 'DIESEL', 'SONIA RYKIEL',
                                 'MYKITA', 'RALPH LAUREN', 'ALAIN MIKLI', 'MIKLI BY MIKLI', 'SUBCREW BY MIKLI',
-                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN');
+                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN', 'BOTTEGA VENETA');
         return self::$_brands;
     }
 
@@ -395,7 +395,7 @@ class GetDir
         if( strcmp($nameu, 'ARNETTE') == 0) return 'AN';
         if( strcmp($nameu, 'BALENCIAGA') == 0) return 'BA';
         if( strcmp($nameu, 'BURBERRY') == 0) return 'BE';
-        if( strcmp($nameu, 'BVLGARI') == 0) return 'BV';
+        if( strcmp($nameu, 'BVLGARI') == 0) return 'BVL';
         if( strcmp($nameu, 'CHRISTIAN AUDIGIER') == 0) return 'CA';
         if( strcmp($nameu, 'ROBERTO CAVALLI') == 0 ) return 'RC';
         if( strcmp($nameu, 'ROBERTO CAVALLI') == 0 ) return 'RC';
@@ -483,6 +483,7 @@ class GetDir
         if( strcmp($nameu, 'DKNY') == 0) return 'DY';
         if( strcmp($nameu, 'CHOPARD') == 0) return  'VCH';
         if( strcmp($nameu, 'MCQUEEN') == 0) return  'AMQ';
+        if( strcmp($nameu, 'BOTTEGA VENETA') == 0) return  'BV';
     }
 
     /********************************************************************************
