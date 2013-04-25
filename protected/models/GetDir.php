@@ -246,6 +246,8 @@ class GetDir
             case 'VCH': return 'CHOPARD';
             case 'AMQ': return 'MCQUEEN';
             case 'BV': return 'BOTTEGA_VENETA';
+            case 'POL': return 'POLICE';
+            case 'BL': return 'BALMAIN';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -359,6 +361,8 @@ class GetDir
             case 'VCH': return 'CHOPARD';
             case 'AMQ': return 'MCQUEEN';
             case 'BV': return 'BOTTEGA VENETA';
+            case 'POL': return 'POLICE';
+            case 'BL': return 'BALMAIN';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -382,7 +386,7 @@ class GetDir
                                 'BEBE', 'PORSCHE DESIGN', 'SPY', 'VON ZIPPER', 'NINE WEST', 'CAVIAR', 'VERA WANG',
                                 'KATE SPADE', 'FRED LUNETTES', 'COSTA DEL MAR', 'ANDY WOLF', 'DIESEL', 'SONIA RYKIEL',
                                 'MYKITA', 'RALPH LAUREN', 'ALAIN MIKLI', 'MIKLI BY MIKLI', 'SUBCREW BY MIKLI',
-                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN', 'BOTTEGA VENETA');
+                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN', 'BOTTEGA VENETA', 'POLICE', 'BALMAIN');
         return self::$_brands;
     }
 
@@ -484,6 +488,8 @@ class GetDir
         if( strcmp($nameu, 'CHOPARD') == 0) return  'VCH';
         if( strcmp($nameu, 'MCQUEEN') == 0) return  'AMQ';
         if( strcmp($nameu, 'BOTTEGA VENETA') == 0) return  'BV';
+        if( strcmp($nameu, 'POLICE') == 0) return  'POL';
+        if( strcmp($nameu, 'BALMAIN') == 0) return  'BL';
     }
 
     /********************************************************************************

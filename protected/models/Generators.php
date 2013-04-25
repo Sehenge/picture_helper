@@ -420,7 +420,6 @@ class Generators
         $dataReader = $command->query();
         $result = $dataReader->readAll();
         $flag = false;
-
         foreach ($result as $row) {
             if (!preg_match("/CO$|FBA$|VW$|SPO$/", $row['Desc1'])) {
                 $flag = true;
