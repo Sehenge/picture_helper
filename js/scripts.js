@@ -296,7 +296,7 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
     this.casesImg = this.imgContrCases.find("img");
     this.casesRB.click(function(){
         self.searchRes.empty();
-        self.searchRes.val(self.eyewear + $(this).val());
+        self.searchRes.val(self.eyewear + ',' + $(this).val());
         //self.searchRes.append($(this).val());
     });
 
