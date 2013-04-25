@@ -114,7 +114,7 @@ $this->breadcrumbs=array(
 </div>
     <div class="fbuttons">
         <input class="customSubmit" name="searchAff" type="button" value="Search Affordable" id="searchAff" />
-        <input class="customSubmit" name="searchShdx" type="button" value="Search Shadesexpo" id="searchShdx" />
+        <!--input class="customSubmit" name="searchShdx" type="button" value="Search Shadesexpo" id="searchShdx" /-->
         <input class="customSubmit" name="addToFeed" type="button" value="Add to feed" id="addToFeed" />
         <input class="customSubmit" name="azGenBtn" type="button" value="Generate AZ Feed" id="azGenBtn" />
         <input class="customSubmit" name="ukGenBtn" type="button" value="Generate UK Feed" id="ukGenBtn" />

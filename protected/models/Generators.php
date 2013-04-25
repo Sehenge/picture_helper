@@ -247,6 +247,8 @@ class Generators
                 $startingBid = $data[21];
                 $retail = $data[22];
                 $pictures = $data[23];
+                $pictures = preg_replace('/http:\/\/affordableluxurygroup\.com\/Large_Pictures\//', 'http://shadesexpo.net/Ebay/Glasses_Large/', $pictures);
+                $pictures = preg_replace('/http:\/\/affordableluxurygroup\.com\/Pictures\//', 'http://shadesexpo.net/Ebay/Glasses/', $pictures);
                 //$invNumber = $model . '-' . $colorCode . '-' . $width;
                 //$aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
                 $invNumber = '=СЦЕПИТЬ(AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';

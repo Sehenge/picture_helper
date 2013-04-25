@@ -467,8 +467,8 @@ input[type="text"] {
 }
 .fbuttons {
     float: right;
-    top: 170px;
-    right: -200px;
+    top: 160px;
+    right: -185px;
     position: relative;
 }
 .files {
