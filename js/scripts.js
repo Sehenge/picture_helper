@@ -254,7 +254,7 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
         var image = images[key];
 
         var imageTemp = image.split('/');
-        var unionImage = "http://union-progress.com/feedhelper/picture_helper/temp/" + imageTemp[7] +
+        var unionImage = "http://dev.union-progress.com/feedhelper/picture_helper/temp/" + imageTemp[7] +
             '/' + imageTemp[8] + '/' + imageTemp[9];
 
         if ((imageTemp[7] == 'Large_Pictures') || (imageTemp[7] == 'Pictures')) {
