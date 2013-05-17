@@ -353,6 +353,7 @@ Helper.prototype.ChangeUnique = function Helper_changeUnique(param) {
  * @constructor
  */
 Helper.prototype.AddToFeed = function Helper_addToFeed(obj) {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/AddToFeed",
@@ -363,6 +364,9 @@ Helper.prototype.AddToFeed = function Helper_addToFeed(obj) {
             $('#preloader').bPopup().close();
             $("#bpop span").text("Successfully added to feed!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -373,6 +377,7 @@ Helper.prototype.AddToFeed = function Helper_addToFeed(obj) {
  * @constructor
  */
 Helper.prototype.AzGenFeed = function Helper_azGenFeed(obj) {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/azgen",
@@ -382,6 +387,9 @@ Helper.prototype.AzGenFeed = function Helper_azGenFeed(obj) {
             console.log(data);
             $("#bpop span").text("AZ feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -392,6 +400,7 @@ Helper.prototype.AzGenFeed = function Helper_azGenFeed(obj) {
  * @constructor
  */
 Helper.prototype.UkGenFeed = function Helper_ukGenFeed(obj) {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/ukgen",
@@ -401,6 +410,9 @@ Helper.prototype.UkGenFeed = function Helper_ukGenFeed(obj) {
             console.log(data);
             $("#bpop span").text("UK feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -411,6 +423,7 @@ Helper.prototype.UkGenFeed = function Helper_ukGenFeed(obj) {
  * @constructor
  */
 Helper.prototype.FpGenFeed = function Helper_fpGenFeed(obj) {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/fpgen",
@@ -420,6 +433,9 @@ Helper.prototype.FpGenFeed = function Helper_fpGenFeed(obj) {
             console.log(data);
             $("#bpop span").text("FP feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -430,6 +446,7 @@ Helper.prototype.FpGenFeed = function Helper_fpGenFeed(obj) {
  * @constructor
  */
 Helper.prototype.EbayGenFeed = function Helper_ebayGenFeed(obj) {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/ebaygen",
@@ -439,6 +456,9 @@ Helper.prototype.EbayGenFeed = function Helper_ebayGenFeed(obj) {
             console.log(data);
             $("#bpop span").text("Ebay feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -449,6 +469,7 @@ Helper.prototype.EbayGenFeed = function Helper_ebayGenFeed(obj) {
  * @constructor
  */
 Helper.prototype.RegGenFeed = function Helper_regGenFeed(obj) {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/reggen",
@@ -458,6 +479,9 @@ Helper.prototype.RegGenFeed = function Helper_regGenFeed(obj) {
             console.log(data);
             $("#bpop span").text("Regular feed successfully generated!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -480,6 +504,9 @@ Helper.prototype.SearchAff = function Helper_searchAff() {
             self.PrintImages(msg);
             $("#bpop span").text("Searching is ended!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -502,6 +529,9 @@ Helper.prototype.SearchShdx = function Helper_searchShdx() {
             self.PrintImages(msg);
             $("#bpop span").text("Searching is ended!").css("color","green");
             $("#bpop").bPopup();
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -511,6 +541,7 @@ Helper.prototype.SearchShdx = function Helper_searchShdx() {
  * @constructor
  */
 Helper.prototype.ClearFeed = function Helper_clearFeed() {
+    var self = this;
     $.ajax({
         type: "POST",
         url: "?r=site/clearfeed"
@@ -519,6 +550,9 @@ Helper.prototype.ClearFeed = function Helper_clearFeed() {
             $("#bpop span").text("Feed successfully cleared!").css("color","green");
             $("#bpop").bPopup();
             $("#fcount").text(data);
+            setTimeout(function() {
+                self.BpopupClose($("#bpop"));
+            }, 700);
             return false;
         });
 }
@@ -594,4 +628,13 @@ Helper.prototype.Tooltips = function Helper_tooltips() {
                     "left" : 0
                 });
         });
+}
+
+/**
+ *
+ * @param block
+ * @constructor
+ */
+Helper.prototype.BpopupClose = function Helper_bpopupClose(block) {
+    block.bPopup().close()
 }

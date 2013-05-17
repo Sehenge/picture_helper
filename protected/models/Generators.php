@@ -106,7 +106,7 @@ class Generators
                 //$aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
                 $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; AV' . $i . '; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ')';
 
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','LENS_MATERIAL_TYPE','PLASTIC','','','','','','','','','','','','');
+                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','LENS_MATERIAL_TYPE','PLASTIC','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -155,7 +155,7 @@ class Generators
                 $invNumber = '=СЦЕПИТЬ("UK";AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';
                 $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; AV' . $i . '; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ')';
 
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -195,16 +195,16 @@ class Generators
                 $brand = $data[17];
                 $color = $data[18];
                 $quantity = $data[19];
-                $sellerCost = $data[20];
+                $sellerCost = round($data[20]);
                 $startingBid = $data[21];
                 $retail = $data[22];
                 $pictures = $data[23];
                 //$invNumber = 'FP' . $model . '-' . $colorCode . '-' . $width;
                 //$aucTitle = $brand . ' ' . $description . ' ' . preg_replace("/_/", " ", $model) . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
                 $invNumber = '=СЦЕПИТЬ("FP"; AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';
-                $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; O' . $i . '; " "; "' . $colorCode . '"; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ')';
+                $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; O' . $i . '; " "; "' . $colorCode . '"; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ';" '. $width . 'MM")';
 
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','Sears','','','','','','','',strtoupper($description),'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','8','4','4','','','','','','','','');
+                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',strtoupper($description),$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','Sears','','','','','','','',strtoupper($description),'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','8','4','4','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -267,7 +267,7 @@ class Generators
                     }
                 }
 
-                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,$ebaycat,'GTC Monday 4pm all',$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'GTC Monday 4pm all',$ebaycat,$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -346,7 +346,8 @@ class Generators
                         $pics .= 'ITEMIMAGEURL' . $i . '=' . $pictures[$i] . ',';
                     }
                 }
-                $content = array(1,'','','','','',1,'','','','','','',$sellerCost,'','',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',strtoupper($description),'','','','','','','','','','','','','','','','','','','','','','','','','',strtoupper($brand),$upc,'','','','','','',$colorCode,'',$frame,'','','',$country,'',$color,'',$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
+                $pics = substr($pics, 0, -1);
+                $content = array(1,'','','','','',1,'','','','','','',$sellerCost,'','',$retail,'',$pics,'','','','','','','','','','','','','','','','','','',strtoupper($description),'','','','','','','','','','','','','','','','','','','','','','','','','',strtoupper($brand),$upc,'','','','','','',$colorCode,'',$color,'','','',$country,'',$frame,'',$gender,'','','',$lens,'',$manufacturer,'',$model,'',$size,'',$style,'',$usage,'',$polarized,'',$rxable,'',$width,'',$length,'','','',$material);
                 //var_dump($content);
                 fputcsv($fp, $content);
             }
@@ -420,6 +421,7 @@ class Generators
         $dataReader = $command->query();
         $result = $dataReader->readAll();
         $flag = false;
+        /*
         foreach ($result as $row) {
             if (!preg_match("/CO$|FBA$|VW$|SPO$/", $row['Desc1'])) {
                 $flag = true;
@@ -455,6 +457,33 @@ class Generators
                     }
                 }
             }
+        }
+        */
+
+        foreach ($result as $row) {
+            if (preg_match("/CO$/", $row['Desc1'])) {
+                if ($row['QuantityOnHand'] != 0) {
+                    $quantity = $row['QuantityOnHand'];
+                } else {
+                    $quantity = 0;
+                    foreach ($result as $rowVw) {
+                        if (!preg_match("/FBA$/", $row['Desc1'])) {
+                            $quantity += $rowVw['QuantityOnHand'];
+                        }
+                    }
+                }
+            } else {
+                $quantity = 0;
+                foreach ($result as $rowVw) {
+                    if (!preg_match("/FBA$/", $row['Desc1'])) {
+                        $quantity += $rowVw['QuantityOnHand'];
+                    }
+                }
+            }
+        }
+
+        if ($quantity > 5) {
+            $quantity = 5;
         }
 
         $pattern = "/([A-Z]+)([^A-Z0-9])([A-Z0-9]+)?(([^A-Z0-9])([A-Z0-9]+))?/";
