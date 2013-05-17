@@ -53,8 +53,7 @@ class GetDir
                     $doc->strictErrorChecking = FALSE;
                     $doc->loadHTML($string);
                     $xml = simplexml_import_dom($doc);
-                    $result = $xml->xpath("//a[contains(.,'jpg')]");
-
+                    $result = $xml->xpath("//a[contains(.,'jpg') or contains(.,'JPG')]");
                     if (isset($result)) {
                         if ($output) {
                             break;
@@ -113,7 +112,7 @@ class GetDir
                     $doc->strictErrorChecking = FALSE;
                     $doc->loadHTML($string);
                     $xml = simplexml_import_dom($doc);
-                    $result = $xml->xpath("//a[contains(@href,'jpg')]/@href");
+                    $result = $xml->xpath("//a[contains(@href,'jpg') or contains(@href,'JPG')]/@href");
                     if (isset($result)) {
                         foreach ($result as $element) {
                             if (strpos(strtoupper($element), $brand) !== false) {
