@@ -191,7 +191,7 @@ class GetDir
             case 'VE': return 'VERSACE';
             case 'VO': return 'VOGUE';
             case 'YSL': return 'YSL';
-            case 'DQ': return 'D SQUARED';
+            case 'DQ': return array('D SQUARED','Dsquared2');
             case 'LV': return 'LANVIN';
             case 'PO': return 'PERSOL';
             case 'PU': return 'PUMA';

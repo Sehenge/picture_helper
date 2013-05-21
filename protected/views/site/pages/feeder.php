@@ -11,12 +11,12 @@ $this->breadcrumbs=array(
     Count of products in temporary feed: <span id="fcount">0</span>
 </div>
 <table class="files">
-    <tr><td>Temp:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/temp.csv">Download</a></td></tr>
-    <tr><td>Amazon:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/azFeed.csv">Download</a></td></tr>
-    <tr><td>Amazon UK:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/ukFeed.csv">Download</a></td></tr>
-    <tr><td>Sears:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/fpFeed.csv">Download</a></td></tr>
-    <tr><td>Ebay:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/ebayFeed.csv">Download</a></td></tr>
-    <tr><td>Ewc:</td><td><a href="https://www.union-progress.com/feedhelper/picture_helper/regFeed.csv">Download</a></td></tr>
+    <tr><td>Temp:</td><td><a href="http://dev.union-progress.com/feedhelper/picture_helper/temp.csv">Download</a></td></tr>
+    <tr><td>Amazon:</td><td><a href="http://dev.union-progress.com/feedhelper/picture_helper/azFeed.csv">Download</a></td></tr>
+    <tr><td>Amazon UK:</td><td><a href="http://dev.union-progress.com/feedhelper/picture_helper/ukFeed.csv">Download</a></td></tr>
+    <tr><td>Sears:</td><td><a href="http://dev.union-progress.com/feedhelper/picture_helper/fpFeed.csv">Download</a></td></tr>
+    <tr><td>Ebay:</td><td><a href="http://dev.union-progress.com/feedhelper/picture_helper/ebayFeed.csv">Download</a></td></tr>
+    <tr><td>Ewc:</td><td><a href="http://dev.union-progress.com/feedhelper/picture_helper/regFeed.csv">Download</a></td></tr>
 </table>
 
 <form class="feederInput" method="post">
