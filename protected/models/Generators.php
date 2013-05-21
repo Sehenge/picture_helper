@@ -102,11 +102,11 @@ class Generators
                 $retail = $data[22];
                 $pictures = $data[23];
                 //$invNumber = 'AZ' . $model . '-' . $colorCode . '-' . $width;
-                $invNumber = '=СЦЕПИТЬ("AZ";AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';
+                $invNumber = '=СЦЕПИТЬ("AZ",AV' . $i . ', "-", AX' . $i . ', "-", BL' . $i . ')';
                 //$aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
-                $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; AV' . $i . '; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ')';
+                $aucTitle = '=СЦЕПИТЬ(P' . $i . ', " ", N' . $i . ', " ", AV' . $i . ', " ", AZ' . $i . ', " ", AX' . $i . ', " ", BZ' . $i . ')';
 
-                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','LENS_MATERIAL_TYPE','PLASTIC','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,'=U' . $i,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','LENS_MATERIAL_TYPE','PLASTIC','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -152,10 +152,10 @@ class Generators
                 $pictures = $data[23];
                 //$invNumber = 'UK' . $model . '-' . $colorCode . '-' . $width;
                 //$aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
-                $invNumber = '=СЦЕПИТЬ("UK";AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';
-                $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; AV' . $i . '; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ')';
+                $invNumber = '=СЦЕПИТЬ("UK",AV' . $i . ', "-", AX' . $i . ', "-", BL' . $i . ')';
+                $aucTitle = '=СЦЕПИТЬ(P' . $i . ', " ", N' . $i . ', " ", AV' . $i . ', " ", AZ' . $i . ', " ", AX' . $i . ', " ", BZ' . $i . ')';
 
-                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,'=U' . $i,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -201,10 +201,10 @@ class Generators
                 $pictures = $data[23];
                 //$invNumber = 'FP' . $model . '-' . $colorCode . '-' . $width;
                 //$aucTitle = $brand . ' ' . $description . ' ' . preg_replace("/_/", " ", $model) . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
-                $invNumber = '=СЦЕПИТЬ("FP"; AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';
-                $aucTitle = '=СЦЕПИТЬ(P' . $i . '; " "; N' . $i . '; " "; O' . $i . '; " "; "' . $colorCode . '"; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . ';" '. $width . 'MM")';
+                $invNumber = '=СЦЕПИТЬ("FP", AV' . $i . ', "-", AX' . $i . ', "-", BL' . $i . ')';
+                $aucTitle = '=СЦЕПИТЬ(P' . $i . ', " ", N' . $i . ', " ", O' . $i . ', " ", "' . $colorCode . '", " ", AZ' . $i . ', " ", AX' . $i . ', " ", BZ' . $i . '," '. $width . 'MM")';
 
-                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',strtoupper($description),$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','Sears','','','','','','','',strtoupper($description),'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','8','4','4','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,'=U' . $i,'','','',$upc,'','','','',strtoupper($description),$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','Sears','','','','','','','',strtoupper($description),'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','8','4','4','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
@@ -251,8 +251,8 @@ class Generators
                 $pictures = preg_replace('/http:\/\/affordableluxurygroup\.com\/Pictures\//', 'http://shadesexpo.net/Ebay/Glasses/', $pictures);
                 //$invNumber = $model . '-' . $colorCode . '-' . $width;
                 //$aucTitle = $brand . ' ' . $description . ' ' . $model . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
-                $invNumber = '=СЦЕПИТЬ(AV' . $i . '; "-"; AX' . $i . '; "-"; BL' . $i . ')';
-                $aucTitle = '=СЦЕПИТЬ(Q' . $i . '; " "; P' . $i . '; " "; N' . $i . '; " "; AV' . $i . '; " "; AZ' . $i . '; " "; AX' . $i . '; " "; BZ' . $i . '; " "; BL' . $i . ')';
+                $invNumber = '=СЦЕПИТЬ(AV' . $i . ', "-", AX' . $i . ', "-", BL' . $i . ')';
+                $aucTitle = '=СЦЕПИТЬ(Q' . $i . ', " ", P' . $i . ', " ", N' . $i . ', " ", AV' . $i . ', " ", AZ' . $i . ', " ", AX' . $i . ', " ", BZ' . $i . ', " ", BL' . $i . ')';
 
                 if ( $description == 'Eyeglasses' ) {
                     $ebaycat = '31415';
@@ -267,7 +267,7 @@ class Generators
                     }
                 }
 
-                $content = array(mb_convert_encoding($aucTitle, 'WINDOWS-1251', 'UTF-8'),$invNumber,'INSTOCK',$quantity,$startingBid,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'GTC Monday 4pm all',$ebaycat,$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
+                $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,'=U' . $i,'','','',$upc,'','','','',$description,$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','SHADESEXPO EBAY NEW DESIGN',$templateName,'GTC Monday 4pm all',$ebaycat,$description.'::'.$brand,'','','','','','','','',$description,'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','','','','','','','','','','','');
                 fputcsv($fp, $content);
                 $i++;
             }
