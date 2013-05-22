@@ -175,8 +175,9 @@ class Generators
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $upc = $data[0];
                 $manufacturer = explode(" ", $data[1]);
+                $mmodel = $manufacturer[1];
                 $manufacturer = $manufacturer[0];
-                $model = preg_replace("/ /", "_", $data[1]);
+                $model = preg_replace("/ /", "_", trim($data[1]));
                 $alterModel = $data[2];
                 $colorCode = $data[3];
                 $frame = $data[4];
@@ -202,7 +203,7 @@ class Generators
                 //$invNumber = 'FP' . $model . '-' . $colorCode . '-' . $width;
                 //$aucTitle = $brand . ' ' . $description . ' ' . preg_replace("/_/", " ", $model) . ' ' . $color . ' ' . $colorCode . ' ' . $alterModel;
                 $invNumber = '=СЦЕПИТЬ("FP", AV' . $i . ', "-", AX' . $i . ', "-", BL' . $i . ')';
-                $aucTitle = '=СЦЕПИТЬ(P' . $i . ', " ", N' . $i . ', " ", O' . $i . ', " ", "' . $colorCode . '", " ", AZ' . $i . ', " ", AX' . $i . ', " ", BZ' . $i . '," '. $width . 'MM")';
+                $aucTitle = '=СЦЕПИТЬ(P' . $i . ', " ", N' . $i . ', " ", O' . $i . ', " ", "' . $mmodel . '", " ", AZ' . $i . ', " ", AX' . $i . ', " ", BZ' . $i . '," '. $width . 'MM")';
 
                 $content = array($aucTitle,$invNumber,'INSTOCK',$quantity,'=U' . $i,'','','',$upc,'','','','',strtoupper($description),$manufacturer,$brand,'NEW','',$sellerCost,'',$startingBid,$retail,'',$pictures,'','','','','','','','','','','','','','Sears','','','','','','','',strtoupper($description),'MODEL',$model,'COLOR CODE',$colorCode,'COLOR DESCRIPTION',$color,'SIZE',$size,'STYLE',$style,'USAGE',$usage,'PROTECTION',$polarized,'RXABLE',$rxable,'RX_LENS_WIDTH',$width,'RX_TEMPLE_LENGTH',$length,'GENDER',$gender,'COUNTRY OF ORIGIN',$country,'FRAME MATERIAL',$material,'FRAME COLOR',$frame,'LENS COLOR',$lens,'ALTERNATE MODEl1',$alterModel,'BRAND',$brand,'CONDITION','NEW','','8','4','4','','','','','','','','');
                 fputcsv($fp, $content);
