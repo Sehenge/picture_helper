@@ -241,12 +241,15 @@ class GetDir
             case 'SBM': return 'ALAN_MIKLI';
             case 'PG': return 'PENGUIN';
             case 'DY': return 'DKNY';
+            case 'CH':
             case 'SCH':
             case 'VCH': return 'CHOPARD';
             case 'AMQ': return 'MCQUEEN';
             case 'BV': return 'BOTTEGA_VENETA';
             case 'POL': return 'POLICE';
             case 'BL': return 'BALMAIN';
+            case 'NR': return 'NINARICCI';
+            case 'VMU': return 'MIUMIU';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -356,12 +359,15 @@ class GetDir
             case 'SBM': return 'ALAN MIKLI';
             case 'PG': return 'PENGUIN';
             case 'DY': return 'DKNY';
+            case 'CH':
             case 'SCH':
             case 'VCH': return 'CHOPARD';
             case 'AMQ': return 'MCQUEEN';
             case 'BV': return 'BOTTEGA VENETA';
             case 'POL': return 'POLICE';
             case 'BL': return 'BALMAIN';
+            case 'NR': return 'NINA RICCI';
+            case 'VMU': return 'MIU MIU';
             default: return 'Manufacturer code was not found';
         }
     }
@@ -385,7 +391,8 @@ class GetDir
                                 'BEBE', 'PORSCHE DESIGN', 'SPY', 'VON ZIPPER', 'NINE WEST', 'CAVIAR', 'VERA WANG',
                                 'KATE SPADE', 'FRED LUNETTES', 'COSTA DEL MAR', 'ANDY WOLF', 'DIESEL', 'SONIA RYKIEL',
                                 'MYKITA', 'RALPH LAUREN', 'ALAIN MIKLI', 'MIKLI BY MIKLI', 'SUBCREW BY MIKLI',
-                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN', 'BOTTEGA VENETA', 'POLICE', 'BALMAIN');
+                                'PENGUIN', 'DKNY', 'CHOPARD', 'MCQUEEN', 'BOTTEGA VENETA', 'POLICE', 'BALMAIN', 'NINA RICCI',
+                                'MIU MIU');
         return self::$_brands;
     }
 
@@ -489,6 +496,8 @@ class GetDir
         if( strcmp($nameu, 'BOTTEGA VENETA') == 0) return  'BV';
         if( strcmp($nameu, 'POLICE') == 0) return  'POL';
         if( strcmp($nameu, 'BALMAIN') == 0) return  'BL';
+        if( strcmp($nameu, 'NINA RICCI') == 0) return  'NR';
+        if( strcmp($nameu, 'MIU MIU') == 0) return  'VMU';
     }
 
     /********************************************************************************
