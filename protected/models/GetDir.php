@@ -249,6 +249,7 @@ class GetDir
             case 'POL': return 'POLICE';
             case 'BL': return 'BALMAIN';
             case 'NR': return 'NINARICCI';
+            case 'SMU':
             case 'VMU': return 'MIUMIU';
             default: return 'Manufacturer code was not found';
         }
@@ -367,6 +368,7 @@ class GetDir
             case 'POL': return 'POLICE';
             case 'BL': return 'BALMAIN';
             case 'NR': return 'NINA RICCI';
+            case 'SMU':
             case 'VMU': return 'MIU MIU';
             default: return 'Manufacturer code was not found';
         }
