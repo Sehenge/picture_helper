@@ -144,6 +144,7 @@ class GetDir
             case 'RC': return 'CAVALLI';
             case 'CN': return 'CHANEL';
             case 'CHROME HEARTS': return 'CHROME_HEARTS';
+            case 'CE':
             case 'CL': return 'CHLOE';
             case 'DD':
             case 'DG': return array('DG', 'DOLCE&GABANA', 'DOLCE');
