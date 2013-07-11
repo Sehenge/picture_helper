@@ -415,10 +415,13 @@ class Generators
         $dataReader = $command->query();
         $result = $dataReader->readAll();
 
+        if ($result[0]['Size'] == '')  $result[0]['Size'] = '.';
+
         $command = $connection->createCommand("SELECT * FROM quickbooks_products_info WHERE
             Attribute = '" . $result[0]['Attribute'] . "' AND
             Desc1 REGEXP '" . $result[0]['Desc1'] . "' AND
-            Size = '" . $result[0]['Size'] . "'");
+            Size REGEXP '" . $result[0]['Size'] . "'");
+
         $dataReader = $command->query();
         $result = $dataReader->readAll();
         $flag = false;
