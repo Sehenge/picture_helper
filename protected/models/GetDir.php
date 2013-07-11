@@ -204,6 +204,7 @@ class GetDir
             case 'TY': return 'TORY_BURCH';
             case 'AX':
             case 'EA':
+            case 'AR':
             case 'GA': return 'ARMANI';
             case 'DF': return 'DVF';
             case 'AA': return 'ADIDAS';
@@ -268,6 +269,7 @@ class GetDir
             case 'RC': return 'CAVALLI';
             case 'CN': return 'CHANEL';
             case 'CHROME HEARTS': return 'CHROME_HEARTS';
+            case 'CE':
             case 'CL': return 'CHLOE';
             case 'DD':
             case 'DG': return 'DOLCE&GABANA';
@@ -324,6 +326,7 @@ class GetDir
             case 'TY': return 'TORY BURCH';
             case 'AX':
             case 'EA':
+            case 'AR':
             case 'GA': return 'ARMANI';
             case 'DF': return 'DVF';
             case 'AA': return 'ADIDAS';
