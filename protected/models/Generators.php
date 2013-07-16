@@ -24,7 +24,15 @@ class Generators
         if (strpos($pictures, 'no one image were found!') !== false) {
             $pictures = '';
         }
-        isset($data['polar']) ? $data['polar'] = 'POLARIZED' : $data['polar'] = '';
+        if (isset($data['polar'])) {
+            $data['polar'] = 'POLARIZED';
+        } else {
+            if (strtolower($data['description']) == 'sunglasses') {
+                $data['polar'] = '100% UV400';
+            } else {
+                $data['polar'] = '';
+            }
+        }
 
         $size_arr = explode('/', $data['size']);
         $width = $size_arr[0];
