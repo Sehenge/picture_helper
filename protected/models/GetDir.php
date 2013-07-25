@@ -97,6 +97,7 @@ class GetDir
             $brands[] = self::getPath($matches[2]);
         }
 
+
         foreach ($brands as $brand) {
             if ($sh == 'aff') {
                 $paths[] = 'http://affordableluxurygroup.com/Large_Pictures/Cases/';
@@ -185,7 +186,7 @@ class GetDir
             case 'COACH': return 'COACH';
             case 'RX':
             case 'RB': return 'RayBan';
-            case 'TC': return 'TIFFANY';
+            case 'TIF': return array('TIFFANY', 'TIFFANY_CO');
             case 'TF': return 'TOM_FORD';
             case 'TH': return array('TAG_HEUER','TAGHEUER');
             case 'VAL': return 'VALENTINO';
@@ -307,7 +308,7 @@ class GetDir
             case 'COACH': return 'COACH';
             case 'RX':
             case 'RB': return 'RAY-BAN';
-            case 'TC': return 'TIFFANY';
+            case 'TIF': return 'TIFFANY';
             case 'TF': return 'TOM FORD';
             case 'THE': return 'TAG HEUER'; // todo: ????s
             case 'VAL': return 'VALENTINO';
@@ -443,7 +444,7 @@ class GetDir
         if( strcmp($nameu, 'PRADA SPORT') == 0) return 'PS';
         if( strcmp($nameu, 'COACH') == 0) return 'CO';
         if( strcmp($nameu, 'RAY-BAN') == 0 ) return 'RB';
-        if( strcmp($nameu, 'TIFFANY') == 0 ) return 'TC';
+        if( strcmp($nameu, 'TIFFANY') == 0 ) return 'TIF';
         if( strcmp($nameu, 'TOM FORD') == 0) return 'TF';
         if( strcmp($nameu, 'TAG HEUER') == 0 ) return 'TH';
         if( strcmp($nameu, 'VALENTINO') == 0 ) return 'VA';
