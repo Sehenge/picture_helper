@@ -125,7 +125,7 @@ $this->breadcrumbs=array(
     </div>
     <div id="fifth_img"></div>
 
-    <div class="output" style="position: relative; top: -324px; left: -23px;">
+    <div class="output" style="position: relative;top: -324px;left: 238px;height: 0;">
         <textarea id="searchResult" name="pictures"></textarea>
     </div>
 </form>

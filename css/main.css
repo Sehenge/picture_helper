@@ -234,8 +234,7 @@ div.search-form
 }
 
 .output textarea{
-    float: right;
-    width: 625px;
+    width: 655px;
     height: 300px;
     border: 2px solid white;
     -webkit-box-shadow:

@@ -133,12 +133,12 @@ class SiteController extends Controller
         }
         if ($images) {
             foreach ($images as $image) {
-                $dest_name = preg_split("/\//", $image);
-                echo 'i:' . GetDir::resizeImage(substr($image, 0, -1),
+                //$dest_name = preg_split("/\//", $image);
+                /*echo 'i:' . GetDir::resizeImage(substr($image, 0, -1),
                     '/home/union-progress.com/public_html/feedhelper/picture_helper/temp/' .
                         $dest_name[3] . '/' . $dest_name[4] . '/' . substr($dest_name[5], 0, -1),
-                    300, 150);
-                //echo 'i:' . $image;
+                    300, 150);*/
+                echo 'i:' . $image;
             }
         } else {
             echo GetDir::printException('images not found');
@@ -146,12 +146,12 @@ class SiteController extends Controller
         if (!isset($_POST['cases']) || $_POST['cases'] !== 'false') {
             if ($cases) {
                 foreach ($cases as $case) {
-                    $dest_name = preg_split("/\//", $case);
-                    echo 'c:' . GetDir::resizeImage(substr($case, 0, -1),
+                    //$dest_name = preg_split("/\//", $case);
+                    /*echo 'c:' . GetDir::resizeImage(substr($case, 0, -1),
                         '/home/union-progress.com/public_html/feedhelper/picture_helper/temp/' .
                             $dest_name[3] . '/' . $dest_name[4] . '/' . substr($dest_name[5], 0, -1),
-                        300, 150);
-                    //echo 'c:' . $case;
+                        300, 150);*/
+                    echo 'c:' . $case;
                 }
             } else {
                 echo GetDir::printException('cases not found');
@@ -238,7 +238,7 @@ class SiteController extends Controller
 
     public function actionJsonBrand()
     {
-        echo GetDir::getPath($_POST['mcode']);
+        echo GetDir::getBrand($_POST['mcode']);
     }
 
     public function actionQbParse()

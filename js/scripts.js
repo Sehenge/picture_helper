@@ -52,8 +52,6 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
             url: "?r=site/QbParse",
             data: { upc: upc }
         }).done(function( msg ) {
-                console.log(msg);
-                //console.log(JSON.parse(msg));
                 self.obj = JSON.parse(msg);
                 window.obj = JSON.parse(msg);
                 self.fselects.empty();
@@ -64,6 +62,11 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                         self.fsizes.append('<option>' + objd['Size'] + '</option>');
                         self.fsellercosts.append('<option>' + objd['Cost'] + '</option>');
                     });
+                } else {
+                    self.fcolorcodes.parent().hide();
+                    self.fcolors.parent().hide();
+                    self.fsizes.parent().hide();
+                    self.fsellercosts.parent().hide();
                 }
                 $('input[name="brand"]').val(self.obj[0]['brand']);
                 $('input[name="colorCode"]').val(self.obj[0]['Attribute']);
@@ -224,9 +227,11 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
                     var brand = msg;
                 }
 
-                if ($(".input select option:contains('" + brand + "')")) {
-                    $(".input select option:contains('" + brand + "')").attr('selected', 'selected');
-                }
+                $(".input select option").each(function() {
+                    if ($(this).text() == brand) {
+                        $(this).attr('selected', 'selected');
+                    }
+                })
                 $('.input input[name="model"]').val(parts[4]);
                 $('.input input[name="color_code"]').val(parts[7]);
             });
@@ -241,7 +246,7 @@ Helper.prototype.InitEvents = function Helper_initEvents() {
  * @constructor
  */
 Helper.prototype.PrintImages = function Helper_printImages(data) {
-    console.log(data);
+    $('#preloader').bPopup().close();
     var self = this;
     this.imgContEyewear.empty();
     this.imgContrCases.empty();
@@ -249,11 +254,9 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
     this.eyewear = [];
     var images = data.split(',');
 
-    var eyewear = new Array();
     for (var key in images) {
         var image = images[key];
-
-        var imageTemp = image.split('/');
+        /*var imageTemp = image.split('/');
         var unionImage = "http://dev.union-progress.com/feedhelper/picture_helper/temp/" + imageTemp[7] +
             '/' + imageTemp[8] + '/' + imageTemp[9];
 
@@ -263,22 +266,22 @@ Helper.prototype.PrintImages = function Helper_printImages(data) {
         } else {
             var affImage = "http://shadesexpo.net/Ebay/"+ imageTemp[7] +
                 '/' + imageTemp[8] + '/' + imageTemp[9];
-        }
+        }*/
 
         if (image.indexOf('i:') !== -1) {
-            this.imgContEyewear.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
-                + '" data-tooltip="' + affImage.substr(affImage.indexOf('i:')+1) + '"/><br/>');
+            this.imgContEyewear.append('<img src="' + image.substr(image.indexOf('i:')+2)
+                + '" data-tooltip="' + image.substr(image.indexOf('i:')+2) + '"/><br/>');
             //$("#searchResult").append(image.substr(image.indexOf('i:')+2) + ",\n");
-            this.eyewear.push(affImage.substr(affImage.indexOf('i:')+1));
+            this.eyewear.push(image.substr(image.indexOf('i:')+2));
             if (key == 4) {
                 self.fifth.empty();
-                self.fifth.append('<img src="' + unionImage.substr(unionImage.indexOf('i:')+1)
-                    + '" width="240px" data-tooltip="' + affImage.substr(affImage.indexOf('i:')+1) + '"/><br/>');
+                self.fifth.append('<img src="' + image.substr(image.indexOf('i:')+2)
+                    + '" width="240px" data-tooltip="' + image.substr(image.indexOf('i:')+2) + '"/><br/>');
             }
         } else if (image.indexOf('c:') !== -1) {
-            this.imgContrCases.append('<input type="radio" name="case" value="' + affImage.substr(affImage.indexOf('c:')+1) +
-                '">' + '<img src="' + unionImage.substr(unionImage.indexOf('c:')+1)
-                + '" data-tooltip="' + affImage.substr(affImage.indexOf('c:')+1) + '"/><br/>');
+            this.imgContrCases.append('<input type="radio" name="case" value="' + image.substr(image.indexOf('c:')+2) +
+                '">' + '<img src="' + image.substr(image.indexOf('c:')+2)
+                + '" data-tooltip="' + image.substr(image.indexOf('c:')+2) + '"/><br/>');
         }
     }
 
@@ -508,6 +511,9 @@ Helper.prototype.SearchAff = function Helper_searchAff() {
                 self.BpopupClose($("#bpop"));
             }, 700);
             return false;
+        }).fail(function(msg) {
+            console.log(msg);
+            $('#preloader').bPopup().close();
         });
 }
 
@@ -533,7 +539,10 @@ Helper.prototype.SearchShdx = function Helper_searchShdx() {
                 self.BpopupClose($("#bpop"));
             }, 700);
             return false;
-        });
+        }.fail(function(msg) {
+                console.log(msg);
+                $('#preloader').bPopup().close();
+            }));
 }
 
 /**
